@@ -123,8 +123,8 @@ describe('GET /artists/:artistId/images',function() {
         const id = 9999999
     
         //excecute
-        // request(app) 
-        // .get(`/artists/${artId}/image`)
+        request(app) 
+        .get(`/artists/${artId}/image`)
         // .end((err, res) => {
         //     if(err) done(err)
                     
@@ -134,6 +134,6 @@ describe('GET /artists/:artistId/images',function() {
         //     expect(res.body).toHaveProperty('message')
         //     expect(res.body.message).toEqual('artists id not found')
         //     done()
-        })
+        // })
     })
 })
