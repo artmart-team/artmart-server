@@ -14,7 +14,7 @@ const app = require('../app')
 // ==========================    GET /users/:userId
 // ==================================================================================
 
-describe('POST /artists/:userId',function() {
+describe('GET /artists/:userId',function() {
     let artistId 
 
     beforeAll(done => {
