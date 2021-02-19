@@ -127,6 +127,36 @@ GET /artists/:artistId/orders
 ]
 ```
 
+User create an order (contoh user id 1 buat order ke artist id 2)
+
+POST /users/:userId/orders/
+
+body 
+```
+{
+  "title" : "Need art with your style",
+  "description": "",  // boleh kosong
+  "ArtistId": 2
+}
+```
+
+response
+```
+{
+    "title": "Need art with your style",
+    "description": "",
+    "refImageId": 1,
+    "duration": 48,
+    "accepted": false,
+    "done": false,
+    "paid": false,
+    "imageURL": "",
+    "UserId": 1,
+    "ArtistId": 2,
+    "createdAt": "2021-02-19T18:49:55.867Z",
+    "updatedAt": "2021-02-19T19:23:06.685Z"
+}
+```
 
 Edit order title, description // only user allowed, user can only edit when accepted === false
 

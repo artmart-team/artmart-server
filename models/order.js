@@ -16,7 +16,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Order.init({
-    title: DataTypes.STRING,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Title required'
+        }
+      },
+    },
     description: DataTypes.STRING,
     refImageId: DataTypes.INTEGER,
     duration: DataTypes.INTEGER,

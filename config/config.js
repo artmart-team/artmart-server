@@ -3,7 +3,6 @@ const uppercasedEnv = env.toUpperCase()
 
 if (env === 'development' || env === 'test') require ('dotenv').config ()
 
-
 const username = process.env ['DB_USERNAME_' + uppercasedEnv]
 const password = process.env ['DB_PASSWORD_' + uppercasedEnv]
 const database = process.env ['DB_NAME_' + uppercasedEnv]
