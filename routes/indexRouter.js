@@ -1,7 +1,13 @@
 const router = require ('express').Router()
-const userRouter = require ('./usersRouter')
+const usersRouter = require ('./usersRouter')
+const artistsRouter = require ('./artistsRouter')
+const ordersRouter = require ('./ordersRouter')
 
-router.use (userRouter)
+router.use (usersRouter)
+
+router.use (artistsRouter)
+
+router.use (ordersRouter)
 
 
 module.exports = router

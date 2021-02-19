@@ -1,4 +1,6 @@
 'use strict';
+const { hashPassword } =  require ('../helpers/bcrypt')
+
 const {
   Model
 } = require('sequelize');
@@ -11,8 +13,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Artist.belongsToMany(models.User, {
+        through: models.Order
+      })
       Artist.hasMany(models.Picture)
-      Artist.hasMany(models.Order)
       Artist.hasMany(models.Rating)
       Artist.hasMany(models.Comment)
       Artist.hasMany(models.Review)
@@ -20,15 +24,79 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Artist.init({
-    username: DataTypes.STRING,
-    firstname: DataTypes.STRING,
-    lastName: DataTypes.STRING,
-    email: DataTypes.STRING,
-    password: DataTypes.STRING,
-    completeDuration: DataTypes.INTEGER
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Username required'
+        }
+      },
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'First Name required'
+        }
+      },
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Last Name required'
+        }
+      },
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Invalid email format'
+        },
+        notEmpty: {
+          msg: 'Email required'
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Password required'
+        }
+      }
+    },
+    completeDuration: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: 'Complete Commission Duration required'
+        }
+      }
+    },
+    profilePicture: DataTypes.STRING,
+    bankAccount: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: 'Bank Account Number required'
+        }
+      }
+    },
   }, {
     sequelize,
     modelName: 'Artist',
+    hooks: {
+      beforeCreate: (artist, options) => {
+        artist.password = hashPassword (artist.password)
+        if (!artist.profilePicture) {
+          artist.profilePicture = `https://ui-avatars.com/api/?name=${artist.firstName}+${artist.lastName}`
+        }
+      }
+    }
   });
   return Artist;
 };
