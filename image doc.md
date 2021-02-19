@@ -1,4 +1,53 @@
 --------------------------------------------------------
+GET /images
+
+//if artist id = 1
+// if category Id = 1
+
+// success
+
+[
+    {
+        "id" : 1,
+        "name" : "ART 1",
+        "description" : "", //description boleh kosong
+        "price" : 100000,
+        "hidden" : false,
+        "Category" : {
+            "name" : "casual"
+        },
+        "Artist" : {
+            "username" : "artist",
+            "firstName" : "art",
+            "lastName" : "ist",
+            "email" : "artist@mail.com",
+        }
+    },
+    {
+        "id" : 2,
+        "name" : "ART 2",
+        "description" : "this is art 2",
+        "price" : 100000,
+        "hidden" : false,
+        "Category" : {
+            "id" : 1,
+            "name" : "casual"
+        },
+        "Artist" : {
+            "id" : 1,
+            "username" : "artist",
+            "firstName" : "art",
+            "lastName" : "ist",
+            "email" : "artist@mail.com",
+        }
+    }
+]
+
+
+
+
+
+--------------------------------------------------------
 GET /artists/:artistId/images
 
 // if artist id = 1

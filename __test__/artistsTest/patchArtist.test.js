@@ -30,7 +30,8 @@ describe('PATCH /artists/:userId',function() {
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
-            password : '123456',  
+            compeleteDuration : 48,
+            password : '123456'
         })
         .then(data => {
             artistId = data.id
@@ -60,7 +61,7 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${artistId}`)
+        .patch(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -71,6 +72,7 @@ describe('PATCH /artists/:userId',function() {
             expect(res.body).toHaveProperty('username')
             expect(res.body).toHaveProperty('firstName')
             expect(res.body).toHaveProperty('lastName')
+            expect(res.body).toHaveProperty('completeDuration')
             expect(res.body).toHaveProperty('email')
             expect(res.body).toEqual({
                 username : expect.any(String),
@@ -92,7 +94,7 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${artistId}`)
+        .patch(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -116,7 +118,7 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${artistId}`)
+        .patch(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -140,7 +142,7 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${artistId}`)
+        .patch(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -163,7 +165,7 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${artistId}`)
+        .patch(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -186,7 +188,7 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${artistId}`)
+        .patch(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -209,7 +211,30 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${artistId}`)
+        .patch(`/artists/${artistId}`)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(400)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('message')
+
+            done()
+        })
+    })
+
+    // ====================== complete Duration diisi kosong ===========================
+    it('should status 400, error input password empty / null' ,function (done) {
+        //setup
+        const body = {
+            completeDuration : ''      
+        }
+    
+        //excecute
+        request(app) 
+        .patch(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)

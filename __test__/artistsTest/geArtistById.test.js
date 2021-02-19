@@ -23,6 +23,7 @@ describe('GET /artists/:userId',function() {
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
+            completeDuration : 48,
             password : '123456',
         })
         .then(data => {
@@ -62,6 +63,7 @@ describe('GET /artists/:userId',function() {
             expect(res.body).toHaveProperty('firstName')
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
+            expect(res.body).toHaveProperty('completeDuration')
             expect(res.body).toEqual({
                 username : expect.any(String),
                 firstName : expect.any(String),

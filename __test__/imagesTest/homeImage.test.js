@@ -1,6 +1,6 @@
-// describe GET /users/:userId
+// describe GET /images
 // -- it success
-// -- it error id not found 
+
 
 const request = require('supertest')
 
@@ -11,10 +11,10 @@ const { beforeAll, afterAll } = require("@jest/globals")
 const app = require('../app')  
 
 // ===================================================================================
-// ==========================    GET /artists/:artistId/images
+// ==========================    GET /images
 // ==================================================================================
 
-describe('GET /artists/images',function() {
+describe('GET /images',function() {
     let artId 
     let catId
 
@@ -91,7 +91,7 @@ describe('GET /artists/images',function() {
 
         //excecute
         request(app) 
-        .get(`/artists/images`)
+        .get(`/images`)
         .end((err, res) => {
             if(err) done(err)
                     

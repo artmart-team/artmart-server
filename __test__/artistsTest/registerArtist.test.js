@@ -39,6 +39,7 @@ describe('POST /users/register',function() {
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
+            completeDuration: 48,
             password : '123456',         
         }
     
@@ -75,7 +76,8 @@ describe('POST /users/register',function() {
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
-            password : '123456',         
+            password : '123456', 
+            completeDuration: 48        
         }
     
         //excecute
@@ -103,7 +105,8 @@ describe('POST /users/register',function() {
             firstName : '',
             lastName : 'name',
             email : 'user@mail.com',
-            password : '123456',         
+            password : '123456',  
+            completeDuration: 48       
         }
     
         //excecute
@@ -158,7 +161,8 @@ describe('POST /users/register',function() {
             firstName : 'user',
             lastName : 'name',
             email : 'user',
-            password : '123456',         
+            password : '123456',   
+            completeDuration: 48      
         }
     
         //excecute
@@ -185,7 +189,8 @@ describe('POST /users/register',function() {
             firstName : 'user',
             lastName : 'name',
             email : '',
-            password : '123456',         
+            password : '123456',
+            completeDuration: 48         
         }
     
         //excecute
@@ -212,7 +217,8 @@ describe('POST /users/register',function() {
             firstName : 'user',
             lastName : '',
             email : 'user@mail.com',
-            password : '',         
+            password : '',
+            completeDuration: 48         
         }
     
         //excecute

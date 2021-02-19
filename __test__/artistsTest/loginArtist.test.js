@@ -24,6 +24,7 @@ describe('POST /artists/login',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
+            completeDuration: 48
         })
         .then(() => {
             done()
