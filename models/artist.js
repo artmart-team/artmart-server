@@ -11,12 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Picture)
-      User.hasMany(models.Order)
-      User.hasMany(models.Rating)
-      User.hasMany(models.Comment)
-      User.hasMany(models.Review)
-      User.hasMany(models.Option)
+      Artist.hasMany(models.Picture)
+      Artist.hasMany(models.Order)
+      Artist.hasMany(models.Rating)
+      Artist.hasMany(models.Comment)
+      Artist.hasMany(models.Review)
+      Artist.hasMany(models.Option)
     }
   };
   Artist.init({

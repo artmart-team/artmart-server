@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Order.belongsTo(models.Artist)
-      Order.belongsTo(models.User)
+      Rating.belongsTo(models.Artist)
+      Rating.belongsTo(models.User)
     }
   };
   Rating.init({
