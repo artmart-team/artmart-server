@@ -3,7 +3,6 @@ const app = require ('../app')
 
 // describe GET /categories/
 // -- it success
-// -- it error not found 
 
 describe ('GET /categories', function () {
     it ('should send response with 200 status code', function (done) {
@@ -15,7 +14,9 @@ describe ('GET /categories', function () {
           expect(res.statusCode).toEqual(200)
           expect(Array.isArray (res.body)).toEqual(true)
           res.body.forEach(category => {
-            expect (typeof category).toEqual('string')
+            expect(category).toHaveProperty('id')
+            expect(category).toHaveProperty('name')
+            expect (typeof category.name).toEqual('string')
           })
 
           done()

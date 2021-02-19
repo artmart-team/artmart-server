@@ -1,3 +1,10 @@
+
+
+// CREATE AFISTA 18-02-2021 20.00
+// DONE REVISION AFISTA 19-02-2021 18.00
+
+// 2 testting -> 1 success test, 1 error test
+
 // describe GET /users/:userId
 // -- it success
 // -- it error id not found 
@@ -24,13 +31,14 @@ describe('GET /users/:userId',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
+            profilePicture : "link.google.com"
         })
         .then(data => {
             userId = data.id
             done()
         })
         .catch(err => {
-            console.log(err, "<< err create user test")
+            console.log(err, "<< err beforeAll getUserById.test.js ")
         })
     })
 
@@ -40,11 +48,11 @@ describe('GET /users/:userId',function() {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err delete user test")
+            console.log(err, "<< err afterAll delete getUserById.test.js ")
         })
     })
     
-    // ======================== successfull login ==========================
+    // ======================== successfull get user Id ==========================
     it('should status 200, successfull get user ID' ,function (done) {
         //setup
         const id = userId
@@ -57,23 +65,23 @@ describe('GET /users/:userId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toEqual('Object')
+            expect(typeof res.body).toBe('object')
             expect(res.body).toHaveProperty('username')
             expect(res.body).toHaveProperty('firstName')
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
-            expect(res.body).toEqual({
-                username : expect.any(String),
-                firstName : expect.any(String),
-                lastName : expect.any(String),
-                email : expect.any(String)
-            })
+            expect(res.body).toHaveProperty('profilePicture')
+            expect(typeof res.body.username).toBe('string')
+            expect(typeof res.body.lastName).toBe('string')
+            expect(typeof res.body.firstName).toBe('string')
+            expect(typeof res.body.email).toBe('string')
+            expect(typeof res.body.profilePicture).toBe('string')
 
             done()
         })
     })
 
-    // ==========================  error in password  ===============================
+    // ==========================  error id  ===============================
     it('should status 404, error user id not found' ,function (done) {
         //setup
         const id = 9999999
@@ -87,8 +95,8 @@ describe('GET /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body.message).toEqual('user id not found')
+            expect(res.body).toHaveProperty('errors')
+
             done()
         })
     })

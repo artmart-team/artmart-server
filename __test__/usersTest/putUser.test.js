@@ -1,3 +1,9 @@
+
+// DONE REVISION AFISTA 19-02-2021 18.00
+
+// 7 testing, 1 success test, 6 error test 
+
+
 // decribe PATCH /users/:userId -- edit username or email or password
 // -- it success
 // -- it edit first name empty
@@ -9,46 +15,65 @@
 
 const request = require('supertest')
 
-const { Artist } = require('../models')
+const { User } = require('../models')
 
-const app = require('../app.js')
+const { genToken } = require('../helper/jwt')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
+const app = require('../app')  
 
 
 // ==================================================================================
-// POST /users/:userId
+// PUT /users/:userId
 // ==================================================================================
 
-describe('PATCH /artists/:userId',function() {
-    let artistId 
+describe('PUT /users/:userId',function() {
+    let userId
+    let access_token 
 
     beforeAll(done => {
-        Artist.create({
+        // dummy creating user 
+        User.create({
             username : 'username',
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
-            compeleteDuration : 48,
-            password : '123456'
+            password : '123456',
+            profilePicture  : "link.google.com"
         })
         .then(data => {
-            artistId = data.id
+            userId = data.id
+
+        })
+        .catch(err => {
+            console.log(err, '<< err beforeAll register putUser.test.js')
+        })
+
+        //dummy user login
+        User.findOne( { where : { email : "user@mail.com"}})
+        .then(user => {
+            const payload = {
+                id : user.id,
+                usernmae : user.username
+            }
+
+            access_token = genToken(payload)
+
             done()
         })
         .catch(err => {
-            console.log(err, '<< err create for patch artist test')
+            console.log(err, "<< err beforeAll get token putUser.test.js")
         })
     })
 
     afterAll(done => {
-        Artist.delete()
+        User.delete()
         .then(() => {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err delete for patch artist test")
+            console.log(err, "<< err afterAll putUser.test.js")
         })
     })
     
@@ -56,24 +81,25 @@ describe('PATCH /artists/:userId',function() {
     it('should status 200, successfull update user' ,function (done) {
         //setup
         const body = {
-            username : 'username',      
+            username : 'usernamesss',      
         }
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .patch(`/users/${userId}`)
+        .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(201)
+            expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('username')
             expect(res.body).toHaveProperty('firstName')
             expect(res.body).toHaveProperty('lastName')
-            expect(res.body).toHaveProperty('completeDuration')
             expect(res.body).toHaveProperty('email')
+            expect(res.body).toHaveProperty('profilePicture')
             expect(res.body).toEqual({
                 username : expect.any(String),
                 firstName : expect.any(String),
@@ -94,7 +120,8 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .patch(`/users/${userId}`)
+        .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -118,7 +145,8 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .patch(`/users/${userId}`)
+        .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -142,7 +170,8 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .patch(`/users/${userId}`)
+        .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -165,7 +194,8 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .patch(`/users/${userId}`)
+        .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -188,7 +218,8 @@ describe('PATCH /artists/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .patch(`/users/${userId}`)
+        .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -202,47 +233,24 @@ describe('PATCH /artists/:userId',function() {
         })
     })
 
-    // ====================== password diisi kosong ===========================
+    // ====================== notLogin users ===========================
     it('should status 400, error input password empty / null' ,function (done) {
         //setup
         const body = {
-            password : ''      
+            username : "userrrrs"      
         }
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .patch(`/users/${userId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(400)
+            expect(res.statusCode).toEqual(401)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-
-            done()
-        })
-    })
-
-    // ====================== complete Duration diisi kosong ===========================
-    it('should status 400, error input password empty / null' ,function (done) {
-        //setup
-        const body = {
-            completeDuration : ''      
-        }
-    
-        //excecute
-        request(app) 
-        .patch(`/artists/${artistId}`)
-        .send(body)
-        .end((err, res) => {
-            if(err) done(err)
-                    
-            //assert
-            expect(res.statusCode).toEqual(400)
-            expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty('errors')
 
             done()
         })

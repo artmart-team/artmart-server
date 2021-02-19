@@ -27,7 +27,7 @@ describe('GET /users/:userId/orders', function () {
           expect(order).toHaveProperty('imageURL')
           expect(order).toHaveProperty('UserId')
           expect(order).toHaveProperty('ArtistId')
-          expect(res.body).toEqual({
+          expect(order).toEqual({
             title : expect.any(String),
             description : expect.any(String),
             refImageId : expect.any(Number),
@@ -65,7 +65,7 @@ describe('GET /artists/:artistId/orders', function () {
           expect(order).toHaveProperty('imageURL')
           expect(order).toHaveProperty('UserId')
           expect(order).toHaveProperty('ArtistId')
-          expect(res.body).toEqual({
+          expect(order).toEqual({
             title : expect.any(String),
             description : expect.any(String),
             refImageId : expect.any(Number),

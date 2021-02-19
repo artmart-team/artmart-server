@@ -1,4 +1,11 @@
-// describe GET /users/:userId
+
+
+// CREATE AFISTA 18-02-2021 20.00
+// DONE REVISION AFISTA 19-02-2021 20.00
+
+// 2 testting -> 1 success test, 1 error test
+
+// describe GET /artists/:artistId
 // -- it success
 // -- it error id not found 
 
@@ -11,42 +18,43 @@ const { beforeAll, afterAll } = require("@jest/globals")
 const app = require('../app')  
 
 // ===================================================================================
-// ==========================    GET /users/:userId
+// ==========================    GET /artists/:artistId
 // ==================================================================================
 
-describe('GET /artists/:userId',function() {
+describe('GET /artists/:artistId',function() {
     let artistId 
 
     beforeAll(done => {
-        Artist.create({
+        User.create({
             username : 'username',
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
-            completeDuration : 48,
             password : '123456',
+            profilePicture : "link.google.com",
+            bankAccount : "230230230"
         })
         .then(data => {
             artistId = data.id
             done()
         })
         .catch(err => {
-            console.log(err, "<< err create artist get by id test")
+            console.log(err, "<< err beforeAll getArtistById.test.js")
         })
     })
 
     afterAll(done => {
-        Artist.delete()
+        User.delete()
         .then(() => {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err delete artist get by id test")
+            console.log(err, "<< err afterAll delete getArtistById.test.js")
         })
     })
     
-    // ======================== successfull login ==========================
-    it('should status 200, successfull get artist ID' ,function (done) {
+    // ======================== successfull get artist id ==========================
+    it('should status 200, successfull get user ID' ,function (done) {
         //setup
         const id = artistId
 
@@ -58,25 +66,25 @@ describe('GET /artists/:userId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toEqual('Object')
+            expect(typeof res.body).toBe('object')
             expect(res.body).toHaveProperty('username')
             expect(res.body).toHaveProperty('firstName')
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
-            expect(res.body).toHaveProperty('completeDuration')
-            expect(res.body).toEqual({
-                username : expect.any(String),
-                firstName : expect.any(String),
-                lastName : expect.any(String),
-                email : expect.any(String)
-            })
+            expect(res.body).toHaveProperty('profilePicture')
+            expect(res.body).toHaveProperty('bankAccount')
+            expect(typeof res.body.username).toBe('string')
+            expect(typeof res.body.lastName).toBe('string')
+            expect(typeof res.body.firstName).toBe('string')
+            expect(typeof res.body.email).toBe('string')
+            expect(typeof res.body.profilePicture).toBe('string')
 
             done()
         })
     })
 
-    // ==========================  error in password  ===============================
-    it('should status 404, error artist id not found' ,function (done) {
+    // ==========================  error get artist id  ===============================
+    it('should status 404, error user id not found' ,function (done) {
         //setup
         const id = 9999999
     
@@ -90,7 +98,7 @@ describe('GET /artists/:userId',function() {
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
-            expect(res.body.message).toEqual('artist id not found')
+
             done()
         })
     })

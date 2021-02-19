@@ -11,20 +11,19 @@ if userId = 1
     "firstName" : "user",
     "lastName" : "name",
     "email" : "user@mail.com",
-    "password" : "!23456"
 }
 
 
 // error id not found
 
 {
-    "message" : "user Id not found"
+    "errors" : "user Id not found"
 }
 
 // error internal server
 
 {
-    "message" : "error in internal server"
+    "errors" : "error in internal server"
 }
 
 --------------------------------------------------------
@@ -37,7 +36,8 @@ SEND BODY
     "firstName" : "user",
     "lastName" : "name",
     "email" : "user@mail.com",
-    "password" : "!23456"
+    "password" : "!23456",
+    "profilePicture" : "link/google.com"
 }
 
 
@@ -56,43 +56,43 @@ RESPONSE
 // error username empty
 
 {
-    "message" : "username must filled"
+    "errors" : "username required"
 }
 
 // error firstName empty
 
 {
-    "message" : "firstName must filled"
+    "errors" : "firstName required"
 }
 
 // error lastname empty
 
 {
-    "message" : "lastName must filled"
+    "errors" : "lastName required"
 }
 
 // error email empty
 
 {
-    "message" : "email must filled"
+    "errors" : "email required"
 }
 
 // error email not email format
 
 {
-    "message" : "email must be email format"
+    "errors" : "email must be email format"
 }
 
 // error password empty
 
 {
-    "message" : "password must filled"
+    "errors" : "password required"
 }
 
 // error internal server
 
 {
-    "message" : "error in internal server"
+    "errors" : "error in internal server"
 }
 
 
@@ -113,61 +113,49 @@ RESPONSE
 // success
 
 {
-    "accss_token" : access_token
+    "accss_token" : access_token,
+    "id" : 1,
+    "username" : "username"
 }
 
 // error username / password not found
 
 {
-    "message" : "username or password not found"
+    "errors" : "username or password not found"
 }
 
 // error username empty
 
 {
-    "message" : "firstName must filled"
+    "errors" : "username required"
 }
 
 // error password empty
 
 {
-    "message" : "lastName must filled"
+    "errors" : "password required"
 }
 
 // error internal server
 
 {
-    "message" : "error in internal server"
+    "errors" : "error in internal server"
 }
 
 
 --------------------------------------------------------
-PATCH /users/:userId
+PUT /users/:userId
 
 if user Id = 1
 
 SEND BODY
 
 {
-    "username" : "userofusername"
-}
-
-//or
-
-{
-    "email" : "username@mail.com"
-}
-
-//or
-
-{
-    "firstName" : "user"
-}
-
-//or
-
-{
-    "lastName" : "username"
+    "username" : "userofusername",
+    "email" : "username@mail.com",
+    "firstName" : "user",
+    "lastName" : "username",
+    "profilePicture" : "link2.google.com"
 }
 
 
@@ -180,41 +168,48 @@ RESPONSE
     "username" : "userofusername",
     "firstName" : "user",
     "lastName" : "username",
-    "email" : "username@mail.com"
+    "email" : "username@mail.com",
+    "profilePicture" : "link.google.com"
 }
 
 // error username empty
 
 {
-    "message" : "username must filled"
+    "errors" : "username required"
 }
 
 // error firstName empty
 
 {
-    "message" : "firstName must filled"
+    "errors" : "firstName required"
 }
 
 // error lastname empty
 
 {
-    "message" : "lastName must filled"
+    "errors" : "lastName required"
 }
 
 // error email empty
 
 {
-    "message" : "email must filled"
+    "errors" : "email required"
 }
 
 // error email not email format
 
 {
-    "message" : "email must be email format"
+    "errors" : "email must be email format"
+}
+
+// error not login user
+
+{
+    "errors" : "please login first"
 }
 
 // error internal server
 
 {
-    "message" : "error in internal server"
+    "errors" : "error in internal server"
 }

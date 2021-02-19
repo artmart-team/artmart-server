@@ -1,3 +1,8 @@
+
+// DONE REVISION AFISTA 19-02-2021 18.00
+
+// 6 testing -> 2 success test,  4 error test
+
 // describe POST /users/login  
 // -- it success
 // -- it error email / password empty
@@ -24,12 +29,13 @@ describe('POST /users/login',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
+            profilePicture : 'link.google.com'
         })
         .then(() => {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err create user test")
+            console.log(err, "<< err beforeAll loginUser.test.js ")
         })
     })
 
@@ -39,12 +45,43 @@ describe('POST /users/login',function() {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err delete user test")
+            console.log(err, "<< err afterAll loginUser.test.js ")
         })
     })
     
-    // ======================== successfull login ==========================
-    it('should status 200, successfull login' ,function (done) {
+    // ======================== successfull login with usernmae ==========================
+    it('should status 200, successfull login with username' ,function (done) {
+        //setup
+        const body = {
+            username : 'username',
+            password : '123456',         
+        }
+    
+        //excecute
+        request(app) 
+        .post('/users/login')
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(200)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('access_token')
+            expect(res.body).toHaveProperty('id')
+            expect(res.body).toHaveProperty('username')
+            expect(res.body).toEqual({
+                access_token : expect.any(String),
+                username : expect.any(String)
+            })
+
+            done()
+        })
+    })
+
+
+    // ======================== successfull login with email ==========================
+    it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
             email : 'user@mail.com',
@@ -62,8 +99,11 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('access_token')
+            expect(res.body).toHaveProperty('id')
+            expect(res.body).toHaveProperty('username')
             expect(res.body).toEqual({
-                access_token : expect.any(String)
+                access_token : expect.any(String),
+                username : expect.any(String)
             })
 
 
@@ -71,8 +111,33 @@ describe('POST /users/login',function() {
         })
     })
 
+    // ==========================  error in username  ===============================
+    it('should status 400, invalid for password / not found in database' ,function (done) {
+        //setup
+        const body = {
+            username : 'userrrrrrrrrrrr@mail.com',
+            password : '123456',         
+        }
+    
+        //excecute
+        request(app) 
+        .post('/users/login')
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(400)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('errors')
+
+            done()
+        })
+    })
+
+
     // ==========================  error in password  ===============================
-    it('should status 401, invalid for password / not found in database' ,function (done) {
+    it('should status 400, invalid for password / not found in database' ,function (done) {
         //setup
         const body = {
             email : 'user@mail.com',
@@ -87,17 +152,17 @@ describe('POST /users/login',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(401)
+            expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body.message).toEqual('Invalid email / password')
+            expect(res.body).toHaveProperty('errors')
+
             done()
         })
     })
 
 
     // ====================== email tidak ada di db ===========================
-    it('should status 401, invalid for email / not found in database' ,function (done) {
+    it('should status 400, invalid for email / not found in database' ,function (done) {
         //setup
         const body = {
             email : 'usernamename@mail.com',
@@ -112,9 +177,9 @@ describe('POST /users/login',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(500)
+            expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty('errors')
 
             done()
         })
