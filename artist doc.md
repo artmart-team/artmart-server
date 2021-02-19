@@ -11,7 +11,7 @@ if artistId = 1
     "firstName" : "art",
     "lastName" : "ist",
     "email" : "artist@mail.com",
-    "password" : "!23456"
+    "completeDuration" : 48
 }
 
 
@@ -37,7 +37,8 @@ SEND BODY
     "firstName" : "art",
     "lastName" : "ist",
     "email" : "artist@mail.com",
-    "password" : "!23456"
+    "password" : "!23456",
+    "completeDuration" : 48
 }
 
 
@@ -50,7 +51,8 @@ RESPONSE
     "username" : "artist",
     "firstName" : "art",
     "lastName" : "ist",
-    "email" : "artist@mail.com"
+    "email" : "artist@mail.com",
+    "completeDuration" : 48
 }
 
 // error username empty
@@ -178,7 +180,44 @@ RESPONSE
 {
     "id" : 1,
     "username" : "artistuser",
-    "firstName" : "art",
-    "lastName" : "ist",
-    "email" : "artist@mail.com"
+    "firstName" : "artist",
+    "lastName" : "user",
+    "email" : "artistuser@mail.com",
+    "completeDuration" : 48
+}
+
+// error username empty
+
+{
+    "message" : "username must filled"
+}
+
+// error firstName empty
+
+{
+    "message" : "firstName must filled"
+}
+
+// error lastname empty
+
+{
+    "message" : "lastName must filled"
+}
+
+// error email empty
+
+{
+    "message" : "email must filled"
+}
+
+// error email not email format
+
+{
+    "message" : "email must be email format"
+}
+
+// error internal server
+
+{
+    "message" : "error in internal server"
 }

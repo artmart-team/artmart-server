@@ -1,6 +1,6 @@
-// describe GET /images
+// describe GET /users/:userId
 // -- it success
-
+// -- it error id not found 
 
 const request = require('supertest')
 
@@ -11,12 +11,11 @@ const { beforeAll, afterAll } = require("@jest/globals")
 const app = require('../app')  
 
 // ===================================================================================
-// ==========================    GET /images
+// ==========================    GET /artists/:artistId/images
 // ==================================================================================
 
-describe('GET /images',function() {
-    let artId 
-    let catId
+describe('GET /artists/:artistId/images/:imageId',function() {
+    let artId, catId, imageId
 
     beforeAll(done => {
         Artist.create({
@@ -25,6 +24,7 @@ describe('GET /images',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
+            completeDuration: 48
         })
         .then(data => {
             artId = data.id
@@ -52,7 +52,8 @@ describe('GET /images',function() {
             categoryId : catId,
             artistId : artId
         })
-        .then(() => {
+        .then(data => {
+            imageId = data.id
             done()
         })
         .catch(err => {
@@ -91,7 +92,7 @@ describe('GET /images',function() {
 
         //excecute
         request(app) 
-        .get(`/images`)
+        .get(`/artists/${artId}/images/${imageId}`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -111,6 +112,28 @@ describe('GET /images',function() {
                 price : expect.any(Number),
                 link : expect.any(String),
                 hidden : expect.any(Boolean)
+            })
+            done()
+        })
+    })
+
+    // ======================== error image id not found ==========================
+    it('should status 404, error image id not found' ,function (done) {
+        //setup
+        const idImage = 9999999
+
+        //excecute
+        request(app) 
+        .get(`/artists/${artId}/images/${idImage}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(404)
+            expect(typeof res.body).toEqual('Object')
+            expect(res.body).toHaveProperty('message')
+            expect(res.body).toEqual({
+                message : expect.any(String),
             })
             done()
         })

@@ -2,7 +2,6 @@
 // -- it success
 // -- it error not found all
 
-
 //describe GET /artists/:artistId/images/:imageId
 // -- it success
 // -- it error not found 
