@@ -14,8 +14,9 @@ const app = require('../app')
 // ==========================    GET /artists/:artistId/images
 // ==================================================================================
 
-describe('GET /artists/:artistId/images/:imageId',function() {
-    let artId, catId, imageId
+describe('GET /artists/images',function() {
+    let artId 
+    let catId
 
     beforeAll(done => {
         Artist.create({
@@ -51,8 +52,7 @@ describe('GET /artists/:artistId/images/:imageId',function() {
             categoryId : catId,
             artistId : artId
         })
-        .then(data => {
-            imageId = data.id
+        .then(() => {
             done()
         })
         .catch(err => {
@@ -91,7 +91,7 @@ describe('GET /artists/:artistId/images/:imageId',function() {
 
         //excecute
         request(app) 
-        .get(`/artists/${artId}/images/${imageId}`)
+        .get(`/artists/images`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -111,28 +111,6 @@ describe('GET /artists/:artistId/images/:imageId',function() {
                 price : expect.any(Number),
                 link : expect.any(String),
                 hidden : expect.any(Boolean)
-            })
-            done()
-        })
-    })
-
-    // ======================== error image id not found ==========================
-    it('should status 404, error image id not found' ,function (done) {
-        //setup
-        const idImage = 9999999
-
-        //excecute
-        request(app) 
-        .get(`/artists/${artId}/images/${idImage}`)
-        .end((err, res) => {
-            if(err) done(err)
-                    
-            //assert
-            expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
             })
             done()
         })

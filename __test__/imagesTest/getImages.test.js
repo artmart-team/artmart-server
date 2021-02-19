@@ -11,7 +11,7 @@ const { beforeAll, afterAll } = require("@jest/globals")
 const app = require('../app')  
 
 // ===================================================================================
-// ==========================    GET /users/:userId
+// ==========================    GET /artists/:artistId/images
 // ==================================================================================
 
 describe('GET /artists/:artistId/images',function() {
@@ -85,14 +85,14 @@ describe('GET /artists/:artistId/images',function() {
         
     })
     
-    // ======================== successfull login ==========================
+    // ======================== successfull get image ==========================
     it('should status 200, successfull get all Image' ,function (done) {
         //setup
-        const id = userId
+        const id = artId
 
         //excecute
         request(app) 
-        .get(`/artists/${artId}/images`)
+        .get(`/artists/${id}/images`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -115,25 +115,5 @@ describe('GET /artists/:artistId/images',function() {
             })
             done()
         })
-    })
-
-    // ==========================  error artist belom login   ===============================
-    it('should status 401, error artist not login' ,function (done) {
-        //setup
-        const id = 9999999
-    
-        //excecute
-        request(app) 
-        .get(`/artists/${artId}/image`)
-        // .end((err, res) => {
-        //     if(err) done(err)
-                    
-        //     //assert
-        //     expect(res.statusCode).toEqual(404)
-        //     expect(typeof res.body).toEqual('object')
-        //     expect(res.body).toHaveProperty('message')
-        //     expect(res.body.message).toEqual('artists id not found')
-        //     done()
-        // })
     })
 })

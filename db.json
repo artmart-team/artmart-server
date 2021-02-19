@@ -1,0 +1,25 @@
+{"users" : 
+    {
+        "id" : 1,
+        "username" : "username",
+        "firstName" : "user",
+        "lastName" : "name",
+        "email" : "user@mail.com",
+        "password" : "!23456"
+    }
+} 
+
+{"artist" : 
+    {
+        "id" : 1,
+        "username" : "artist",
+        "firstName" : "art",
+        "lastName" : "ist",
+        "email" : "artist@mail.com",
+        "password" : "!23456"
+    }
+} 
+
+{"category" : {
+
+}}
