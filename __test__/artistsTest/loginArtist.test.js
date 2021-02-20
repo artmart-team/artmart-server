@@ -3,7 +3,7 @@
 
 // 6 testing -> 2 success test,  4 error test
 
-// describe POST /users/login  
+// describe POST /artists/login  
 // -- it success
 // -- it error email / password empty
 // -- it error id not found
@@ -11,41 +11,43 @@
 
 const request = require('supertest')
 
-const { User } = require('../models')
+const { Artist } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require ('../../app') 
 
 // ===================================================================================
-// POST /users/login
+// POST /artists/login
 // ==================================================================================
 
-describe('POST /users/login',function() {
+describe('POST /artists/login',function() {
     beforeAll(done => {
-        User.create({
+        Artist.create({
             username : 'username',
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
-            profilePicture : 'link.google.com'
+            profilePicture : 'link.google.com',
+            bankAccount : 230230230,
+            completeDuration: 48
         })
         .then(() => {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err beforeAll loginUser.test.js ")
+            console.log(err, "<< err beforeAll loginArtist.test.js ")
         })
     })
 
     afterAll(done => {
-        User.delete()
+        Artist.destroy()
         .then(() => {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err afterAll loginUser.test.js ")
+            console.log(err, "<< err afterAll loginArtist.test.js ")
         })
     })
     
@@ -59,7 +61,7 @@ describe('POST /users/login',function() {
     
         //excecute
         request(app) 
-        .post('/users/login')
+        .post('/artists/login')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -90,7 +92,7 @@ describe('POST /users/login',function() {
     
         //excecute
         request(app) 
-        .post('/users/login')
+        .post('/artists/login')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -121,7 +123,7 @@ describe('POST /users/login',function() {
     
         //excecute
         request(app) 
-        .post('/users/login')
+        .post('/artists/login')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -130,6 +132,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toBe('string')
 
             done()
         })
@@ -146,7 +149,7 @@ describe('POST /users/login',function() {
     
         //excecute
         request(app) 
-        .post('/users/login')
+        .post('/artists/login')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -155,6 +158,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toBe('string')
 
             done()
         })
@@ -171,7 +175,7 @@ describe('POST /users/login',function() {
     
         //excecute
         request(app) 
-        .post('/users/login')
+        .post('/artists/login')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -180,6 +184,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toBe('string')
 
             done()
         })
@@ -196,7 +201,7 @@ describe('POST /users/login',function() {
     
         //excecute
         request(app) 
-        .post('/users/login')
+        .post('/artists/login')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -205,7 +210,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
-            expect(res.body.message).toEqual('Email / Password must be filled')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })

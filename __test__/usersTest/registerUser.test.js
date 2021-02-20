@@ -17,9 +17,9 @@
 
 const request = require('supertest')
 
-const { User } = require('../models')
+const { User } = require('../../models')
 
-const app = require('../app')  
+const app = require ('../../app')  
 
 
 // ===================================================================================
@@ -28,7 +28,7 @@ const app = require('../app')
 
 describe('POST /users/register',function() {
     afterAll(done => {
-        User.delete()
+        User.destroy()
         .then(() => {
             done()
         })
@@ -99,6 +99,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })
@@ -128,6 +129,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })
@@ -157,6 +159,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })
@@ -185,6 +188,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })
@@ -213,6 +217,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })
@@ -241,6 +246,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })

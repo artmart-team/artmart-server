@@ -2,13 +2,15 @@
 // -- it success
 
 
+// 1 success test
+
 const request = require('supertest')
 
-const { Image, Artist, Category } = require('../models')
+const { Picture, Artist, Category, User } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require('../../app')  
 
 // ===================================================================================
 // ==========================    GET /images
@@ -17,6 +19,7 @@ const app = require('../app')
 describe('GET /images',function() {
     let artId 
     let catId
+    let idUser
 
     beforeAll(done => {
         Artist.create({
@@ -25,10 +28,27 @@ describe('GET /images',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
+            profilePicture : 'link.google.com',
+            bankAccount : 23023023,
             completeDuration: 48
         })
         .then(data => {
             artId = data.id
+        })
+        .catch(err => {
+            console.log(err, "<< err create artist image test")
+        })
+
+        User.create({
+            username : 'username',
+            firstName : 'user',
+            lastName : 'name',
+            email : 'user@mail.com',
+            password : '123456',
+            profilePicture : 'link.google.com'
+        })
+        .then(data => {
+            idUser = data.id
         })
         .catch(err => {
             console.log(err, "<< err create artist image test")
@@ -49,9 +69,9 @@ describe('GET /images',function() {
             description : '',
             price : 100000,
             link : 'www.google.com',
-            hidden: false,
-            categoryId : catId,
-            artistId : artId
+            CategoryId : catId,
+            ArtistId : artId,
+            UserId : idUser
         })
         .then(() => {
             done()
@@ -62,21 +82,21 @@ describe('GET /images',function() {
     })
 
     afterAll(done => {
-        Image.delete()
+        Image.destroy()
         .then(() => {
         })
         .catch(err => {
             console.log(err, "<< err delete Image test")
         })
 
-        Category.delete()
+        Category.destroy()
         .then(() => {
         })
         .catch(err => {
             console.log(err, "<< err delete category create image test")
         })
 
-        Artist.delete()
+        Artist.destroy()
         .then(() => {
             done()
         })
@@ -98,21 +118,20 @@ describe('GET /images',function() {
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('name')
-            expect(res.body).toHaveProperty('description')
-            expect(res.body).toHaveProperty('price')
-            expect(res.body).toHaveProperty('link')
-            expect(res.body).toHaveProperty('hidden')
-            expect(res.body).toHaveProperty('CategoryId')
-            expect(res.body).toHaveProperty('ArtistId')
-            expect(res.body).toEqual({
-                name : expect.any(String),
-                description : expect.any(String),
-                price : expect.any(Number),
-                link : expect.any(String),
-                hidden : expect.any(Boolean)
+            res.body(Array.isArray (res.body)).toEqual(true)
+            res.body.forEach(picture => {
+                expect (typeof picture).toEqual('Object')
+                expect (picture).toHaveProperty('name')
+                expect (picture).toHaveProperty('description')
+                expect (picture).toHaveProperty('price')
+                expect (picture).toHaveProperty('link')
+
+                expect (typeof picture.name).toHaveProperty('string')
+                expect (typeof picture.description).toHaveProperty('string')
+                expect (typeof picture.price).toHaveProperty('number')
+                expect (typeof picture.link).toHaveProperty('string')
             })
+
             done()
         })
     })

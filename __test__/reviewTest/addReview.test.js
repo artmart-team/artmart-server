@@ -1,10 +1,9 @@
-// decribe POST /artists/:artistId/comments
+// decribe POST /artists/:artistId/review
 // -- it success
-// -- it error description empty
+// -- it error score empty
 // -- it error user not login
-
-// error masalah routingan
-
+// -- it error artis id not found
+// -- it error artis Id empty
 
 const request = require('supertest')
 
@@ -17,10 +16,10 @@ const { User } = require('../../models')
 const app = require('../../app')  
 
 // ===================================================================================
-// ==========================  POST /users/:userId/comments
+// ==========================  POST /users/:userId/reviews
 // ==================================================================================
 
-describe('POST /users/:userId/comments',function() {
+describe('POST /users/:userId/reviews',function() {
     let userId, access_token
 
     beforeAll(done => {
@@ -42,25 +41,28 @@ describe('POST /users/:userId/comments',function() {
         })
     })
 
-    // ======================== successfull Create Comment ==========================
-    it('should status 201, successfull Create Comment' ,function (done) {
+    // ======================== successfull Create reviews ==========================
+    it('should status 201, successfull Create reviews' ,function (done) {
         //setup
-        const data = {
-            description : "sepertinya keren nih"
+        const body = {
+            title : "create new review",
+            description : "new review"
         }
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/comments`)
+        .post(`/users/${userId}/reviews`)
         .set('access_token', access_token)
-        .send(data)
+        .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(201)
             expect (typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('title')
             expect(res.body).toHaveProperty('description')
+            expect(typeof res.body.title).toEqual('string')
             expect(typeof res.body.description).toEqual('string')
 
             done()
@@ -68,17 +70,18 @@ describe('POST /users/:userId/comments',function() {
     })
 
     // ======================== description empty ==========================
-    it('should status 400, Description empty' ,function (done) {
+    it('should status 400, title dan desc empty' ,function (done) {
         //setup
-        const data = {
+        const body = {
+            title : "",
             description : ""
         }
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/comments`)
+        .post(`/users/${userId}/reviews`)
         .set('access_token', access_token)
-        .send(data)
+        .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -93,15 +96,16 @@ describe('POST /users/:userId/comments',function() {
     })
 
     // ======================== error user not login ==========================
-    it('should status 403, successfull Create Comment' ,function (done) {
+    it('should status 403, error not login' ,function (done) {
         //setup
         const data = {
-            description : "sepertinya keren nih"
+            title : "create new review",
+            description : "new review"
         }
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/comments`)
+        .post(`/users/${userId}/reviews`)
         .send(data)
         .end((err, res) => {
             if(err) done(err)

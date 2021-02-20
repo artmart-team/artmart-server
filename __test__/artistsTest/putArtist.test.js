@@ -15,70 +15,71 @@
 
 const request = require('supertest')
 
-const { User } = require('../models')
+const { Artist } = require('../../models')
 
-const { genToken } = require('../helper/jwt')
+const { generateToken } = require('../../helpers/jwt')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
-
+const app = require ('../../app')
 
 // ==================================================================================
-// PUT /users/:userId
+// PUT /artists/:artistId
 // ==================================================================================
 
-describe('PUT /users/:userId',function() {
-    let userId
+describe('PUT /artists/:artistId',function() {
+    let artistId
     let access_token 
 
     beforeAll(done => {
         // dummy creating user 
-        User.create({
+        Artist.create({
             username : 'username',
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
-            profilePicture  : "link.google.com"
+            profilePicture  : "link.google.com",
+            bankAccount : 230230230,
+            completeDuration : 48
         })
         .then(data => {
             userId = data.id
 
         })
         .catch(err => {
-            console.log(err, '<< err beforeAll register putUser.test.js')
+            console.log(err, '<< err beforeAll register putArtists.test.js')
         })
 
         //dummy user login
-        User.findOne( { where : { email : "user@mail.com"}})
-        .then(user => {
+        Artist.findOne({ where : { email : "user@mail.com"}})
+        .then(artis => {
             const payload = {
-                id : user.id,
-                usernmae : user.username
+                id : artis.id,
+                usernmae : artis.username
             }
 
-            access_token = genToken(payload)
+            access_token = generateToken(payload)
 
             done()
         })
         .catch(err => {
-            console.log(err, "<< err beforeAll get token putUser.test.js")
+            console.log(err, "<< err beforeAll get token putArtists.test.js")
         })
     })
 
     afterAll(done => {
-        User.delete()
+        Artist.destroy()
         .then(() => {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err afterAll putUser.test.js")
+            console.log(err, "<< err afterAll putArtists.test.js")
         })
     })
     
     // ======================== successfull login ==========================
-    it('should status 200, successfull update user' ,function (done) {
+    it('should status 200, successfull update artist' ,function (done) {
         //setup
         const body = {
             username : 'usernamesss',      
@@ -86,7 +87,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .patch(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -120,7 +121,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .patch(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -145,7 +146,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .patch(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -170,7 +171,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .patch(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -194,7 +195,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .patch(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -218,7 +219,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .patch(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -234,7 +235,7 @@ describe('PUT /users/:userId',function() {
     })
 
     // ====================== notLogin users ===========================
-    it('should status 400, error input password empty / null' ,function (done) {
+    it('should status 403, error input password empty / null' ,function (done) {
         //setup
         const body = {
             username : "userrrrs"      
@@ -242,15 +243,16 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .patch(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(401)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })

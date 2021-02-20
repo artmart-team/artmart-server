@@ -1,10 +1,38 @@
 const request = require ('supertest')
-const app = require ('../app')
+const { Category } = require('../../models')
+const app = require ('../../app')
+
+// DONE REVISION AFISTA 19-02-2021
+
+// 1 testing, 1 success testing
 
 // describe GET /categories/
 // -- it success
 
 describe ('GET /categories', function () {
+
+    beforeAll(done => {
+      Category.create({
+        name : "casual"
+      })
+      .then(() => {
+        done()
+      })
+      .catch(err => {
+        console.log(err, "<< error beforeAll getAllCat.test.js")
+      })
+    })
+
+    afterAll(done => {
+      Category.destroy()
+      .then(() => {
+        done()
+      })
+      .catch(err => {
+        console.log(err, "<< error afterAll getAllCat.test.js")
+      })
+    })
+
     it ('should send response with 200 status code', function (done) {
       request (app)
         .get ('/categories')

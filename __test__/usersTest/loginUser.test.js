@@ -11,11 +11,11 @@
 
 const request = require('supertest')
 
-const { User } = require('../models')
+const { User } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require ('../../app')  
 
 // ===================================================================================
 // POST /users/login
@@ -40,7 +40,7 @@ describe('POST /users/login',function() {
     })
 
     afterAll(done => {
-        User.delete()
+        User.destroy()
         .then(() => {
             done()
         })
@@ -130,6 +130,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })
@@ -155,6 +156,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })
@@ -180,6 +182,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+            expect(typeof res.body.errors).toHaveProperty('string')
 
             done()
         })
@@ -205,7 +208,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
-            expect(res.body.message).toEqual('Email / Password must be filled')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })

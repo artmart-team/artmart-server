@@ -1,4 +1,4 @@
-// decribe PATCH /artists/:artistId/ratings/:ratingId   // updating title commnet or desciption
+// decribe PATCH /artists/:artistId/reviews/:reviewId   // updating title commnet or desciption
 // -- it success 
 // -- it error score empty
 // -- it error rating id not found
@@ -6,17 +6,17 @@
 // -- it error not login user
 
 const request = require('supertest')
-const { User, Rating } = require('../../models')
+const { User, Review } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
 // ===================================================================================
-// ==========================  PUT /users/:userId/ratings/:ratingId
+// ==========================  PUT /users/:userId/reviews/:commentId
 // ==================================================================================
 
-describe('PUT /users/:userId/ratings/:ratingId',function() {
+describe('PUT /users/:userId/reviews/:commentId',function() {
     let userId
-    let ratingId
+    let reviewId
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -27,11 +27,11 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             console.log(err)
         })
 
-        Rating.findOne({where : {score : 3}})
+        Review.findOne({where : {title : "buat test edit review"}})
         .then(data => {
-            ratingId = data.id
+            reviewId = data.id
 
-            if(userId && ratingId) {
+            if(userId && commentId) {
                 done()
             }
         })
@@ -40,16 +40,16 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
         })
     })
 
-    // ======================== successfull edit rating ==========================
-    it('should status 200, successfull edit rating' ,function (done) {
+    // ======================== successfull edit reviews ==========================
+    it('should status 200, successfull edit reviews' ,function (done) {
         //setup
         const body = {
-            score : 2.44
+            title : "edit berhasil"
         }
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -58,24 +58,26 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             //assert
             expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('score')
-            expect(typeof res.body.description).toEqual('number')
+            expect(res.body).toHaveProperty('title')
+            expect(res.body).toHaveProperty('description')
+            expect(typeof res.body.title).toEqual('string')
+            expect(typeof res.body.description).toEqual('string')
 
             done()
         })
     })
 
 
-    // ======================== error rating not number ==========================
-    it('should status 400, error rating score not number' ,function (done) {
+    // ======================== error title review empty ==========================
+    it('should status 400, error title review empty' ,function (done) {
         //setup
         const body = {
-            score : "asih deh tapi error ya"
+            title : ""
         }
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -92,20 +94,20 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
     })
 
 
-    // ======================== error rating id not found ==========================
-    it('should status 404, error rating id not found' ,function (done) {
+    // ======================== error reviews id not found ==========================
+    it('should status 404, error reviews id not found' ,function (done) {
         //setup
         const id = 9999999
 
-        const body = {
-            score : 2.44
+        const data = {
+            title : 'tidak berhasil edit'
         }
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${id}`)
+        .put(`/users/${userId}/reviews/${id}`)
         .set('access_token', access_token)
-        .send(body)
+        .send(data)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -124,14 +126,14 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
     // ======================== error user not login ==========================
     it('should status 403, error edit user not login' ,function (done) {
         //setup
-        const body = {
-            score : 2.44
+        const data = {
+            title : "tidak berhasil edit"
         }
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
-        .send(body)
+        .put(`/users/${userId}/reviews/${id}`)
+        .send(data)
         .end((err, res) => {
             if(err) done(err)
                     

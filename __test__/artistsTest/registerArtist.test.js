@@ -4,7 +4,7 @@
 
 // 7 testing -> 1 success test, 6 error test 
 
-// describe POST /users/register
+// describe POST /artists/register
 // -- it success
 // -- it firstname empty
 // -- it lastname empty
@@ -23,12 +23,12 @@ const app = require('../app')
 
 
 // ===================================================================================
-// POST /users/register
+// POST /artists/register
 // ==================================================================================
 
-describe('POST /users/register',function() {
+describe('POST /artists/register',function() {
     afterAll(done => {
-        User.delete()
+        User.destroy()
         .then(() => {
             done()
         })
@@ -46,12 +46,14 @@ describe('POST /users/register',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
-            profilePicture : "link.google.com"         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48         
         }
     
         //excecute
         request(app) 
-        .post('/users/register')
+        .post('/artists/register')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -85,12 +87,14 @@ describe('POST /users/register',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
-            profilePicture : "link.google.com"         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
         request(app) 
-        .post('/users/register')
+        .post('/artists/register')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -114,12 +118,14 @@ describe('POST /users/register',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
-            profilePicture : "link.google.com"         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
         request(app) 
-        .post('/users/register')
+        .post('/artists/register')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -143,12 +149,14 @@ describe('POST /users/register',function() {
             lastName : '',
             email : 'user@mail.com',
             password : '123456',
-            profilePicture : "link.google.com"         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
         request(app) 
-        .post('/users/register')
+        .post('/artists/register')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -171,12 +179,14 @@ describe('POST /users/register',function() {
             lastName : 'name',
             email : 'user',
             password : '123456',
-            profilePicture : "link.google.com"         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
         request(app) 
-        .post('/users/register')
+        .post('/artists/register')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -199,12 +209,14 @@ describe('POST /users/register',function() {
             lastName : 'name',
             email : '',
             password : '123456',
-            profilePicture : "link.google.com"         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
         request(app) 
-        .post('/users/register')
+        .post('/artists/register')
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -227,12 +239,14 @@ describe('POST /users/register',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '',
-            profilePicture : "link.google.com"         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
         request(app) 
-        .post('/users/register')
+        .post('/artists/register')
         .send(body)
         .end((err, res) => {
             if(err) done(err)

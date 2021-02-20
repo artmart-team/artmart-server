@@ -11,11 +11,11 @@
 
 const request = require('supertest')
 
-const { User } = require('../models')
+const { User } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require ('../../app') 
 
 // ===================================================================================
 // ==========================    GET /users/:userId
@@ -43,7 +43,7 @@ describe('GET /users/:userId',function() {
     })
 
     afterAll(done => {
-        User.delete()
+        User.destroy()
         .then(() => {
             done()
         })
@@ -95,7 +95,8 @@ describe('GET /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })

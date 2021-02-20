@@ -15,13 +15,13 @@
 
 const request = require('supertest')
 
-const { User } = require('../models')
+const { User } = require('../../models')
 
-const { genToken } = require('../helper/jwt')
+const { generateToken } = require('../../helpers/jwt')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require ('../../app')
 
 
 // ==================================================================================
@@ -55,10 +55,10 @@ describe('PUT /users/:userId',function() {
         .then(user => {
             const payload = {
                 id : user.id,
-                usernmae : user.username
+                username : user.username
             }
 
-            access_token = genToken(payload)
+            access_token = generateToken(payload)
 
             done()
         })
@@ -68,7 +68,7 @@ describe('PUT /users/:userId',function() {
     })
 
     afterAll(done => {
-        User.delete()
+        User.destroy()
         .then(() => {
             done()
         })
@@ -130,6 +130,7 @@ describe('PUT /users/:userId',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })
@@ -155,6 +156,7 @@ describe('PUT /users/:userId',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })
@@ -180,6 +182,7 @@ describe('PUT /users/:userId',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })
@@ -204,6 +207,7 @@ describe('PUT /users/:userId',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })
@@ -228,13 +232,14 @@ describe('PUT /users/:userId',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })
     })
 
     // ====================== notLogin users ===========================
-    it('should status 400, error input password empty / null' ,function (done) {
+    it('should status 403, not login user' ,function (done) {
         //setup
         const body = {
             username : "userrrrs"      
@@ -248,9 +253,10 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(401)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })

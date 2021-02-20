@@ -11,11 +11,11 @@
 
 const request = require('supertest')
 
-const { Artist } = require('../models')
+const { Artist } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require ('../../app')  
 
 // ===================================================================================
 // ==========================    GET /artists/:artistId
@@ -25,14 +25,15 @@ describe('GET /artists/:artistId',function() {
     let artistId 
 
     beforeAll(done => {
-        User.create({
+        Artist.create({
             username : 'username',
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
             profilePicture : "link.google.com",
-            bankAccount : "230230230"
+            bankAccount : 230230230,
+            completeDuration : 48
         })
         .then(data => {
             artistId = data.id
@@ -44,7 +45,7 @@ describe('GET /artists/:artistId',function() {
     })
 
     afterAll(done => {
-        User.delete()
+        Artist.destroy()
         .then(() => {
             done()
         })
@@ -73,6 +74,7 @@ describe('GET /artists/:artistId',function() {
             expect(res.body).toHaveProperty('email')
             expect(res.body).toHaveProperty('profilePicture')
             expect(res.body).toHaveProperty('bankAccount')
+            expect(res.body).toHaveProperty('completeDuration')
             expect(typeof res.body.username).toBe('string')
             expect(typeof res.body.lastName).toBe('string')
             expect(typeof res.body.firstName).toBe('string')
@@ -98,6 +100,7 @@ describe('GET /artists/:artistId',function() {
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toHaveProperty('string')
 
             done()
         })
