@@ -1,22 +1,24 @@
-// describe GET /users/:userId
+// describe DELETE /artists/:artistId/pictures/:pictureId
 // -- it success
-// -- it error id not found 
+// -- it error pictures id not found
 
 const request = require('supertest')
 
-const { Image, Artist, Category } = require('../models')
+const { Picture, Artist, User, Category } = require('../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
 const app = require('../app')  
 
 // ===================================================================================
-// ==========================    GET /artists/:artistId/images
+// ==========================    DELETE /artists/:artistId/pictures/:pictureId
 // ==================================================================================
 
-describe('GET /artists/:artistId/images',function() {
+describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
     let artId 
     let catId
+    let pictId
+    let idUser
 
     beforeAll(done => {
         Artist.create({
@@ -25,6 +27,9 @@ describe('GET /artists/:artistId/images',function() {
             lastName : 'name',
             email : 'user@mail.com',
             password : '123456',
+            bankAccount : 230230230,
+            completeDuration: 48,
+            profilePicture : 'link.google.com'
         })
         .then(data => {
             artId = data.id
@@ -32,6 +37,25 @@ describe('GET /artists/:artistId/images',function() {
         .catch(err => {
             console.log(err, "<< err create artist image test")
         })
+
+
+        
+        User.create({
+            username : 'username',
+            firstName : 'user',
+            lastName : 'name',
+            email : 'user@mail.com',
+            password : '123456',
+            profilePicture : "link.google.com",
+
+        })
+        .then(data => {
+            idUser = data.id
+        })
+        .catch(err => {
+            console.log(err, "<< err create user getPict.test.js")
+        })
+
 
         Category.create({
             name : 'image'
@@ -43,16 +67,18 @@ describe('GET /artists/:artistId/images',function() {
             console.log(err, "<< err create image category test")
         })
 
-        Image.create({
+
+        Picture.create({
             name : 'asik nih',
             description : '',
             price : 100000,
             link : 'www.google.com',
-            hidden: false,
-            categoryId : catId,
-            artistId : artId
+            CategoryId : catId,
+            ArtistId : artId,
+            UserId : idUser 
         })
-        .then(() => {
+        .then(data => {
+            pictId = data.id
             done()
         })
         .catch(err => {
@@ -61,21 +87,21 @@ describe('GET /artists/:artistId/images',function() {
     })
 
     afterAll(done => {
-        Image.delete()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete Image test")
-        })
-
-        Category.delete()
+        Category.destory()
         .then(() => {
         })
         .catch(err => {
             console.log(err, "<< err delete category create image test")
         })
 
-        Artist.delete()
+        User.destroy()
+        .then(() => {            
+        })
+        .catch(err => {
+            console.log(err, "<< err delete User  getPict.test.js")
+        })
+
+        Artist.destory()
         .then(() => {
             done()
         })
@@ -85,34 +111,22 @@ describe('GET /artists/:artistId/images',function() {
         
     })
     
-    // ======================== successfull get image ==========================
-    it('should status 200, successfull get all Image' ,function (done) {
+    // ======================== successfull delete picture ==========================
+    it('should status 200, successfull delete' ,function (done) {
         //setup
         const id = artId
 
         //excecute
         request(app) 
-        .get(`/artists/${id}/images`)
+        .delete(`/artists/${id}/pictures/${pictId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('name')
-            expect(res.body).toHaveProperty('description')
-            expect(res.body).toHaveProperty('price')
-            expect(res.body).toHaveProperty('link')
-            expect(res.body).toHaveProperty('hidden')
-            expect(res.body).toHaveProperty('CategoryId')
-            expect(res.body).toHaveProperty('ArtistId')
-            expect(res.body).toEqual({
-                name : expect.any(String),
-                description : expect.any(String),
-                price : expect.any(Number),
-                link : expect.any(String),
-                hidden : expect.any(Boolean)
-            })
+            expect(res.body).toHaveProperty('message')
+
             done()
         })
     })

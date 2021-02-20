@@ -1,4 +1,10 @@
-// describe POST /users/register
+
+
+// DONE REVISION AFISTA 19-02-2021 18.00
+
+// 7 testing -> 1 success test, 6 error test 
+
+// describe POST /artists/register
 // -- it success
 // -- it firstname empty
 // -- it lastname empty
@@ -11,36 +17,38 @@
 
 const request = require('supertest')
 
-const { Artist } = require('../models')
+const { User } = require('../models')
 
 const app = require('../app')  
 
 
 // ===================================================================================
-// POST /users/register
+// POST /artists/register
 // ==================================================================================
 
-describe('POST /users/register',function() {
+describe('POST /artists/register',function() {
     afterAll(done => {
-        Artist.delete()
+        User.destroy()
         .then(() => {
             done()
         })
         .catch(err => {
-            console.log(err, "<< err delete user test")
+            console.log(err, "<< err delete afterAll registerUser.test.js ")
         })
     })
     
-    // ======================== successfull login ==========================
-    it('should status 201, successfull created artist' ,function (done) {
+    // ======================== successfull register ==========================
+    it('should status 201, successfull created user' ,function (done) {
         //setup
         const body = {
             username : 'username',
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
-            completeDuration: 48,
-            password : '123456',         
+            password : '123456',
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48         
         }
     
         //excecute
@@ -57,11 +65,13 @@ describe('POST /users/register',function() {
             expect(res.body).toHaveProperty('firstName')
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
+            expect(res.body).toHaveProperty('profilePicture')
             expect(res.body).toEqual({
                 username : expect.any(String),
                 firstName : expect.any(String),
                 lastName : expect.any(String),
-                email : expect.any(String)
+                email : expect.any(String),
+                profilePicture : expect.any(String)
             })
 
             done()
@@ -76,8 +86,10 @@ describe('POST /users/register',function() {
             firstName : 'user',
             lastName : 'name',
             email : 'user@mail.com',
-            password : '123456', 
-            completeDuration: 48        
+            password : '123456',
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
@@ -90,7 +102,7 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty('errors')
 
             done()
         })
@@ -105,8 +117,10 @@ describe('POST /users/register',function() {
             firstName : '',
             lastName : 'name',
             email : 'user@mail.com',
-            password : '123456',  
-            completeDuration: 48       
+            password : '123456',
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
@@ -119,7 +133,7 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty('errors')
 
             done()
         })
@@ -134,7 +148,10 @@ describe('POST /users/register',function() {
             firstName : 'user',
             lastName : '',
             email : 'user@mail.com',
-            password : '123456',         
+            password : '123456',
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
@@ -147,7 +164,7 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty('errors')
 
             done()
         })
@@ -161,8 +178,10 @@ describe('POST /users/register',function() {
             firstName : 'user',
             lastName : 'name',
             email : 'user',
-            password : '123456',   
-            completeDuration: 48      
+            password : '123456',
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
@@ -175,7 +194,7 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty('errors')
 
             done()
         })
@@ -190,7 +209,9 @@ describe('POST /users/register',function() {
             lastName : 'name',
             email : '',
             password : '123456',
-            completeDuration: 48         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
@@ -203,7 +224,7 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty('errors')
 
             done()
         })
@@ -215,10 +236,12 @@ describe('POST /users/register',function() {
         const body = {
             username : 'username',
             firstName : 'user',
-            lastName : '',
+            lastName : 'name',
             email : 'user@mail.com',
             password : '',
-            completeDuration: 48         
+            profilePicture : "link.google.com",
+            bankAccount : 23023023,
+            completeDuration : 48           
         }
     
         //excecute
@@ -231,7 +254,7 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty('errors')
 
             done()
         })

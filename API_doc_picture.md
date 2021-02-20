@@ -1,5 +1,5 @@
 --------------------------------------------------------
-GET /images
+GET /pictures
 
 //if artist id = 1
 // if category Id = 1
@@ -12,6 +12,7 @@ GET /images
         "name" : "ART 1",
         "description" : "", //description boleh kosong
         "price" : 100000,
+        "link" : "https://google.com",
         "hidden" : false,
         "Category" : {
             "name" : "casual"
@@ -28,6 +29,7 @@ GET /images
         "name" : "ART 2",
         "description" : "this is art 2",
         "price" : 100000,
+        "link" : "https://google.com",
         "hidden" : false,
         "Category" : {
             "id" : 1,
@@ -48,7 +50,7 @@ GET /images
 
 
 --------------------------------------------------------
-GET /artists/:artistId/images
+GET /artists/:artistId/pictures
 
 // if artist id = 1
 
@@ -61,6 +63,7 @@ GET /artists/:artistId/images
         "description" : "", //description boleh kosong
         "price" : 100000,
         "hidden" : false,
+        "link" : "https://google.com",
         "CategoryId" : 1,
         "ArtistId" : 1
     },
@@ -70,6 +73,7 @@ GET /artists/:artistId/images
         "description" : "this is art 2",
         "price" : 100000,
         "hidden" : false,
+        "link" : "https://google.com",
         "CategoryId" : 1,
         "ArtistId" : 1
     }
@@ -93,7 +97,7 @@ GET /artists/:artistId/images
 
 
 --------------------------------------------------------
-GET /artists/:artistId/images/:imageId
+GET /artists/:artistId/pictures/:pictureId
 
 // if artist id = 1
 // if image id = 1
@@ -107,6 +111,7 @@ GET /artists/:artistId/images/:imageId
     "description" : "", //description boleh kosong
     "price" : 100000,
     "hidden" : false,
+    "link" : "https://google.com",
     "CategoryId" : 1,
     "ArtistId" : 1
 }
@@ -132,10 +137,10 @@ GET /artists/:artistId/images/:imageId
 
 
 --------------------------------------------------------
-GET /artists/:artistId/images/:imageId
+GET /artists/:artistId/pictures/:pictureId
 
 // if artist id = 1
-// if image id = 1
+// if picture id = 1
 
 // success
 
@@ -146,6 +151,7 @@ GET /artists/:artistId/images/:imageId
     "description" : "", //description boleh kosong
     "price" : 100000,
     "hidden" : false,
+    "link" : "https://google.com",
     "CategoryId" : 1,
     "ArtistId" : 1
 }
@@ -171,7 +177,7 @@ GET /artists/:artistId/images/:imageId
 
 
 --------------------------------------------------------
-POST /artists/:artistId/images ( create new image )
+POST /artists/:artistId/images ( create new picture )
 
 SEND BODY
 
@@ -180,7 +186,7 @@ SEND BODY
     "name" : "ART 1",
     "description" : "", //description boleh kosong
     "price" : 100000, // number
-    "hidden" : false,
+    "link" : "https://google.com",
     "CategoryId" : 1,
     "ArtistId" : 1
 }
@@ -195,7 +201,8 @@ RESPONSE
     "name" : "ART 1",
     "description" : "", //description boleh kosong
     "price" : 100000,
-    "hidden" : false, 
+    "hidden" : false,
+    "link" : "https://google.com", 
     "CategoryId" : 1,
     "ArtistId" : 1
 }
@@ -203,7 +210,7 @@ RESPONSE
 
 
 --------------------------------------------------------
-PATCH /artists/:artistId/images/:imageId
+PATCH /artists/:artistId/picture/:pictureId
 
 if artistId = 1
 if categoryI = 1
@@ -237,7 +244,8 @@ RESPONSE
     "name" : "arts 1",
     "description" : "", //description boleh kosong
     "price" : 150000,
-    "hidden" : true, 
+    "hidden" : true,
+    "link" : "https://google.com", 
     "CategoryId" : 1,
     "ArtistId" : 1
 }
@@ -245,7 +253,7 @@ RESPONSE
 
 
 --------------------------------------------------------
-DELETE /artists/:artistId/images/:imageId
+DELETE /artists/:artistId/picture/:pictureId
 
 
 if imageId = 1
