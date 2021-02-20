@@ -106,6 +106,10 @@ class UserController {
       if (!obj.lastName) delete obj.lastName
       if (!obj.profilePicture) delete obj.profilePicture
 
+      if (JSON.stringify(obj) === '{}') {
+        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
+      }
+
       let data = await User.update (obj, {
         where: {
           id: +req.params.userId

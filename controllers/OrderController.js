@@ -31,28 +31,35 @@ class OrderController {
 
   static async post (req, res, next) {
     try {
-      const { title, description, refImageId, duration, price, totalPrice, accepted, done, paid, imageURL, ArtistId } = req.body
+      const { title, description, refImageId, price, totalPrice, accepted, done, paid, imageURL, ArtistId } = req.body
+      let duration = null
 
+      const checkArtist = await Artist.findOne({
+        where: {
+          id: +ArtistId
+        }
+      })
+      duration = checkArtist.completeDuration
+      
       const checkDuplicate = await Order.findAll({
         where: {
           ArtistId: +ArtistId
         }
       })
       
-      if (checkDuplicate) {
+      if (checkDuplicate.length) {
         checkDuplicate.forEach(e => {
           if (!e.paid) {
-            console.log(e)
             return next({ name: "Existing order still active" })
           }
         })
       } 
-
+    
       const obj = {
         title,
         description,
-        // refImageId,
-        // duration,
+        refImageId,
+        duration: duration,
         // price,
         // totalPrice,
         accepted: false,
@@ -122,20 +129,24 @@ class OrderController {
 
   static async doneOrder (req, res, next) {
     try {
-      const obj = { done: true }
-      const data = await Order.update (obj, {
-        where: {
-          id: +req.params.orderId
-        },
-        returning: true
-      })
-      let isSuccess = data[0]
-      
-      if (isSuccess === 1) {
-        let dataObj = data[1][0]
-        res.status(200).json (dataObj)
+      const obj = { done: true, imageURL: req.body.imageURL }
+      if (!obj.imageURL) {
+        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Image URL required' }] })
       } else {
-        next ({name: 'Error not found'})
+        const data = await Order.update (obj, {
+          where: {
+            id: +req.params.orderId
+          },
+          returning: true
+        })
+        let isSuccess = data[0]
+        
+        if (isSuccess === 1) {
+          let dataObj = data[1][0]
+          res.status(200).json (dataObj)
+        } else {
+          next ({name: 'Error not found'})
+        }    
       }
     } catch (err) {
       next (err)
