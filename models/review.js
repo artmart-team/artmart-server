@@ -11,15 +11,45 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Review.belongsTo(models.User)
+      Review.belongsToMany(models.User, {
+        through: models.Order
+      })
       Review.belongsTo(models.Artist)
     }
   };
   Review.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    UserId: DataTypes.INTEGER,
-    ArtistId: DataTypes.INTEGER
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Title required'
+        }
+      },
+    },
+    description: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Description required'
+        }
+      },
+    },
+    UserId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: 'UserId required'
+        }
+      },
+    },
+    ArtistId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: 'ArtistId required'
+        }
+      },
+    }
   }, {
     sequelize,
     modelName: 'Review',

@@ -50,6 +50,24 @@ module.exports = {
         onUpdate: 'cascade',
         onDelete: 'cascade'
       },
+      ReviewId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {tableName: 'Reviews'},
+          key: "id"
+        },
+        onUpdate: 'cascade',
+        onDelete: 'SET NULL'
+      },
+      RatingId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {tableName: 'Ratings'},
+          key: "id"
+        },
+        onUpdate: 'cascade',
+        onDelete: 'SET NULL'
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

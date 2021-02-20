@@ -1,0 +1,106 @@
+const { Review, Order } = require ('../models/index')
+
+class ReviewController {
+  static async getAllByArtist (req, res, next) {
+    try {
+      const data = await Review.findAll({
+        where: {
+          ArtistId: +req.params.artistId
+        }
+      })
+      res.status(200).json(data)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async getAllByUser (req, res, next) {
+    try {
+      const data = await Review.findAll({
+        where: {
+          UserId: +req.params.userId
+        }
+      })
+      res.status(200).json(data)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async post (req, res, next) {
+    try {
+      const { title, description } = req.body
+      const obj = {
+        title,
+        description,
+        UserId: +req.params.userId,
+        ArtistId: +req.params.artistId
+      }
+
+      const data = await Review.create(obj)
+
+      const updateObj = {
+        ReviewId: data.id
+      }
+
+      const updatedOrderData = await Order.update(updateObj, {
+        where: {
+          id: +req.params.orderId
+        }
+      })
+      res.status(200).json(data)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async put (req, res, next) {
+    try {
+      const { title, description } = req.body
+      const obj = {
+        title,
+        description
+      }
+      if (!obj.title) delete obj.title
+      if (!obj.description) delete obj.description
+
+      if (JSON.stringify(obj) === '{}') {
+        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
+      }
+
+
+      let data = await Review.update (obj, {
+        where: {
+          id: +req.params.reviewId
+        },
+        returning: true
+      })
+      let isSuccess = data[0]
+      
+      if (isSuccess === 1) {
+        let dataObj = data[1][0]
+
+        res.status(200).json (dataObj)
+      } else {
+        next ({name: 'Error not found'})
+      }
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async delete (req, res, next) {
+    try {
+      const data = await Review.destroy({
+        where: {
+          id: +req.params.reviewId
+        }
+      })
+      res.status(200).json({ messages: 'Review deleted' })
+    } catch (err) {
+      next(err)
+    }
+  }
+}
+
+module.exports = ReviewController

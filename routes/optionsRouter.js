@@ -1,6 +1,5 @@
 const router = require ('express').Router()
 const OptionController  = require ('../controllers/OptionController')
-const { authenticate } = require ('../middlewares/auth')
 
 router.get ('/artists/:artistId/options', OptionController.getAll)
 

@@ -1,13 +1,12 @@
 const router = require ('express').Router()
 const CommentController = require ('../controllers/CommentController')
-const { authenticate } = require ('../middlewares/auth')
 
-router.get ('/users/:userId', CommentController.getById)
+router.get ('/artists/:artistId/comments', CommentController.getAll)
 
-router.post ('/users/register', CommentController.register)
+router.post ('/users/:userId/artists/:artistId/comments', CommentController.post)
 
-router.post ('/users/login', CommentController.login)
+router.patch ('/users/:userId/artists/:artistId/comments/:commentId', CommentController.patch)
 
-router.put ('/users/:userId', CommentController.put)
+router.delete ('/users/:userId/artists/:artistId/comments/:commentId', CommentController.delete)
 
 module.exports = router

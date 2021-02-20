@@ -31,7 +31,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
     },
-    ArtistId: DataTypes.INTEGER
+    ArtistId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: 'ArtistId required'
+        }
+      },
+    }
   }, {
     sequelize,
     modelName: 'Option',
