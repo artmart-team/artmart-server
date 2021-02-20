@@ -23,7 +23,7 @@ class ArtistController {
 
   static async register (req, res, next) {
     try {
-      const { username, firstName, lastName, email, password, completeDuration, profilePicture, bankAccount } = req.body
+      const { username, firstName, lastName, email, password, completeDuration, profilePicture, bankAccount, defaultPrice } = req.body
       let data = await Artist.create ({
         username,
         firstName,
@@ -32,8 +32,11 @@ class ArtistController {
         password,
         completeDuration,
         profilePicture,
-        bankAccount
+        bankAccount,
+        defaultPrice: +defaultPrice
       })
+
+      delete data.dataValues.password
       res.status (201).json (data)
     } catch (err) {
       next (err)
@@ -60,9 +63,10 @@ class ArtistController {
             const payload = {
               id: data.id,
               username: data.username,
+              profilePicture: data.profilePicture
             }
             const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, username:data.username})
+            res.status (200).json ({access_token, id: data.id, username:data.username, profilePicture: data.profilePicture})
           }
         }
       } else {
@@ -81,9 +85,10 @@ class ArtistController {
             const payload = {
               id: data.id,
               username: data.username,
+              profilePicture: data.profilePicture
             }
             const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, username:data.username})
+            res.status (200).json ({access_token, id: data.id, username:data.username, profilePicture: data.profilePicture})
           }
         }
       }

@@ -20,6 +20,12 @@ module.exports = {
       duration: {
         type: Sequelize.INTEGER
       },
+      price: {
+        type: Sequelize.DOUBLE
+      },
+      totalPrice: {
+        type: Sequelize.DOUBLE
+      },
       accepted: {
         type: Sequelize.BOOLEAN
       },

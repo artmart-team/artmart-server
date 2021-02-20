@@ -31,19 +31,31 @@ class OrderController {
 
   static async post (req, res, next) {
     try {
-      const { title, description, refImageId, price, totalPrice, accepted, done, paid, imageURL, ArtistId } = req.body
+      let { title, description, refImageId, totalPrice, totalOptions } = req.body
+      let price = null
       let duration = null
 
       const checkArtist = await Artist.findOne({
         where: {
-          id: +ArtistId
+          id: +req.params.artistId
         }
       })
+
       duration = checkArtist.completeDuration
+      if (!req.body.price){
+        price = checkArtist.defaultPrice
+      } else {
+        price = +req.body.price
+      }
+      if (!req.body.totalOptions) {
+        totalPrice = price
+      } else {
+        totalPrice = price + Number(totalOptions)
+      }
       
       const checkDuplicate = await Order.findAll({
         where: {
-          ArtistId: +ArtistId
+          ArtistId: +req.params.artistId
         }
       })
       
@@ -58,16 +70,16 @@ class OrderController {
       const obj = {
         title,
         description,
-        refImageId,
+        refImageId: +req.params.refImageId,
         duration: duration,
-        // price,
-        // totalPrice,
+        price,
+        totalPrice,
         accepted: false,
         done: false,
         paid: false,
         imageURL: '',
         UserId: +req.params.userId,
-        ArtistId: +ArtistId
+        ArtistId: +req.params.artistId
       }
       const data = await Order.create(obj)
       res.status(201).json(data)

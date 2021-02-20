@@ -29,6 +29,22 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     refImageId: DataTypes.INTEGER,
     duration: DataTypes.INTEGER,
+    price: {
+      type: DataTypes.DOUBLE,
+      validate: {
+        notEmpty: {
+          msg: 'Price required'
+        }
+      },
+    },
+    totalPrice: {
+      type: DataTypes.DOUBLE,
+      validate: {
+        notEmpty: {
+          msg: 'Total Price required'
+        }
+      },
+    },
     accepted: DataTypes.BOOLEAN,
     done: DataTypes.BOOLEAN,
     paid: DataTypes.BOOLEAN,
