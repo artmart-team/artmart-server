@@ -32,6 +32,8 @@ class UserController {
         password,
         profilePicture
       })
+      console.log(data)
+      delete data.dataValues.password
       res.status (201).json (data)
     } catch (err) {
       next (err)
@@ -58,9 +60,10 @@ class UserController {
             const payload = {
               id: data.id,
               username: data.username,
+              profilePicture: data.profilePicture
             }
             const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, role: data.role, username:data.username})
+            res.status (200).json ({access_token, id: data.id, role: data.role, username:data.username, profilePicture: data.profilePicture})
           }
         }
       } else {
@@ -79,9 +82,10 @@ class UserController {
             const payload = {
               id: data.id,
               username: data.username,
+              profilePicture: data.profilePicture
             }
             const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, role: data.role, username:data.username})
+            res.status (200).json ({access_token, id: data.id, role: data.role, username:data.username, profilePicture: data.profilePicture})
           }
         }
       }

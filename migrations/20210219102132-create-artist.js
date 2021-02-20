@@ -34,6 +34,9 @@ module.exports = {
       bankAccount: {
         type: Sequelize.INTEGER
       },
+      defaultPrice: {
+        type: Sequelize.DOUBLE
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

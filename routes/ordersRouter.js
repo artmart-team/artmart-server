@@ -1,19 +1,21 @@
 const router = require ('express').Router()
 const OrderController = require ('../controllers/OrderController')
-const { authenticate } = require ('../middlewares/auth')
+const { authenticate, authorizeUserOrder, authorizeArtistOrder } = require ('../middlewares/auth')
 
 router.get ('/users/:userId/orders', OrderController.getAllByUser)
 
 router.get ('/artists/:artistId/orders', OrderController.getAllByArtist)
 
-router.post ('/users/:userId/orders/', OrderController.post)
+router.use(authenticate)
 
-router.put ('/users/:userId/orders/:orderId', OrderController.editOrder)
+router.post ('/users/:userId/artists/:artistId/orders/', OrderController.post)
 
-router.patch ('/artists/:artistId/orders/:orderId/accepted', OrderController.acceptOrder)
+router.put ('/users/:userId/orders/:orderId', authorizeUserOrder, OrderController.editOrder)
 
-router.patch ('/artists/:artistId/orders/:orderId/done', OrderController.doneOrder)
+router.patch ('/artists/:artistId/orders/:orderId/accepted', authorizeArtistOrder, OrderController.acceptOrder)
 
-router.patch ('/users/:userId/orders/:orderId/paid', OrderController.paidOrder)
+router.patch ('/artists/:artistId/orders/:orderId/done', authorizeArtistOrder, OrderController.doneOrder)
+
+router.patch ('/users/:userId/orders/:orderId/paid', authorizeArtistOrder, OrderController.paidOrder)
 
 module.exports = router

@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
   Artist.init({
     username: {
       type: DataTypes.STRING,
+      unique: true,
       validate: {
         notEmpty: {
           msg: 'Username required'
@@ -83,6 +84,14 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         notEmpty: {
           msg: 'Bank Account Number required'
+        }
+      }
+    },
+    defaultPrice: {
+      type: DataTypes.DOUBLE,
+      validate: {
+        notEmpty: {
+          msg: 'Default Price required'
         }
       }
     },

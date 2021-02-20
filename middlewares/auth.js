@@ -1,5 +1,5 @@
 const { checkToken } = require ('../helpers/jwt')
-const { User, Artist } = require ('../models/index')
+const { User, Artist, Order } = require ('../models/index')
 
 async function authenticate (req, res, next) {
   try {
@@ -34,26 +34,46 @@ async function authenticate (req, res, next) {
   }
 }
 
-async function authorize (req, res, next) {
+async function authorizeUserOrder (req, res, next) {
   try {
-    const targetId = +req.params.cartId
-    var data = await Cart.findOne({
+    const targetId = +req.params.orderId
+    var data = await Order.findOne({
       where: {
         id: targetId
       }
     })
-    if (data.userId !== req.user) {
+
+    if (data.UserId !== req.userId) {
       res.status (401).json ({message: 'Unauthorized'})
-    } else if (data.userId === req.user) {
+    } else if (data.UserId === req.userId) {
       next()
     }
   } catch (err) {
-    console.log(data, 'masuk')
+    next (err)
+  }
+}
+
+async function authorizeArtistOrder (req, res, next) {
+  try {
+    const targetId = +req.params.orderId
+    var data = await Order.findOne({
+      where: {
+        id: targetId
+      }
+    })
+
+    if (data.ArtistId !== req.artistId) {
+      res.status (401).json ({message: 'Unauthorized'})
+    } else if (data.ArtistId === req.artistId) {
+      next()
+    }
+  } catch (err) {
     next (err)
   }
 }
 
 module.exports = {
   authenticate,
-  authorize
+  authorizeUserOrder,
+  authorizeArtistOrder
 }
