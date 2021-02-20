@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Order.belongsTo(models.User)
       Order.belongsTo(models.Artist)
+      Order.belongsTo(models.Review)
+      Order.belongsTo(models.Rating)
     }
   };
   Order.init({
@@ -31,8 +33,22 @@ module.exports = (sequelize, DataTypes) => {
     done: DataTypes.BOOLEAN,
     paid: DataTypes.BOOLEAN,
     imageURL: DataTypes.STRING,
-    UserId: DataTypes.INTEGER,
-    ArtistId: DataTypes.INTEGER
+    UserId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: 'UserId required'
+        }
+      },
+    },
+    ArtistId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: 'ArtistId required'
+        }
+      },
+    }
   }, {
     sequelize,
     modelName: 'Order',

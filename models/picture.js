@@ -17,13 +17,41 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Picture.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Picture Name required'
+        }
+      },
+    },
     description: DataTypes.STRING,
-    price: DataTypes.DOUBLE,
-    link: DataTypes.STRING,
+    price: {
+      type: DataTypes.DOUBLE,
+      validate: {
+        notEmpty: {
+          msg: 'Price required'
+        }
+      },
+    },
+    link: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'URL required'
+        }
+      },
+    },
     hidden: DataTypes.BOOLEAN,
     CategoryId: DataTypes.INTEGER,
-    ArtistId: DataTypes.INTEGER,
+    ArtistId: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          msg: 'ArtistId required'
+        }
+      },
+    },
     UserId: DataTypes.INTEGER
   }, {
     sequelize,

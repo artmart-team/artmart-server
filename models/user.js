@@ -16,10 +16,15 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Artist, {
         through: models.Order
       })
+      User.belongsToMany(models.Review, {
+        through: models.Order
+      })
+      User.belongsToMany(models.Rating, {
+        through: models.Order
+      })
+      User.hasMany(models.Order)
       User.hasMany(models.Picture)
-      User.hasMany(models.Rating)
       User.hasMany(models.Comment)
-      User.hasMany(models.Review)
     }
   };
   User.init({
