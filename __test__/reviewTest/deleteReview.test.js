@@ -5,38 +5,52 @@
 
 
 const request = require('supertest')
-const { User, Review } = require('../../models')
+const { User, Review, Order, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  DELETE /users/:userId/reviews/:reviewId
 // ==================================================================================
 
 describe('DELETE /users/:userId/reviews/:reviewId',function() {
-    let userId
-    let reviewId
+    let userId, access_token, reviewId, artistId, orderId
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Review.findOne({where : {title : "buat test delete review"}})
-        .then(data => {
-            reviewId = data.id
-
-            if(userId && reviewId) {
-                done()
+            const payload = {
+                id : data.id,
+                username : data.username
             }
+
+            access_token = generateToken(payload)
+
+
+            return Artist.findOne({ where : { email : "user@mail.com"}})
+        })
+        .then(res => {
+            artistId = res.id
+
+            return Order.findOne({ where : { title : "testingforOrder"}})
+        })
+        then(response => {
+            orderId = response.id
+
+            return Review.findOne({ where : { title : "deleteReviewTesting"}})
+        })
+        then(rev => {
+            reviewId = rev.id
+
+            done()
         })
         .catch(err => {
             console.log(err)
         })
+
     })
 
 
@@ -47,7 +61,7 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/reviews/${id}`)
+        .delete(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -70,7 +84,7 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/reviews/${reviewId}`)
+        .delete(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -90,7 +104,7 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/reviews/${reviewId}`)
+        .delete(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)

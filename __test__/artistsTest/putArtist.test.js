@@ -29,34 +29,16 @@ const app = require ('../../app')
 
 describe('PUT /artists/:artistId',function() {
     let artistId
-    let access_token 
 
     beforeAll(done => {
-        // dummy creating user 
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture  : "link.google.com",
-            bankAccount : 230230230,
-            completeDuration : 48
-        })
-        .then(data => {
-            userId = data.id
-
-        })
-        .catch(err => {
-            console.log(err, '<< err beforeAll register putArtists.test.js')
-        })
-
         //dummy user login
-        Artist.findOne({ where : { email : "user@mail.com"}})
-        .then(artis => {
+        Artist.findOne({ where : { email : "testingedit@mail.com"}})
+        .then(artist => {
+            artistId = artist.id
+
             const payload = {
-                id : artis.id,
-                usernmae : artis.username
+                id : artist.id,
+                usernmae : artist.username
             }
 
             access_token = generateToken(payload)
@@ -65,16 +47,6 @@ describe('PUT /artists/:artistId',function() {
         })
         .catch(err => {
             console.log(err, "<< err beforeAll get token putArtists.test.js")
-        })
-    })
-
-    afterAll(done => {
-        Artist.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err afterAll putArtists.test.js")
         })
     })
     

@@ -11,9 +11,7 @@
 
 const request = require('supertest')
 
-const { Artist } = require('../../models')
-
-const { beforeAll, afterAll } = require("@jest/globals")
+// const { Artist } = require('../../models')
 
 const app = require ('../../app') 
 
@@ -22,40 +20,12 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /artists/login',function() {
-    beforeAll(done => {
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com',
-            bankAccount : 230230230,
-            completeDuration: 48
-        })
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err beforeAll loginArtist.test.js ")
-        })
-    })
-
-    afterAll(done => {
-        Artist.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err afterAll loginArtist.test.js ")
-        })
-    })
     
     // ======================== successfull login with usernmae ==========================
     it('should status 200, successfull login with username' ,function (done) {
         //setup
         const body = {
-            username : 'username',
+            username : 'testing',
             password : '123456',         
         }
     
@@ -86,7 +56,7 @@ describe('POST /artists/login',function() {
     it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
-            email : 'user@mail.com',
+            email : 'testing@mail.com',
             password : '123456',         
         }
     
@@ -117,7 +87,7 @@ describe('POST /artists/login',function() {
     it('should status 400, invalid for password / not found in database' ,function (done) {
         //setup
         const body = {
-            username : 'userrrrrrrrrrrr@mail.com',
+            username : 'testinggggggg@mail.com',
             password : '123456',         
         }
     
@@ -143,7 +113,7 @@ describe('POST /artists/login',function() {
     it('should status 400, invalid for password / not found in database' ,function (done) {
         //setup
         const body = {
-            email : 'user@mail.com',
+            email : 'testing@mail.com',
             password : '12345678910',         
         }
     

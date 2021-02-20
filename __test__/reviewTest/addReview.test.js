@@ -11,16 +11,17 @@ const { beforeAll } = require("@jest/globals")
 
 const { generateToken } = require('../../helpers/jwt')
 
-const { User } = require('../../models')
+const { User, Artist, Order } = require('../../models')
 
 const app = require('../../app')  
 
+
 // ===================================================================================
-// ==========================  POST /users/:userId/reviews
+// ==========================  POST /users/:userId/artists/:artistId/orders/:orderId/reviews
 // ==================================================================================
 
-describe('POST /users/:userId/reviews',function() {
-    let userId, access_token
+describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',function() {
+    let userId, artistId, orderId, access_token
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -33,6 +34,17 @@ describe('POST /users/:userId/reviews',function() {
             }
 
             access_token = generateToken(payload)
+
+
+            return Artist.findOne({ where : { email : "user@mail.com"}})
+        })
+        .then(res => {
+            artistId = res.id
+
+            return Order.findOne({ where : { title : "testingforOrder"}})
+        })
+        then(response => {
+            orderId = response.id
 
             done()
         })
@@ -51,7 +63,7 @@ describe('POST /users/:userId/reviews',function() {
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/reviews`)
+        .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -79,7 +91,7 @@ describe('POST /users/:userId/reviews',function() {
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/reviews`)
+        .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -105,7 +117,7 @@ describe('POST /users/:userId/reviews',function() {
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/reviews`)
+        .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
         .send(data)
         .end((err, res) => {
             if(err) done(err)

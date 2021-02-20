@@ -17,7 +17,7 @@
 
 const request = require('supertest')
 
-const { User } = require('../../models')
+// const { User } = require('../../models')
 
 const app = require ('../../app')  
 
@@ -27,24 +27,15 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /users/register',function() {
-    afterAll(done => {
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err delete afterAll registerUser.test.js ")
-        })
-    })
-    
+
     // ======================== successfull register ==========================
     it('should status 201, successfull created user' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            username : 'testUser',
+            firstName : 'test',
+            lastName : 'user',
+            email : 'testingforuser@mail.com',
             password : '123456',
             profilePicture : "link.google.com"         
         }
@@ -81,9 +72,9 @@ describe('POST /users/register',function() {
         //setup
         const body = {
             username : '',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            firstName : 'test',
+            lastName : 'user',
+            email : 'testingforuser@mail.com',
             password : '123456',
             profilePicture : "link.google.com"         
         }
@@ -110,10 +101,10 @@ describe('POST /users/register',function() {
     it('should status 400, error input firstname empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
+            username : 'testUser',
             firstName : '',
-            lastName : 'name',
-            email : 'user@mail.com',
+            lastName : 'user',
+            email : 'testingforuser@mail.com',
             password : '123456',
             profilePicture : "link.google.com"         
         }
@@ -140,10 +131,10 @@ describe('POST /users/register',function() {
     it('should status 400, error input lastname empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
+            username : 'testUser',
+            firstName : 'test',
             lastName : '',
-            email : 'user@mail.com',
+            email : 'testingforuser@mail.com',
             password : '123456',
             profilePicture : "link.google.com"         
         }
@@ -169,9 +160,9 @@ describe('POST /users/register',function() {
     it('should status 400, error input email format' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
+            username : 'testUser',
+            firstName : 'test',
+            lastName : 'user',
             email : 'user',
             password : '123456',
             profilePicture : "link.google.com"         
@@ -198,9 +189,9 @@ describe('POST /users/register',function() {
     it('should status 400, error input email empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
+            username : 'testUser',
+            firstName : 'test',
+            lastName : 'user',
             email : '',
             password : '123456',
             profilePicture : "link.google.com"         
@@ -227,10 +218,10 @@ describe('POST /users/register',function() {
     it('should status 400, error input password empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            username : 'testUser',
+            firstName : 'test',
+            lastName : 'user',
+            email : 'testingforuser@mail.com',
             password : '',
             profilePicture : "link.google.com"         
         }

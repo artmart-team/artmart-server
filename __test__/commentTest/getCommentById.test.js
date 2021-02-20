@@ -20,18 +20,11 @@ describe('GET /users/:userId/comments/:commentId',function() {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Comment.findOne({where : {description : "buat test get comment by id"}})
-        .then(data => {
-            commentId = data.id
-
-            if(userId && commentId) {
-                done()
-            }
+            return Comment.findOne({where : {description : "buat test get comment by id"}})
+        })
+        then(res => {
+            commentId = res.id
         })
         .catch(err => {
             console.log(err)
@@ -95,18 +88,10 @@ describe('GET /artists/:artistId/comments/:commentId',function() {
         Artist.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             artistId = data.id
+            return Comment.findOne({where : {description : "buat test get comment by id"}})
         })
-        .catch(err => {
-            console.log(err)
-        })
-
-        Comment.findOne({where : {description : "buat test get comment by id"}})
-        .then(data => {
-            commentId = data.id
-
-            if(artistId && commentId) {
-                done()
-            }
+        then(res => {
+            commentId = res.id
         })
         .catch(err => {
             console.log(err)

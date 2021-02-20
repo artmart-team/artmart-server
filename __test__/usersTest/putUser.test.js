@@ -33,26 +33,11 @@ describe('PUT /users/:userId',function() {
     let access_token 
 
     beforeAll(done => {
-        // dummy creating user 
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture  : "link.google.com"
-        })
-        .then(data => {
-            userId = data.id
-
-        })
-        .catch(err => {
-            console.log(err, '<< err beforeAll register putUser.test.js')
-        })
-
         //dummy user login
-        User.findOne( { where : { email : "user@mail.com"}})
+        User.findOne( { where : { email : "testingedit@mail.com"}})
         .then(user => {
+            userId = user.id
+
             const payload = {
                 id : user.id,
                 username : user.username
@@ -64,16 +49,6 @@ describe('PUT /users/:userId',function() {
         })
         .catch(err => {
             console.log(err, "<< err beforeAll get token putUser.test.js")
-        })
-    })
-
-    afterAll(done => {
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err afterAll putUser.test.js")
         })
     })
     
