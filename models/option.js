@@ -15,8 +15,22 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Option.init({
-    title: DataTypes.STRING,
-    extraPrice: DataTypes.DOUBLE,
+    title: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          msg: 'Title required'
+        }
+      },
+    },
+    extraPrice: {
+      type: DataTypes.DOUBLE,
+      validate: {
+        notEmpty: {
+          msg: 'Extra Price required'
+        }
+      },
+    },
     ArtistId: DataTypes.INTEGER
   }, {
     sequelize,

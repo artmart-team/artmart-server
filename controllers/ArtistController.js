@@ -108,6 +108,10 @@ class ArtistController {
       if (!obj.lastName) delete obj.lastName
       if (!obj.profilePicture) delete obj.profilePicture
 
+      if (JSON.stringify(obj) === '{}') {
+        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
+      }
+
       let data = await Artist.update (obj, {
         where: {
           id: +req.params.artistId

@@ -14,9 +14,11 @@
     "db:migrate:undo:all": "npx sequelize-cli db:migrate:undo:all",
     "db:migrate:undo:all:test": "NODE_ENV=test npm run db:migrate:undo:all",
     "db:migrate:undo:all:development": "NODE_ENV=development npm run db:migrate:undo:all",
+    "db:seed:undo:all": "npx sequelize-cli db:seed:undo:all",
     "db:seed:all": "npx sequelize-cli db:seed:all",
     "db:seed:all:test": "NODE_ENV=test npm run db:seed:all",
     "db:seed:all:development": "NODE_ENV=development npm run db:seed:all",
+    "db:seed:undo:all:development": "NODE_ENV=development npm run db:seed:undo:all",
     "dev": "NODE_ENV=development npx nodemon bin/http.js",
     "test": "NODE_ENV=test npx jest --runInBand --detectOpenHandles --force-exit"
   },
