@@ -7,37 +7,38 @@ const request = require('supertest')
 const { User, Comment } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  DELETE /users/:userId/comments/:commentId
 // ==================================================================================
 
 describe('DELETE /users/:userId/comments/:commentId',function() {
-    let userId
+    let userId, access_token
     let commentId
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Comment.findOne({where : {description : "buat test delete comment"}})
-        .then(data => {
-            commentId = data.id
-
-            if(userId && commentId) {
-                done()
+            const decoded = {
+                id : data.id,
+                username : data.username
             }
+
+            access_token = generateToken(decoded)
+
+            return Comment.findOme({ where : {description : "buat test delete comment"}})
+        })
+        .then(res => {
+            commentId = res.id
+            done()
         })
         .catch(err => {
             console.log(err)
         })
     })
-
 
     // ======================== error comments id not found ==========================
     it('should status 404, error comment id not found' ,function (done) {

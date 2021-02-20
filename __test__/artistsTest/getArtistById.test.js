@@ -13,7 +13,7 @@ const request = require('supertest')
 
 const { Artist } = require('../../models')
 
-const { beforeAll, afterAll } = require("@jest/globals")
+const { beforeAll } = require("@jest/globals")
 
 const app = require ('../../app')  
 
@@ -25,32 +25,13 @@ describe('GET /artists/:artistId',function() {
     let artistId 
 
     beforeAll(done => {
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : "link.google.com",
-            bankAccount : 230230230,
-            completeDuration : 48
-        })
+        Artist.findOne({ where: { email : "testing@mail.com"}})
         .then(data => {
             artistId = data.id
             done()
         })
         .catch(err => {
             console.log(err, "<< err beforeAll getArtistById.test.js")
-        })
-    })
-
-    afterAll(done => {
-        Artist.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err afterAll delete getArtistById.test.js")
         })
     })
     

@@ -8,35 +8,38 @@ const request = require('supertest')
 const { User, Comment } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  PUT /users/:userId/comments/:commentId
 // ==================================================================================
 
 describe('PUT /users/:userId/comments/:commentId',function() {
-    let userId
+    let userId, access_token
     let commentId
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Comment.findOne({where : {description : "buat test edit comment"}})
-        .then(data => {
-            commentId = data.id
-
-            if(userId && commentId) {
-                done()
+            const decoded = {
+                id : data.id,
+                username : data.username
             }
+            
+            access_token = generateToken(decoded)
+
+            return Comment.findOne({ where : {description : "buat test edit comment"}})
+        })
+        then(res => {
+            commentId = res.id
+            done()
         })
         .catch(err => {
             console.log(err)
         })
+
     })
 
     // ======================== successfull edit comments ==========================
@@ -129,7 +132,7 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/comments/${id}`)
+        .put(`/users/${userId}/comments/${commentId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)

@@ -6,38 +6,48 @@
 // -- it error not login user
 
 const request = require('supertest')
-const { User, Review } = require('../../models')
+const { User, Review, Order, Artist} = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
-// ===================================================================================
-// ==========================  PUT /users/:userId/reviews/:commentId
-// ==================================================================================
 
-describe('PUT /users/:userId/reviews/:commentId',function() {
-    let userId
-    let reviewId
+describe('PUT /users/:userId/artist/:artistId/orders/:orderId/reviews/:reviewId',function() {
+    let userId, reviewId, artistId, access_token, orderId
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Review.findOne({where : {title : "buat test edit review"}})
-        .then(data => {
-            reviewId = data.id
-
-            if(userId && commentId) {
-                done()
+            const payload = {
+                id : data.id,
+                username : data.username
             }
+
+            access_token = generateToken(payload)
+
+
+            return Artist.findOne({ where : { email : "user@mail.com"}})
+        })
+        .then(res => {
+            artistId = res.id
+
+            return Order.findOne({ where : { title : "testingforOrder"}})
+        })
+        then(response => {
+            orderId = response.id
+
+            return Review.findOne({ where : { title : "editReviewTesting"}})
+        })
+        then(rev => {
+            reviewId = rev.id
+
+            done()
         })
         .catch(err => {
             console.log(err)
         })
+
     })
 
     // ======================== successfull edit reviews ==========================
@@ -49,7 +59,7 @@ describe('PUT /users/:userId/reviews/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/reviews/${reviewId}`)
+        .put(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -77,7 +87,7 @@ describe('PUT /users/:userId/reviews/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/reviews/${reviewId}`)
+        .put(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -105,7 +115,7 @@ describe('PUT /users/:userId/reviews/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/reviews/${id}`)
+        .put(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${id}`)
         .set('access_token', access_token)
         .send(data)
         .end((err, res) => {
@@ -132,7 +142,7 @@ describe('PUT /users/:userId/reviews/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/reviews/${id}`)
+        .put(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
         .send(data)
         .end((err, res) => {
             if(err) done(err)

@@ -11,9 +11,9 @@
 
 const request = require('supertest')
 
-const { Artist, Category, User } = require('../../models')
+const { Artist } = require('../../models')
 
-const { beforeAll, afterAll } = require("@jest/globals")
+const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
 
@@ -22,56 +22,16 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('POST /artists/:artistId/pictures', function() {
-    let artId, catId, idUser, access_token
+    let artId, access_token
+    let catId = 1
+    let idUser = 1
 
     beforeAll(done => {
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            bankAccount : 230230230,
-            profilePicture : "link.google.com",
-            completeDuration: 48
-        })
-        .then(data => {
-            artId = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
-
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : "link.google.com"
-        })
-        .then(data => {
-            idUser = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
-
-        Category.create({
-            name : 'image'
-        })
-        .then(data => {
-            catId = data.id
-
-        })
-        .catch(err => {
-            console.log(err, "<< err create image category test")
-        })
-
-
         //dummy Artist login
         Artist.findOne( { where : { email : "user@mail.com"}})
         .then(artis => {
+            artId = artis.id
+
             const payload = {
                 id : artis.id,
                 username : artis.username
@@ -87,37 +47,6 @@ describe('POST /artists/:artistId/pictures', function() {
             console.log(err, "<< err beforeAll get token putUser.test.js")
         })
     })
-
-    afterAll(done => {
-        Picture.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete Image test")
-        })
-
-        Category.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-
-        Artist.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-    })
-
 
     // ======================== successfull add Picture ==========================
     it('should status 201, successfull create picture' ,function (done) {
@@ -271,7 +200,7 @@ describe('POST /artists/:artistId/pictures', function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(302)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
             expect(typeof res.body.message).toHaveProperty('string')

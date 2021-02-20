@@ -6,7 +6,7 @@
 
 const request = require('supertest')
 
-const { Picture, Artist, Category, User } = require('../../models')
+const { Picture, Artist } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
@@ -17,99 +17,22 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /artists/:artistId/images/:imageId',function() {
-    let artId, catId, pictId, idUser
+    let artId, pictId
 
     beforeAll(done => {
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com',
-            bankAccount : 23023023,
-            completeDuration: 48
-        })
+        Artist.findOne({ where  : { email : "user@mail.com"}})
         .then(data => {
             artId = data.id
+            return Picture.findOne({ where : { name : "getId picture testing"}})
         })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
-
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com'
-        })
-        .then(data => {
-            idUser = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
-
-        Category.create({
-            name : 'image'
-        })
-        .then(data => {
-            catId = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create image category test")
-        })
-
-        Picture.create({
-            name : 'asik nih',
-            description : '',
-            price : 100000,
-            link : 'www.google.com',
-            CategoryId : catId,
-            ArtistId : artId,
-            UserId : idUser
-        })
-        .then(data => {
-            pictId = data.id
+        .then(res => {
+            pictid = res.id
             done()
         })
         .catch(err => {
-            console.log(err, "<< err create image test") 
-        })
-    })
-
-    afterAll(done => {
-        Picture.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete Image test")
+            console.log(err, "<< err getPictById.test.js")
         })
 
-        Category.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-
-        Artist.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-        
     })
     
     // ======================== successfull get image ==========================

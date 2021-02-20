@@ -11,9 +11,7 @@
 
 const request = require('supertest')
 
-const { User } = require('../../models')
-
-const { beforeAll, afterAll } = require("@jest/globals")
+// const { User } = require('../../models')
 
 const app = require ('../../app')  
 
@@ -22,38 +20,12 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /users/login',function() {
-    beforeAll(done => {
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com'
-        })
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err beforeAll loginUser.test.js ")
-        })
-    })
 
-    afterAll(done => {
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err afterAll loginUser.test.js ")
-        })
-    })
-    
     // ======================== successfull login with usernmae ==========================
     it('should status 200, successfull login with username' ,function (done) {
         //setup
         const body = {
-            username : 'username',
+            username : 'testing',
             password : '123456',         
         }
     
@@ -84,7 +56,7 @@ describe('POST /users/login',function() {
     it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
-            email : 'user@mail.com',
+            email : 'testing@mail.com',
             password : '123456',         
         }
     
@@ -141,7 +113,7 @@ describe('POST /users/login',function() {
     it('should status 400, invalid for password / not found in database' ,function (done) {
         //setup
         const body = {
-            email : 'user@mail.com',
+            email : 'testing@mail.com',
             password : '12345678910',         
         }
     
@@ -167,7 +139,7 @@ describe('POST /users/login',function() {
     it('should status 400, invalid for email / not found in database' ,function (done) {
         //setup
         const body = {
-            email : 'usernamename@mail.com',
+            email : 'testingggggggg@mail.com',
             password : '123456',         
         }
     

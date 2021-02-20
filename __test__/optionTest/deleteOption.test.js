@@ -1,66 +1,50 @@
-// describe DELETE /artists/:artistId/ratings/:ratingId
-// -- it success
-// -- it error ratings id not found
-// -- it error not login user
-
-
 const request = require('supertest')
-const { User, Rating, Order, Artist } = require('../../models')
+const { Artist, Option } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
-// ==========================  DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratingId
+// ==========================  DELETE /artist/:artistId/options/:optionId
 // ==================================================================================
 
-describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratingId',function() {
-    let userId, access_token, ratingId, artistId, orderId
+describe('DELETE /artist/:artistId/options/:optionId',function() {
+    let artistId
+    let optionId
+    let access_token
 
     beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
+        Artist.findOne({where : {email : "user@mail.com"}})
         .then(data => {
-            userId = data.id
+            artistId = data.id
 
-            const payload = {
+            const decoded = {
                 id : data.id,
                 username : data.username
             }
 
-            access_token = generateToken(payload)
+            access_token = generateToken(decoded)
 
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
+            return Option.findOne({ where : { title : "deleteOptionTestng"}})
         })
         .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
-            return Rating.findOne({ where : { score : 4 }})
-        })
-        then(rating => {
-            ratingId = rating.id
-
+            optionId = res.id
             done()
         })
         .catch(err => {
             console.log(err)
         })
-
     })
 
 
-    // ======================== error ratings id not found ==========================
-    it('should status 404, error ratings id not found' ,function (done) {
+    // ======================== error options id not found ==========================
+    it('should status 404, error options id not found' ,function (done) {
         //setup
         const id = 9999999
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${id}`)
+        .delete(`/artist/${artistId}/options/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -83,7 +67,7 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
+        .delete(`/artist/${artistId}/options/${optionId}`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -97,13 +81,13 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
         })
     })
 
-    // ======================== successfull delete ratings ==========================
-    it('should status 200, successfull delete ratings' ,function (done) {
+    // ======================== successfull delete options ==========================
+    it('should status 200, successfull delete options' ,function (done) {
         //setup
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
+        .delete(`/artist/${artistId}/options/${optionId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)

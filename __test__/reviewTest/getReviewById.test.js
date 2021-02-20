@@ -4,7 +4,7 @@
 // -- it error rating id not found 
 
 const request = require('supertest')
-const { User, Review, Artist } = require('../../models')
+const { User, Review, Artist, Order } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
@@ -13,30 +13,36 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/reviews/:reviewId',function() {
-    let userId
-    let reviewId
+    let userId, reviewId, artistId, orderId
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
+
+            return Artist.findOne({ where : { email : "user@mail.com"}})
+        })
+        .then(res => {
+            artistId = res.id
+
+            return Order.findOne({ where : { title : "testingforOrder"}})
+        })
+        then(response => {
+            orderId = response.id
+
+            return Review.findOne({ where : { title : "getIdReviewTesting"}})
+        })
+        then(rev => {
+            reviewId = rev.id
+
+            done()
         })
         .catch(err => {
             console.log(err)
         })
 
-        Review.findOne({where : {title : "buat test get title by id"}})
-        .then(data => {
-            reviewId = data.id
-
-            if(userId && reviewId) {
-                done()
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
     })
+
 
     // ======================== successfull get reviews ==========================
     it('should status 200, successfull get reviews id' ,function (done) {
@@ -44,7 +50,7 @@ describe('GET /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .get(`/users/${userId}/reviews/${reviewId}`)
+        .get(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -68,7 +74,7 @@ describe('GET /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .get(`/users/${userId}/reviews/${id}`)
+        .get(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${id}`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -84,58 +90,3 @@ describe('GET /users/:userId/reviews/:reviewId',function() {
     })
 })
 
-
-
-
-// ===================================================================================
-// ==========================  GET /users/:userId/reviews/:reviewId
-// ==================================================================================
-
-describe('GET /artists/:artistId/reviews/:reviewId',function() {
-    let artistId
-    let reviewId
-
-    beforeAll(done => {
-        Artist.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            artistId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-        Review.findOne({where : {title : "buat test get title by id"}})
-        .then(data => {
-            reviewId = data.id
-
-            if(artistId && reviewId) {
-                done()
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
-
-    // ======================== successfull get reviews ==========================
-    it('should status 200, successfull get reviews id' ,function (done) {
-        //setup
-
-        //excecute
-        request(app) 
-        .get(`/artists/${artistId}/reviews/${reviewId}`)
-        .end((err, res) => {
-            if(err) done(err)
-                    
-            //assert
-            expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('title')
-            expect(res.body).toHaveProperty('description')
-            expect(typeof res.body.title).toEqual('string')
-            expect(typeof res.body.description).toEqual('string')
-
-            done()
-        })
-    })
-})

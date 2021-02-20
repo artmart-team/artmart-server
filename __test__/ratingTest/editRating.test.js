@@ -6,7 +6,7 @@
 // -- it error not login user
 
 const request = require('supertest')
-const { User, Rating } = require('../../models')
+const { User, Rating, Artist, Order } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
@@ -15,29 +15,42 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('PUT /users/:userId/ratings/:ratingId',function() {
-    let userId
-    let ratingId
+    let userId, access_token, ratingId, artistId, orderId
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Rating.findOne({where : {score : 3}})
-        .then(data => {
-            ratingId = data.id
-
-            if(userId && ratingId) {
-                done()
+            const payload = {
+                id : data.id,
+                username : data.username
             }
+
+            access_token = generateToken(payload)
+
+
+            return Artist.findOne({ where : { email : "user@mail.com"}})
+        })
+        .then(res => {
+            artistId = res.id
+
+            return Order.findOne({ where : { title : "testingforOrder"}})
+        })
+        then(response => {
+            orderId = response.id
+
+            return Rating.findOne({ where : { score : 3 }})
+        })
+        then(rating => {
+            ratingId = rating.id
+
+            done()
         })
         .catch(err => {
             console.log(err)
         })
+
     })
 
     // ======================== successfull edit rating ==========================
@@ -49,7 +62,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -75,7 +88,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -103,7 +116,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${id}`)
+        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${id}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -130,7 +143,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
