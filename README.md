@@ -12,8 +12,8 @@ orders test = 100%
 
 picture test = 100%
 
-rating test = 100% (ganti routing done )
+rating test = 100% 
 
-review test = 100% (ganti routing done)
+review test = 100% 
 
 user test = 100%
