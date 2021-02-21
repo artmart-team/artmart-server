@@ -259,12 +259,15 @@ class OrderController {
 
   static async respondPayment (req, res, next) {
     try {
-      const { order_id, gross_amount } = req.body.transaction_details
+      const obj = {
+        transaction_details: {
+          order_id: 'TEST_ORDER' + Number(req.params.orderId),
+          gross_amount: +req.body.gross_amount
+        }
+      }
 
-      axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', {
-        order_id,
-        gross_amount
-      }, {
+      axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', obj,
+      {
         headers: {
           "Accept": "application/json",
           "Content-Type": "application/json",
@@ -272,10 +275,11 @@ class OrderController {
         }
       })
       .then(function (response) {
-        console.log(response);
+        res.status(201).json(response.data)
       })
       .catch(function (error) {
-        console.log(error, 'error respondPayment');
+        res.status(400).json(error)
+        console.log(error, 'error respondPayment')
       })
 
     } catch (err) {
