@@ -18,8 +18,8 @@ router.patch ('/artists/:artistId/orders/:orderId/accepted',  authenticate, auth
 
 router.patch ('/artists/:artistId/orders/:orderId/done',  authenticate, authorizeArtistOrder, OrderController.doneOrder)
 
-router.patch ('/users/:userId/orders/:orderId/paid',  authenticate, authorizeArtistOrder, OrderController.paidOrder)
+router.patch ('/users/:userId/orders/:orderId/paid',  authenticate, authorizeUserOrder, OrderController.paidOrder)
 
-router.post ('/requestPaymentGateway/orders/:orderId', authenticate, OrderController.respondPayment)
+router.post ('/users/:userId/requestPaymentGateway/orders/:orderId', authenticate, OrderController.respondPayment)
 
 module.exports = router
