@@ -3,7 +3,11 @@ const { Picture, User, Artist } = require ('../models/index')
 class PictureController {
   static async getAll (req, res, next) {
     try {
-      const data = await Picture.findAll()
+      const data = await Picture.findAll({
+        where: {
+          hidden: false
+        }
+      })
       res.status(200).json(data)
     } catch (err) {
       next(err)
@@ -119,14 +123,47 @@ class PictureController {
         price: req.body.price,
         link: req.body.link,
         hidden: req.body.hidden,
-        categoryId: req.body.categoryId
+        CategoryId: req.body.CategoryId,
+        UserId: req.body.UserId
       }
       if (!obj.name) delete obj.name
       if (!obj.description) delete obj.description
       if (!obj.price) delete obj.price
       if (!obj.link) delete obj.link
       if (!obj.hidden) delete obj.hidden
-      if (!obj.categoryId) delete obj.categoryId
+      if (!obj.CategoryId) delete obj.CategoryId
+      if (!obj.UserId) delete obj.UserId
+
+      if (JSON.stringify(obj) === '{}') {
+        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
+      }
+
+      let data = await Picture.update (obj, {
+        where: {
+          id: +req.params.pictureId
+        },
+        returning: true
+      })
+      let isSuccess = data[0]
+      
+      if (isSuccess === 1) {
+        let dataObj = data[1][0]
+        res.status(200).json (dataObj)
+      } else {
+        next ({name: 'Error not found'})
+      }
+
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async patchHidden (req, res, next) {
+    try {
+      let obj = {
+        hidden: req.body.hidden
+      }
+      if (!obj.hidden) delete obj.hidden
 
       if (JSON.stringify(obj) === '{}') {
         return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })

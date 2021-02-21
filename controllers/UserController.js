@@ -32,7 +32,7 @@ class UserController {
         password,
         profilePicture
       })
-      console.log(data)
+      // console.log(data)
       delete data.dataValues.password
       res.status (201).json (data)
     } catch (err) {

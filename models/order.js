@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     description: DataTypes.STRING,
-    refImageId: DataTypes.INTEGER,
-    duration: DataTypes.INTEGER,
+    refPictureId: DataTypes.INTEGER,
+    deadline: DataTypes.DATE,
     price: {
       type: DataTypes.DOUBLE,
       validate: {

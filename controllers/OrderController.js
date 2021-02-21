@@ -4,6 +4,9 @@ class OrderController {
   static async getAllByUser (req, res, next) {
     try {
       const data = await Order.findAll({
+        attributes: [
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+        ],
         include: {
           model: Artist,
           attributes: ['username', 'email', 'profilePicture']
@@ -18,6 +21,49 @@ class OrderController {
   static async getAllByArtist (req, res, next) {
     try {
       const data = await Order.findAll({
+        attributes: [
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+        ],
+        include: {
+          model: User,
+          attributes: ['username', 'email', 'profilePicture']
+        }
+      })
+      res.status(200).json(data)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async getOneByUser (req, res, next) {
+    try {
+      const data = await Order.findOne({
+        where: {
+          id: +req.params.orderId
+        },
+        attributes: [
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+        ],
+        include: {
+          model: Artist,
+          attributes: ['username', 'email', 'profilePicture']
+        }
+      })
+      res.status(200).json(data)
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async getOneByArtist (req, res, next) {
+    try {
+      const data = await Order.findOne({
+        where: {
+          id: +req.params.orderId
+        },
+        attributes: [
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+        ],
         include: {
           model: User,
           attributes: ['username', 'email', 'profilePicture']
@@ -31,28 +77,30 @@ class OrderController {
 
   static async post (req, res, next) {
     try {
-      let { title, description, refImageId, totalPrice, totalOptions } = req.body
+      let { title, description, refPictureId, totalOptions } = req.body
+      let setRefPictureId = +req.body.refPictureId || null
       let price = null
-      let duration = null
+      let totalPrice = null
+      totalOptions = +totalOptions
 
-      const checkArtist = await Artist.findOne({
-        where: {
-          id: +req.params.artistId
-        }
-      })
-
-      duration = checkArtist.completeDuration
       if (!req.body.price){
+        const checkArtist = await Artist.findOne({
+          where: {
+            id: +req.params.artistId
+          }
+        })
+
         price = checkArtist.defaultPrice
       } else {
         price = +req.body.price
       }
+      
       if (!req.body.totalOptions) {
         totalPrice = price
       } else {
-        totalPrice = price + Number(totalOptions)
+        totalPrice = price + totalOptions
       }
-      
+
       const checkDuplicate = await Order.findAll({
         where: {
           ArtistId: +req.params.artistId
@@ -66,12 +114,11 @@ class OrderController {
           }
         })
       } 
-    
+      
       const obj = {
         title,
         description,
-        refImageId: +req.params.refImageId,
-        duration: duration,
+        refPictureId: setRefPictureId,
         price,
         totalPrice,
         accepted: false,
@@ -81,7 +128,11 @@ class OrderController {
         UserId: +req.params.userId,
         ArtistId: +req.params.artistId
       }
-      const data = await Order.create(obj)
+      const data = await Order.create(obj, {
+        attributes: [
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'userId', 'artistId', 'reviewId', 'ratingId'
+        ]
+      })
       res.status(201).json(data)
 
     } catch (err) {
@@ -118,21 +169,40 @@ class OrderController {
 
   static async acceptOrder (req, res, next) {
     try {
-      const obj = { accepted: true }
-      const data = await Order.update (obj, {
+      const artistData = await Artist.findOne({
+        where: {
+          id: +req.artistId
+        }
+      })
+      const orderData = await Order.findOne({
         where: {
           id: +req.params.orderId
-        },
-        returning: true
+        }
       })
-      let isSuccess = data[0]
-      
-      if (isSuccess === 1) {
-        let dataObj = data[1][0]
-        res.status(200).json (dataObj)
+
+      if (orderData.deadline) {
+        return next ({ name: 'Order already accepted' })
       } else {
-        next ({name: 'Error not found'})
-      }
+          const deadline = new Date()
+          deadline.setHours(deadline.getHours() + artistData.completeDuration)
+    
+          const obj = { accepted: true, deadline }
+          const data = await Order.update (obj, {
+            where: {
+              id: +req.params.orderId
+            },
+            returning: true
+          })
+          let isSuccess = data[0]
+          
+          if (isSuccess === 1) {
+            let dataObj = data[1][0]
+            res.status(200).json (dataObj)
+          } else {
+            next ({name: 'Error not found'})
+          }
+        }
+
     } catch (err) {
       next(err)
     }
