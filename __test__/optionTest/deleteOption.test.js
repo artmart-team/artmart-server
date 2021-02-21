@@ -20,7 +20,8 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
 
             const decoded = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(decoded)

@@ -16,8 +16,8 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('PUT /users/:userId/ratings/:ratingId',function() {
-    let userId 
-    let access_token 
+    let userId = null
+    let access_token = null
     let ratingId = 3 
     let artistId = 1
     let orderId = 1
@@ -29,7 +29,8 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
             const payload = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)

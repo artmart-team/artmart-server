@@ -1,5 +1,15 @@
 'use strict';
 
+Date.prototype.addDays = function(days) {
+  var date = new Date(this.valueOf());
+  date.setDate(date.getDate() + days);
+  return date;
+}
+
+var dateDeadline = new Date();
+
+// console.log(date.addDays(2));
+
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
@@ -7,8 +17,8 @@ module.exports = {
       {
         title :"testingforOrder",
         description: "",
-        refImageId : 1,
-        duration: 48,
+        refPictureId : 1,
+        deadline : dateDeadline.addDays(2),
         price :100000,
         totalPrice : 120000,
         accepted : false,
@@ -25,8 +35,8 @@ module.exports = {
       {
         title :"orderIdTesting",
         description: "",
-        refImageId : 1,
-        duration: 48,
+        refPictureId : 1,
+        deadline : dateDeadline.addDays(2),
         price :100000,
         totalPrice : 120000,
         accepted : false,
@@ -43,8 +53,8 @@ module.exports = {
       {
         title :"patchForOrderTesting",
         description: "",
-        refImageId : 1,
-        duration: 48,
+        refPictureId : 1,
+        deadline : dateDeadline.addDays(2),
         price :100000,
         totalPrice : 120000,
         accepted : false,

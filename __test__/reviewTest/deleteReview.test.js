@@ -15,8 +15,8 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('DELETE /users/:userId/reviews/:reviewId',function() {
-    let userId
-    let access_token 
+    let userId = null
+    let access_token = null
     let reviewId = 2
     let artistId = 1
     let orderId = 1
@@ -28,7 +28,8 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
             const payload = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)

@@ -19,7 +19,8 @@ const { generateToken } = require('../../helpers/jwt')
 describe('GET /users/:userId/ratings',function() {
     let artistId = 1 
     let orderId = 1 
-    let access_token, userId
+    let access_token = null
+    let userId = null
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})

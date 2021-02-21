@@ -7,7 +7,7 @@ module.exports = {
 
     const users = [
       {
-        username : "username",
+        username : "usernameTestingForUSer",
         firstName : "user",
         lastName : "name",
         email : "user@mail.com",

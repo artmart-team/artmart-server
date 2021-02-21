@@ -4,7 +4,7 @@
 
 
 const request = require('supertest')
-const { User, Artist } = require('../../models')
+// const { User, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
@@ -13,19 +13,19 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/comments/:commentId',function() {
-    let userId = null
+    let userId = 1
     let commentId = 3
 
-    beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            userId = data.id
-            done()
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
+    // beforeAll(done => {
+    //     User.findOne({where : {email : "user@mail.com"}})
+    //     .then(data => {
+    //         userId = data.id
+    //         done()
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+    // })
 
     // ======================== successfull get comments ==========================
     it('should status 200, successfull get comments id' ,function (done) {
@@ -76,19 +76,19 @@ describe('GET /users/:userId/comments/:commentId',function() {
 // ==================================================================================
 
 describe('GET /artists/:artistId/comments/:commentId',function() {
-    let artistId = null
+    let artistId = 1
     let commentId = 3
 
-    beforeAll(done => {
-        Artist.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            artistId = data.id
-            done()
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
+    // beforeAll(done => {
+    //     Artist.findOne({where : {email : "user@mail.com"}})
+    //     .then(data => {
+    //         artistId = data.id
+    //         done()
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+    // })
 
     // ======================== successfull get comments ==========================
     it('should status 200, successfull get comments id' ,function (done) {

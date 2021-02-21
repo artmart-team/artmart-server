@@ -10,7 +10,7 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/comments',function() {
-    let userId = 1
+    let artistId = 1
 
     // ======================== successfull get all comments ==========================
     it('should status 200, successfull get all comments' ,function (done) {
@@ -18,7 +18,7 @@ describe('GET /users/:userId/comments',function() {
 
         //excecute
         request(app) 
-        .get(`/users/${userId}/comments`)
+        .get(`/artists/${artistId}/comments`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -28,7 +28,7 @@ describe('GET /users/:userId/comments',function() {
             res.body.forEach(comment => {
                 expect (typeof comment).toEqual('object')
                 expect (comment).toHaveProperty('description')
-                expect (typeof comment.description).toHaveProperty('string')
+                expect (typeof comment.description).toEqual('string')
             })
 
             done()

@@ -26,7 +26,8 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
         .then(artis => {
             const payload = {
                 id : artis.id,
-                username : artis.username
+                username : artis.username,
+                profilePicture : artis.profilePicture
             }
 
             access_token = generateToken(payload)
@@ -65,13 +66,11 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
             expect(res.body).toHaveProperty('description')
             expect(res.body).toHaveProperty('price')
             expect(res.body).toHaveProperty('link')
-            expect(res.body).toEqual({
-                name : expect.any(String),
-                description : expect.any(String),
-                price : expect.any(Number),
-                link : expect.any(String),
+            expect(typeof res.body.name).toEqual('name')
+            expect(typeof res.body.description).toEqual('string')
+            expect(typeof res.body.price).toEqual('number')
+            expect(typeof res.body.link).toEqual('string')
 
-            })
             done()
         })
     })
@@ -94,10 +93,9 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
                 //assert
                 expect(res.statusCode).toEqual(400)
                 expect(typeof res.body).toEqual('Object')
-                expect(res.body).toHaveProperty('message')
-                expect(res.body).toEqual({
-                    message : expect.any(String),
-                })
+                expect(res.body).toHaveProperty('messages')
+                expect(typeof res.body.messages).toEqual('string')
+
                 done()
             })
         })
@@ -122,10 +120,9 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+            
             done()
         })
     })
@@ -148,10 +145,9 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+            
             done()
         })
     })

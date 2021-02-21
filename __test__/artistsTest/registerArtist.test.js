@@ -37,7 +37,8 @@ describe('POST /artists/register',function() {
             password : '123456',
             profilePicture : "link.google.com",
             bankAccount : 23023023,
-            completeDuration : 48         
+            completeDuration : 48,
+            defaultPrice : 100000         
         }
     
         //excecute
@@ -55,13 +56,11 @@ describe('POST /artists/register',function() {
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
             expect(res.body).toHaveProperty('profilePicture')
-            expect(res.body).toEqual({
-                username : expect.any(String),
-                firstName : expect.any(String),
-                lastName : expect.any(String),
-                email : expect.any(String),
-                profilePicture : expect.any(String)
-            })
+            expect(typeof res.body.username).toHaveProperty('string')
+            expect(typeof res.body.firstName).toHaveProperty('string')
+            expect(typeof res.body.lastName).toHaveProperty('string')
+            expect(typeof res.body.email).toHaveProperty('string')
+            expect(typeof res.body.profilePicture).toHaveProperty('string')
 
             done()
         })
@@ -183,7 +182,8 @@ describe('POST /artists/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toHaveProperty('string')
 
             done()
         })

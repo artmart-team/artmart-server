@@ -77,7 +77,7 @@ describe('GET /users/:userId',function() {
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

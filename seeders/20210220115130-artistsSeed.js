@@ -7,7 +7,7 @@ module.exports = {
 
     const artists = [
     {
-      username : "username",
+      username : "usernameTestingForArtist",
       firstName : "user",
       lastName : "name",
       email : "user@mail.com",
@@ -15,6 +15,7 @@ module.exports = {
       profilePicture : "link.google.com",
       completeDuration : 48,
       bankAccount : 230230230,
+      defaultPrice : 100000,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -27,6 +28,7 @@ module.exports = {
       profilePicture : "link.google.com",
       completeDuration : 48,
       bankAccount : 230230230,
+      defaultPrice : 100000,
       createdAt: new Date(),
       updatedAt: new Date()
     },
@@ -39,6 +41,7 @@ module.exports = {
       profilePicture : "link.google.com",
       completeDuration : 48,
       bankAccount : 230230230,
+      defaultPrice : 100000,
       createdAt: new Date(),
       updatedAt: new Date()
     }

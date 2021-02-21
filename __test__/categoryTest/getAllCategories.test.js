@@ -1,5 +1,5 @@
 const request = require ('supertest')
-const { Category } = require('../../models')
+// const { Category } = require('../../models')
 const app = require ('../../app')
 
 // DONE REVISION AFISTA 19-02-2021

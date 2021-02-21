@@ -24,9 +24,10 @@ describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
         .then(data => {
             artId = data.id
 
-            const paylaod = {
-                id : data.id,
-                username : data.username
+            const payload = {
+                id : artist.id,
+                username : artist.username,
+                profilePicture : artist.profilePicture
             }
 
             access_token = generateToken(paylaod)

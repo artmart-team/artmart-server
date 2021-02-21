@@ -25,7 +25,7 @@ describe('POST /users/login',function() {
     it('should status 200, successfull login with username' ,function (done) {
         //setup
         const body = {
-            username : 'testing',
+            username : 'testinguser',
             password : '123456',         
         }
     
@@ -42,6 +42,7 @@ describe('POST /users/login',function() {
             expect(res.body).toHaveProperty('access_token')
             expect(res.body).toHaveProperty('id')
             expect(res.body).toHaveProperty('username')
+            expect(typeof res.body.id).toEqual('number')
             expect(typeof res.body.access_token).toEqual('string')
             expect(typeof res.body.username).toEqual('string')
 
@@ -71,6 +72,7 @@ describe('POST /users/login',function() {
             expect(res.body).toHaveProperty('access_token')
             expect(res.body).toHaveProperty('id')
             expect(res.body).toHaveProperty('username')
+            expect(typeof res.body.id).toEqual('number')
             expect(typeof res.body.access_token).toEqual('string')
             expect(typeof res.body.username).toEqual('string')
 
@@ -175,7 +177,7 @@ describe('POST /users/login',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.message).toEqual('string')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

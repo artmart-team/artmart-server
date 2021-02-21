@@ -30,27 +30,28 @@ const app = require ('../../app')
 
 describe('PUT /users/:userId',function() {
     let userId = 3
-    let access_token 
+    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0aW5nZm9yZWRpdCIsInByb2ZpbGVQaWN0dXJlIjoibGluay5nb29nbGUuY29tIiwiaWF0IjoxNjEzOTE2MTM0fQ.Z-O8Pqnx1bvhd2c-SwgSPTew5GXMkOWvPx-cUvkbA-M"
 
-    beforeAll(done => {
-        //dummy user login
-        User.findOne( { where : { email : "testingedit@mail.com"}})
-        .then(user => {
-            userId = user.id
+    // beforeAll(done => {
+    //     //dummy user login
+    //     User.findOne( { where : { email : "testingedit@mail.com"}})
+    //     .then(user => {
+    //         userId = user.id
 
-            const payload = {
-                id : user.id,
-                username : user.username
-            }
+    //         const payload = {
+    //             id : user.id,
+    //             username : user.username,
+    //             profilePicture : user.profilePicture
+    //         }
 
-            access_token = generateToken(payload)
+    //         access_token = generateToken(payload)
 
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err beforeAll get token putUser.test.js")
-        })
-    })
+    //         done()
+    //     })
+    //     .catch(err => {
+    //         console.log(err, "<< err beforeAll get token putUser.test.js")
+    //     })
+    // })
     
     // ======================== successfull login ==========================
     it('should status 200, successfull update user' ,function (done) {
@@ -100,7 +101,7 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(400)
+            expect(res.statusCode).toEqual(401)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
@@ -126,7 +127,7 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(400)
+            expect(res.statusCode).toEqual(401)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messagse).toEqual('string')
@@ -152,7 +153,7 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(400)
+            expect(res.statusCode).toEqual(401)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
@@ -177,7 +178,7 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(400)
+            expect(res.statusCode).toEqual(401)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
@@ -226,10 +227,10 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toHaveProperty('string')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

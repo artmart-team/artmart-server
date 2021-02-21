@@ -33,7 +33,8 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
 
             const payload = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)

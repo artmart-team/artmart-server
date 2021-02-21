@@ -35,8 +35,9 @@ describe('POST /artists/:artistId/pictures', function() {
             artId = artis.id
 
             const payload = {
-                id : artis.id,
-                username : artis.username
+                id : artist.id,
+                username : artist.username,
+                profilePicture : artist.profilePicture
             }
 
             access_token = generateToken(payload)

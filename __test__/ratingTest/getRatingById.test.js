@@ -12,7 +12,7 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/ratings/:ratingId',function() {
-    let userId
+    let userId = null
     let ratingId = 2
     let artistId = 1 
     let orderId =  1

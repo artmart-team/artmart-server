@@ -23,7 +23,8 @@ describe('POST /artists/:artisId/options',function() {
 
             const payload = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)

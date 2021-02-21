@@ -18,6 +18,24 @@ class CommentController {
     }
   }
 
+  static async getById(req, res, next) {
+    let param = +req.params.commentId
+
+    try {
+      let data  = await Comment.findOne({ where : {
+        id : param
+      }})
+      if(data) {
+        res.status(200).json(data)
+      } else {
+        next ({name: 'Error not found'})
+      }
+
+    } catch(err) {
+      next(err)
+    }
+  }
+
   static async post (req, res, next) {
     try {
       let obj = {

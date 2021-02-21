@@ -10,6 +10,7 @@ const { generateToken } = require('../../helpers/jwt')
 
 describe('PUT /artists/:artistId/options/:optionId',function() {
     let artistId = null
+    let access_token = null
     let optionId = 1
 
     beforeAll(done => {
@@ -19,7 +20,8 @@ describe('PUT /artists/:artistId/options/:optionId',function() {
 
             const payload = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)

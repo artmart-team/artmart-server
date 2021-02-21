@@ -1,5 +1,3 @@
-
-
 // CREATE AFISTA 18-02-2021 20.00
 // DONE REVISION AFISTA 19-02-2021 20.00
 
@@ -7,7 +5,7 @@
 
 // describe GET /artists/:artistId
 // -- it success
-// -- it error id not found 
+// -- it error id nonpt found 
 
 const request = require('supertest')
 
@@ -81,7 +79,7 @@ describe('GET /artists/:artistId',function() {
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

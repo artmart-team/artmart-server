@@ -17,6 +17,7 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
     let userId = null
     let access_token = null
     let commentId = 1
+    let artistId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -25,7 +26,8 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
             const decoded = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePricture : data.profilePricture
             }
 
             access_token = generateToken(decoded)
@@ -43,7 +45,7 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .delete(`/artists/${userId}/comments/${id}`)
+        .delete(`/artists/${userId}/artists/${artistId}/comments/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -51,10 +53,9 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toHaveProperty('string')
+
             done()
         })
     })
@@ -66,12 +67,12 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .delete(`/artists/${userId}/comments/${commentId}`)
+        .delete(`/artists/${userId}/artists/${artistId}/comments/${commentId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(404)
             expect (typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
@@ -86,7 +87,7 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/comments/${commentId}`)
+        .delete(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -94,8 +95,8 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
