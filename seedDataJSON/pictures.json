@@ -1,0 +1,83 @@
+[
+    {
+      "name": "Pillow 1",
+      "description": "My Pillow Color is Blue",
+      "price": "100000",
+      "link": "https://i.pinimg.com/564x/6e/23/90/6e2390297a401146940c24675cb59368.jpg",
+      "hidden": false,
+      "CategoryId": 1,
+      "ArtistId": 1,
+      "UserId": null
+    },
+    {
+      "name": "Pillow 2",
+      "description": "My Pillow Color is White",
+      "price": "150000",
+      "link": "https://i.pinimg.com/564x/7b/81/29/7b8129c724b043c57e135ed0491a5919.jpg",
+      "hidden": false,
+      "CategoryId": 2,
+      "ArtistId": 2,
+      "UserId": 1
+    },
+    {
+      "name": "Pillow 3",
+      "description": "My Pillow Color is Yellow",
+      "price": "50000",
+      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-14.jpg",
+      "hidden": false,
+      "CategoryId": 1,
+      "ArtistId": 2,
+      "UserId": 2
+    },
+    {
+      "name": "Pillow 4",
+      "description": "My Pillow Color is Purple",
+      "price": "200000",
+      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-10.jpg",
+      "hidden": false,
+      "CategoryId": 3,
+      "ArtistId": 1,
+      "UserId": 1
+    },
+    {
+      "name": "Pillow 5",
+      "description": "My Pillow Color is Orange",
+      "price": "10000",
+      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-20.jpg",
+      "hidden": false,
+      "CategoryId": 4,
+      "ArtistId": 1,
+      "UserId": 1
+    },
+    {
+      "name": "Pillow 6",
+      "description": "My Pillow Color is Red",
+      "price": "150000",
+      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-15.jpg",
+      "hidden": false,
+      "CategoryId": 3,
+      "ArtistId": 3,
+      "UserId": 3
+    },
+    {
+      "name": "Pillow 7",
+      "description": "My Pillow Color is Green",
+      "price": "100000",
+      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-17.jpg.jpg",
+      "hidden": false,
+      "CategoryId": 2,
+      "ArtistId": 2,
+      "UserId": 2
+    },
+    {
+      "name": "Pillow 8",
+      "description": "My Pillow Color is Silver",
+      "price": "50000",
+      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-19.jpg",
+      "hidden": false,
+      "CategoryId": 3,
+      "ArtistId": 2,
+      "UserId": 1
+    }
+]
+
