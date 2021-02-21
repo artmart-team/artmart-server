@@ -28,7 +28,11 @@ function errorHandlers (err, req, res, next) {
       res.status(401).json ({ messages: 'Please login first' })
       break;
     case 'Existing order still active':
-      res.status(403).json ({ messages: 'You already have an order for this artist' })
+      res.status(403).json ({ messages: 'You already have an active order for this artist' })
+      break;
+    case 'Order already accepted':
+      res.status(403).json ({ messages: 'Order already accepted' })
+      break;
     default:
       res.status(500).json ({ messages: 'Internal server error' })
   }

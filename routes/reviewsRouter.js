@@ -1,5 +1,6 @@
 const router = require ('express').Router()
 const ReviewController  = require ('../controllers/ReviewController')
+const { authenticate, authorizeUserComment } = require ('../middlewares/auth')
 
 router.get ('/artists/:artistId/reviews', ReviewController.getAllByArtist)
 

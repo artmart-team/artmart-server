@@ -14,11 +14,11 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      refImageId: {
+      refPictureId: {
         type: Sequelize.INTEGER
       },
-      duration: {
-        type: Sequelize.INTEGER
+      deadline: {
+        type: Sequelize.DATE
       },
       price: {
         type: Sequelize.DOUBLE
