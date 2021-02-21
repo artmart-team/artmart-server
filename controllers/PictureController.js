@@ -6,6 +6,10 @@ class PictureController {
       const data = await Picture.findAll({
         where: {
           hidden: false
+        },
+        include: {
+          model: Artist,
+          attributes: [ 'id', 'username', 'profilePicture']
         }
       })
       res.status(200).json(data)
