@@ -1,5 +1,3 @@
-
-
 // CREATE AFISTA 18-02-2021 20.00
 // DONE REVISION AFISTA 19-02-2021 20.00
 
@@ -7,7 +5,7 @@
 
 // describe GET /artists/:artistId
 // -- it success
-// -- it error id not found 
+// -- it error id nonpt found 
 
 const request = require('supertest')
 
@@ -48,7 +46,7 @@ describe('GET /artists/:artistId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toBe('object')
+            expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('username')
             expect(res.body).toHaveProperty('firstName')
             expect(res.body).toHaveProperty('lastName')
@@ -56,11 +54,11 @@ describe('GET /artists/:artistId',function() {
             expect(res.body).toHaveProperty('profilePicture')
             expect(res.body).toHaveProperty('bankAccount')
             expect(res.body).toHaveProperty('completeDuration')
-            expect(typeof res.body.username).toBe('string')
-            expect(typeof res.body.lastName).toBe('string')
-            expect(typeof res.body.firstName).toBe('string')
-            expect(typeof res.body.email).toBe('string')
-            expect(typeof res.body.profilePicture).toBe('string')
+            expect(typeof res.body.username).toEqual('string')
+            expect(typeof res.body.lastName).toEqual('string')
+            expect(typeof res.body.firstName).toEqual('string')
+            expect(typeof res.body.email).toEqual('string')
+            expect(typeof res.body.profilePicture).toEqual('string')
 
             done()
         })
@@ -80,8 +78,8 @@ describe('GET /artists/:artistId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

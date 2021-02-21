@@ -8,13 +8,18 @@ const request = require('supertest')
 const { User, Rating, Order, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratingId
 // ==================================================================================
 
 describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratingId',function() {
-    let userId, access_token, ratingId, artistId, orderId
+    let userId
+    let access_token
+    let ratingId = 4
+    let artistId = 1
+    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -23,27 +28,11 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
 
             const payload = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)
-
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
-            return Rating.findOne({ where : { score : 4 }})
-        })
-        then(rating => {
-            ratingId = rating.id
-
             done()
         })
         .catch(err => {
@@ -67,11 +56,10 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -90,8 +78,8 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -111,8 +99,8 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
             //assert
             expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

@@ -7,38 +7,44 @@
 
 const request = require('supertest')
 
-const { beforeAll } = require("@jest/globals")
-
 const { generateToken } = require('../../helpers/jwt')
 
 const { User } = require('../../models')
 
 const app = require('../../app')  
+const { beforeAll } = require('@jest/globals')
 
 // ===================================================================================
 // ==========================  POST /users/:userId/comments
 // ==================================================================================
 
+
+
+
+
 describe('POST /users/:userId/comments',function() {
-    let userId, access_token
+
+    let userId = 1
+    let access_token = null
+    let artistId = 1
 
     beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            userId = data.id
-
-            const payload = {
-                id : data.id,
-                username : data.username
-            }
-
-            access_token = generateToken(payload)
-
-            done()
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        User.findOne({where : {id : 1}})
+            .then(data => {
+                userId = data.id
+    
+                const payload = {
+                    id : data.id,
+                    username : data.username,
+                    profilePicture : data.profilePicture
+                }
+                access_token = generateToken(payload)
+    
+                done()
+            })
+            .catch(err => {
+                console.log(err)
+            })
     })
 
     // ======================== successfull Create Comment ==========================
@@ -50,7 +56,7 @@ describe('POST /users/:userId/comments',function() {
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/comments`)
+        .post(`/users/${userId}/artists/${artistId}/comments`)
         .set('access_token', access_token)
         .send(data)
         .end((err, res) => {
@@ -75,7 +81,7 @@ describe('POST /users/:userId/comments',function() {
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/comments`)
+        .post(`/users/${userId}/artists/${artistId}/comments`)
         .set('access_token', access_token)
         .send(data)
         .end((err, res) => {
@@ -84,8 +90,8 @@ describe('POST /users/:userId/comments',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('errors')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -100,16 +106,16 @@ describe('POST /users/:userId/comments',function() {
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/comments`)
+        .post(`/users/${userId}/artists/${artistId}/comments`)
         .send(data)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

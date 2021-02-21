@@ -1,25 +1,30 @@
 const request = require('supertest')
-const { Artist, Option } = require('../../models')
+const { Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
-// ==========================  PUT /users/:userId/options/:commentId
+// ==========================  PUT /artists/:artistId/options/:optionId
 // ==================================================================================
 
-describe('PUT /users/:userId/options/:commentId',function() {
-    let artistId
-    let optionId
+describe('PUT /artists/:artistId/options/:optionId',function() {
+    let artistId = null
+    let access_token = null
+    let optionId = 1
 
     beforeAll(done => {
         Artist.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             artistId = data.id
 
-            return Option.findOne({ where : {title : "editOptionTesting"}})
-        })
-        .then(res => {
-            optionId = res.id
+            const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
+            }
+
+            access_token = generateToken(payload)
             done()
         })
         .catch(err => {
@@ -36,7 +41,7 @@ describe('PUT /users/:userId/options/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/artist/${userId}/options/${reviewId}`)
+        .put(`/artists/${artistId}/options/${optionId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -64,7 +69,7 @@ describe('PUT /users/:userId/options/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/options/${reviewId}`)
+        .put(`/artists/${artistId}/options/${optionId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -73,8 +78,8 @@ describe('PUT /users/:userId/options/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -89,7 +94,7 @@ describe('PUT /users/:userId/options/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/artist/${artistId}/options/${optionId}`)
+        .put(`/artists/${artistId}/options/${optionId}`)
         .send(data)
         .end((err, res) => {
             if(err) done(err)
@@ -97,8 +102,8 @@ describe('PUT /users/:userId/options/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messagess')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

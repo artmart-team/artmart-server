@@ -2,8 +2,6 @@ const request = require ('supertest')
 const app = require ('../../app')
 
 
-
-
 describe ('GET /artists/:artistId/options', function () {
     let artistId = 1
 

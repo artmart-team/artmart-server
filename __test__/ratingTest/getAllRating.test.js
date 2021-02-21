@@ -7,16 +7,20 @@ const request = require('supertest')
 
 const { beforeAll } = require("@jest/globals")
 
-const { User, Artist, Order } = require('../../models')
+const { User } = require('../../models')
 
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  GET /users/:userId/ratings
 // ==================================================================================
 
 describe('GET /users/:userId/ratings',function() {
-    let userId, artistId, orderId
+    let artistId = 1 
+    let orderId = 1 
+    let access_token = null
+    let userId = null
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -29,18 +33,6 @@ describe('GET /users/:userId/ratings',function() {
             }
 
             access_token = generateToken(payload)
-
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
             done()
         })
         .catch(err => {
@@ -60,7 +52,7 @@ describe('GET /users/:userId/ratings',function() {
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            res.body(Array.isArray (res.body)).toEqual(true)
+            expect(Array.isArray (res.body)).toEqual(true)
             res.body.forEach(rating => {
                 expect (typeof rating).toEqual('Object')
                 expect (rating).toHaveProperty('score')

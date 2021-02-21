@@ -63,7 +63,12 @@ class UserController {
               profilePicture: data.profilePicture
             }
             const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, role: data.role, username:data.username, profilePicture: data.profilePicture})
+            res.status (200).json ({
+              access_token, 
+              id: data.id, 
+              role: data.role, 
+              username:data.username, 
+              profilePicture: data.profilePicture})
           }
         }
       } else {
@@ -85,7 +90,11 @@ class UserController {
               profilePicture: data.profilePicture
             }
             const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, role: data.role, username:data.username, profilePicture: data.profilePicture})
+            res.status (200).json ({
+              access_token, 
+              id: data.id,  
+              username:data.username, 
+              profilePicture: data.profilePicture})
           }
         }
       }

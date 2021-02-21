@@ -4,7 +4,7 @@
 // -- it error not login user
 
 const request = require('supertest')
-const { User, Comment } = require('../../models')
+const { User } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
@@ -14,8 +14,10 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('DELETE /users/:userId/comments/:commentId',function() {
-    let userId, access_token
-    let commentId
+    let userId = null
+    let access_token = null
+    let commentId = 1
+    let artistId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -24,15 +26,11 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
             const decoded = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePricture : data.profilePricture
             }
 
             access_token = generateToken(decoded)
-
-            return Comment.findOme({ where : {description : "buat test delete comment"}})
-        })
-        .then(res => {
-            commentId = res.id
             done()
         })
         .catch(err => {
@@ -47,18 +45,17 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .delete(`/artists/${userId}/comments/${id}`)
+        .delete(`/artists/${userId}/artists/${artistId}/comments/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toHaveProperty('string')
+
             done()
         })
     })
@@ -70,15 +67,15 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .delete(`/artists/${userId}/comments/${commentId}`)
+        .delete(`/artists/${userId}/artists/${artistId}/comments/${commentId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(404)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -90,7 +87,7 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/comments/${commentId}`)
+        .delete(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)

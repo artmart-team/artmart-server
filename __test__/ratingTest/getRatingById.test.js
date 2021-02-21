@@ -12,28 +12,15 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/ratings/:ratingId',function() {
-    let userId, ratingId, artistId, orderId
+    let userId = null
+    let ratingId = 2
+    let artistId = 1 
+    let orderId =  1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
-            return Rating.findOne({ where : { score : 2}})
-        })
-        then(rating => {
-            ratingId = rating.id
-
             done()
         })
         .catch(err => {
@@ -76,11 +63,10 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })

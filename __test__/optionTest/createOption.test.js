@@ -13,7 +13,8 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('POST /artists/:artisId/options',function() {
-    let artistId, access_token
+    let artistId = null
+    let access_token = null
 
     beforeAll(done => {
         Artist.findOne({where : {email : "user@mail.com"}})
@@ -22,7 +23,8 @@ describe('POST /artists/:artisId/options',function() {
 
             const payload = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)

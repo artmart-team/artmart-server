@@ -12,7 +12,7 @@ const { beforeAll } = require("@jest/globals")
 
 const { generateToken } = require('../../helpers/jwt')
 
-const { User, Artist, Order } = require('../../models')
+const { User } = require('../../models')
 
 const app = require('../../app')  
 
@@ -21,7 +21,10 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',function() {
-    let userId, access_token, artistId, orderId
+    let userId = null 
+    let access_token = null
+    let artistId = 1
+    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -30,22 +33,11 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
 
             const payload = {
                 id : data.id,
-                username : data.username
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)
-
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
             done()
         })
         .catch(err => {
@@ -72,7 +64,7 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
             expect(res.statusCode).toEqual(201)
             expect (typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('score')
-            expect(typeof res.body.description).toEqual('number')
+            expect(typeof res.body.score).toEqual('number')
 
             done()
         })
@@ -96,8 +88,8 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
             //assert
             expect(res.statusCode).toEqual(400)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -120,8 +112,8 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
