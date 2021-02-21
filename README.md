@@ -17,4 +17,4 @@ NODE_ENV = test
 after testing
 
 6. db drop database test
-7. --------------------------------
+----------------------------------
