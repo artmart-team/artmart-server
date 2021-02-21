@@ -1,4 +1,5 @@
 const { Order, User, Artist } = require('../models/index')
+const axios = require('axios')
 
 class OrderController {
   static async getAllByUser (req, res, next) {
@@ -77,11 +78,10 @@ class OrderController {
 
   static async post (req, res, next) {
     try {
-      let { title, description, refPictureId, totalOptions } = req.body
+      let { title, description, refPictureId } = req.body
       let setRefPictureId = +req.body.refPictureId || null
       let price = null
       let totalPrice = null
-      totalOptions = +totalOptions
 
       if (!req.body.price){
         const checkArtist = await Artist.findOne({
@@ -95,10 +95,10 @@ class OrderController {
         price = +req.body.price
       }
       
-      if (!req.body.totalOptions) {
+      if (!req.body.totalPrice) {
         totalPrice = price
       } else {
-        totalPrice = price + totalOptions
+        totalPrice = +req.body.totalPrice
       }
 
       const checkDuplicate = await Order.findAll({
@@ -252,6 +252,32 @@ class OrderController {
       } else {
         next ({name: 'Error not found'})
       }
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async respondPayment (req, res, next) {
+    try {
+      const { order_id, gross_amount } = req.body.transaction_details
+
+      axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', {
+        order_id,
+        gross_amount
+      }, {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Basic U0ItTWlkLXNlcnZlci1jTmFXSDdCbUJMRS1tYmsxYWszUmV4al86"
+        }
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error, 'error respondPayment');
+      })
+
     } catch (err) {
       next(err)
     }
