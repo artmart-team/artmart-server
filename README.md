@@ -1,11 +1,11 @@
-TDD
+**TDD**
 
 file seeding : buat testing
 
 start pake bin/http.js
 
-
-STEP TESTING
+-----------------------------------
+**STEP TESTING**
 
 NODE_ENV = test
 
@@ -17,3 +17,4 @@ NODE_ENV = test
 after testing
 
 6. db drop database test
+7. --------------------------------
