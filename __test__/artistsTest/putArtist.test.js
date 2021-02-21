@@ -28,17 +28,17 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('PUT /artists/:artistId',function() {
-    let artistId
+    let artistId =  3
+    let access_token
 
     beforeAll(done => {
         //dummy user login
         Artist.findOne({ where : { email : "testingedit@mail.com"}})
         .then(artist => {
-            artistId = artist.id
 
             const payload = {
                 id : artist.id,
-                usernmae : artist.username
+                username : artist.username
             }
 
             access_token = generateToken(payload)
@@ -59,7 +59,7 @@ describe('PUT /artists/:artistId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .put(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -93,7 +93,7 @@ describe('PUT /artists/:artistId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .put(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -118,7 +118,7 @@ describe('PUT /artists/:artistId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .put(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -143,7 +143,7 @@ describe('PUT /artists/:artistId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .put(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -167,7 +167,7 @@ describe('PUT /artists/:artistId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .put(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -191,7 +191,7 @@ describe('PUT /artists/:artistId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .put(`/artists/${artistId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -215,13 +215,13 @@ describe('PUT /artists/:artistId',function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}`)
+        .put(`/artists/${artistId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
             expect(typeof res.body.message).toHaveProperty('string')

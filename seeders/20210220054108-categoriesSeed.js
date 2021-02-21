@@ -13,37 +13,31 @@ module.exports = {
     */
     const categories = [
       {
-        id: 1,
         name: "Others",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 2,
         name: "Realism",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 3,
         name: "Design",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 4,
         name: "Anime",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 5,
         name: "Abstract",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        id: 6,
         name: "Cartoon",
         createdAt: new Date(),
         updatedAt: new Date()

@@ -6,12 +6,16 @@ const request = require('supertest')
 
 const { beforeAll } = require("@jest/globals")
 
+const { generateToken } = require('../../helpers/jwt')
+
 const { User, Artist, Order } = require('../../models')
 
 const app = require('../../app')  
 
 describe('GET /users/:userId/artists/:artistId/orders/:orderId/reviews',function() {
-    let userId, artistId, orderId
+    let userId, access_token
+    let artistId = 1
+    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -24,18 +28,6 @@ describe('GET /users/:userId/artists/:artistId/orders/:orderId/reviews',function
             }
 
             access_token = generateToken(payload)
-
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
             done()
         })
         .catch(err => {
@@ -55,9 +47,9 @@ describe('GET /users/:userId/artists/:artistId/orders/:orderId/reviews',function
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            res.body(Array.isArray (res.body)).toEqual(true)
+            expect(Array.isArray (res.body)).toEqual(true)
             res.body.forEach(review => {
-                expect (typeof review).toEqual('Object')
+                expect (typeof review).toEqual('object')
                 expect (review).toHaveProperty('title')
                 expect (review).toHaveProperty('description')
                 expect (typeof review.title).toHaveProperty('string')

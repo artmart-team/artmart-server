@@ -4,11 +4,11 @@
 
 const request = require('supertest')
 
-const { Picture, Artist } = require('../models')
+const { Picture, Artist } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================

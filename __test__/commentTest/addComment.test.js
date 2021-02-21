@@ -20,7 +20,8 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('POST /users/:userId/comments',function() {
-    let userId, access_token
+    let userId = null 
+    let access_token = null
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -84,8 +85,8 @@ describe('POST /users/:userId/comments',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -108,8 +109,8 @@ describe('POST /users/:userId/comments',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

@@ -13,20 +13,17 @@ const { beforeAll, afterAll } = require("@jest/globals")
 const app = require('../../app')  
 
 // ===================================================================================
-// ==========================    GET /artists/:artistId/images
+// ==========================    GET /artists/:artistId/pictures
 // ==================================================================================
 
-describe('GET /artists/:artistId/images/:imageId',function() {
-    let artId, pictId
+describe('GET /artists/:artistId/pictures/:pictureId',function() {
+    let artId 
+    let pictId = 2
 
     beforeAll(done => {
         Artist.findOne({ where  : { email : "user@mail.com"}})
         .then(data => {
             artId = data.id
-            return Picture.findOne({ where : { name : "getId picture testing"}})
-        })
-        .then(res => {
-            pictid = res.id
             done()
         })
         .catch(err => {
@@ -41,24 +38,22 @@ describe('GET /artists/:artistId/images/:imageId',function() {
 
         //excecute
         request(app) 
-        .get(`/artists/${artId}/images/${pictId}`)
+        .get(`/artists/${artId}/pictures/${pictId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toEqual('Object')
+            expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('name')
             expect(res.body).toHaveProperty('description')
             expect(res.body).toHaveProperty('price')
             expect(res.body).toHaveProperty('link')
-            expect(res.body).toEqual({
-                name : expect.any(String),
-                description : expect.any(String),
-                price : expect.any(Number),
-                link : expect.any(String),
-
-            })
+            expect(typeof res.body.name).toEqual('string')
+            expect(typeof res.body.description).toEqual('string')
+            expect(typeof res.body.price).toEqual('number')
+            expect(typeof res.body.link).toEqual('string')
+            
             done()
         })
     })
@@ -70,17 +65,16 @@ describe('GET /artists/:artistId/images/:imageId',function() {
 
         //excecute
         request(app) 
-        .get(`/artists/${artId}/images/${idImage}`)
+        .get(`/artists/${artId}/pictures/${idImage}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })

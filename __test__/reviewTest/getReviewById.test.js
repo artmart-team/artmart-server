@@ -9,40 +9,25 @@ const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
 // ===================================================================================
-// ==========================  GET /users/:userId/reviews/:reviewId
+// ====  GET /users/:userId/artists/:artistId/orders/:orderId/reviews/:reviewId
 // ==================================================================================
 
-describe('GET /users/:userId/reviews/:reviewId',function() {
-    let userId, reviewId, artistId, orderId
+describe('GET /users/:userId/artists/:artistId/orders/:orderId/reviews/:reviewId',function() {
+    let reviewId = 4
+    let userId
+    let artistId = 1
+    let orderId = 1 
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
-            return Review.findOne({ where : { title : "getIdReviewTesting"}})
-        })
-        then(rev => {
-            reviewId = rev.id
-
             done()
         })
         .catch(err => {
             console.log(err)
         })
-
     })
-
 
     // ======================== successfull get reviews ==========================
     it('should status 200, successfull get reviews id' ,function (done) {
@@ -80,11 +65,10 @@ describe('GET /users/:userId/reviews/:reviewId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })

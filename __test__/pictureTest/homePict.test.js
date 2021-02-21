@@ -24,13 +24,13 @@ describe('GET /pictures',function() {
 
         //excecute
         request(app) 
-        .get(`/images`)
+        .get(`/pictures`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            res.body(Array.isArray (res.body)).toEqual(true)
+            expect(Array.isArray (res.body)).toEqual(true)
             res.body.forEach(picture => {
                 expect (typeof picture).toEqual('Object')
                 expect (picture).toHaveProperty('name')

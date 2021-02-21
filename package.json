@@ -12,10 +12,10 @@
     "db:seed:all": "npx sequelize db:seed:all",
     "db-test-start": "set NODE_ENV=test&&npm run db:create&&npm run db:migrate&&npm run db:seed:all",
     "db-dev-start": "set NODE_ENV=development&&npm run db:create&&npm run db:migrate&&npm run db:seed:all",
-    "db-test-drop" : "set NODE_ENV=test&&npx sequelize db:drop",
-    "db-dev-drop" : "set NODE_ENV=development&&npx sequelize db:drop",
+    "db-test-drop": "set NODE_ENV=test&&npx sequelize db:drop",
+    "db-dev-drop": "set NODE_ENV=development&&npx sequelize db:drop",
     "dev": "NODE_ENV=development npx nodemon bin/http.js",
-    "test": "NODE_ENV=test npx jest --runInBand --detectOpenHandles --force-exit"
+    "test": "set NODE_ENV=test&&npx jest --runInBand --detectOpenHandles --force-exit"
   },
   "repository": {
     "type": "git",

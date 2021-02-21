@@ -9,9 +9,9 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('DELETE /artist/:artistId/options/:optionId',function() {
-    let artistId
-    let optionId
-    let access_token
+    let artistId = null
+    let optionId = 2
+    let access_token = null
 
     beforeAll(done => {
         Artist.findOne({where : {email : "user@mail.com"}})
@@ -25,10 +25,6 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
 
             access_token = generateToken(decoded)
 
-            return Option.findOne({ where : { title : "deleteOptionTestng"}})
-        })
-        .then(res => {
-            optionId = res.id
             done()
         })
         .catch(err => {
@@ -51,11 +47,10 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -74,8 +69,8 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messagse')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -95,8 +90,8 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
             //assert
             expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

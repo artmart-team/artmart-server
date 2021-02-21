@@ -29,6 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     refImageId: DataTypes.INTEGER,
     duration: DataTypes.INTEGER,
+    price : DataTypes.INTEGER,
+    totalPrice : DataTypes.INTEGER,
     accepted: DataTypes.BOOLEAN,
     done: DataTypes.BOOLEAN,
     paid: DataTypes.BOOLEAN,
@@ -48,6 +50,12 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'ArtistId required'
         }
       },
+    },
+    ReviewId : {
+      type : DataTypes.INTEGER 
+    },
+    RatingId : {
+      type : DataTypes.INTEGER 
     }
   }, {
     sequelize,
