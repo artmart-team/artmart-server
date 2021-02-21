@@ -21,7 +21,10 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',function() {
-    let userId, artistId, orderId, access_token
+    let userId = null
+    let artistId = 1
+    let orderId = 1
+    let access_token = null
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -34,18 +37,6 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             }
 
             access_token = generateToken(payload)
-
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
             done()
         })
         .catch(err => {
@@ -100,8 +91,8 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             //assert
             expect(res.statusCode).toEqual(400)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -125,8 +116,8 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

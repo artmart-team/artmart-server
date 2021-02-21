@@ -8,7 +8,7 @@ const request = require('supertest')
 
 const { Picture, Artist, Category, User } = require('../../models')
 
-const { beforeAll, afterAll } = require("@jest/globals")
+const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
 
@@ -34,17 +34,16 @@ describe('GET /artists/:artistId/pictures',function() {
     // ======================== successfull get image ==========================
     it('should status 200, successfull get all Image' ,function (done) {
         //setup
-        const id = artId
 
         //excecute
         request(app) 
-        .get(`/artists/${id}/pictures`)
+        .get(`/artists/${artId}/pictures`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            res.body(Array.isArray (res.body)).toEqual(true)
+            expect(Array.isArray (res.body)).toEqual(true)
             res.body.forEach(picture => {
                 expect (typeof picture).toEqual('Object')
                 expect (picture).toHaveProperty('name')

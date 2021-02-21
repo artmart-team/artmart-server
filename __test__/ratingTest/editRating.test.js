@@ -9,13 +9,18 @@ const request = require('supertest')
 const { User, Rating, Artist, Order } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  PUT /users/:userId/ratings/:ratingId
 // ==================================================================================
 
 describe('PUT /users/:userId/ratings/:ratingId',function() {
-    let userId, access_token, ratingId, artistId, orderId
+    let userId 
+    let access_token 
+    let ratingId = 3 
+    let artistId = 1
+    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -28,23 +33,6 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             }
 
             access_token = generateToken(payload)
-
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
-            return Rating.findOne({ where : { score : 3 }})
-        })
-        then(rating => {
-            ratingId = rating.id
-
             done()
         })
         .catch(err => {
@@ -97,8 +85,8 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -125,10 +113,9 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -151,8 +138,8 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

@@ -11,28 +11,6 @@ const app = require ('../../app')
 
 describe ('GET /categories', function () {
 
-    beforeAll(done => {
-      Category.create({
-        name : "casual"
-      })
-      .then(() => {
-        done()
-      })
-      .catch(err => {
-        console.log(err, "<< error beforeAll getAllCat.test.js")
-      })
-    })
-
-    afterAll(done => {
-      Category.destroy()
-      .then(() => {
-        done()
-      })
-      .catch(err => {
-        console.log(err, "<< error afterAll getAllCat.test.js")
-      })
-    })
-
     it ('should send response with 200 status code', function (done) {
       request (app)
         .get ('/categories')

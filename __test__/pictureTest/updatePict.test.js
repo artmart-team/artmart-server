@@ -80,7 +80,7 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
         it('should status 400, error name required' ,function (done) {
             //setup
             const body = {
-                title = ""
+                title : ""
             }
     
             //excecute
@@ -108,7 +108,7 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
         const idImage = 9999999
 
         const body = {
-            name = "keren deh"
+            name : "keren deh"
         }
 
         //excecute
@@ -135,7 +135,7 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
     it('should status 403, error Artist id not login' ,function (done) {
         //setup
         const body = {
-            name = "keren deh"
+            name : "keren deh"
         }
 
         //excecute

@@ -1,5 +1,3 @@
-
-
 // DONE REVISION AFISTA 19-02-2021 18.00
 
 // 7 testing -> 1 success test, 6 error test 
@@ -55,13 +53,11 @@ describe('POST /users/register',function() {
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
             expect(res.body).toHaveProperty('profilePicture')
-            expect(res.body).toEqual({
-                username : expect.any(String),
-                firstName : expect.any(String),
-                lastName : expect.any(String),
-                email : expect.any(String),
-                profilePicture : expect.any(String)
-            })
+            expect(typeof res.body.username).toEqual('string')
+            expect(typeof res.body.firstName).toEqual('string')
+            expect(typeof res.body.lastName).toEqual('string')
+            expect(typeof res.body.email).toEqual('string')
+            expect(typeof res.body.profilePicture).toEqual('string')
 
             done()
         })
@@ -89,8 +85,8 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -119,8 +115,8 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -149,8 +145,8 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -178,8 +174,8 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -207,8 +203,8 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -236,8 +232,8 @@ describe('POST /users/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

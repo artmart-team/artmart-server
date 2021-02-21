@@ -4,16 +4,13 @@ const app = require ('../../app')
 
 
 describe ('GET /artists/:artistId/options/:optionId', function () {
-    let artistId, optionId
+    let artistId
+    let optionId = 3 
 
     beforeAll(done => {
         Artist.findOne({ where : {email : "user@mail.com"}})
         .then(data => {
             artistId = data.id
-            return Option.findOne({ where : { title : "byIdOptionTesting"}})
-        })
-        .then(res => {
-            optionId = res.id
             done()
         })
         .catch(err => {

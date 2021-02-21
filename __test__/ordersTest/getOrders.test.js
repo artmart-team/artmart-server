@@ -2,7 +2,7 @@ const request = require('supertest')
 
 const { beforeAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require('../../app')  
 
 const { User, Artist } = require('../../models')
 

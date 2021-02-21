@@ -16,13 +16,15 @@ const { Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================    POST /artists/:artistId/pictures
 // ==================================================================================
 
 describe('POST /artists/:artistId/pictures', function() {
-    let artId, access_token
+    let artId = null
+    let access_token = null
     let catId = 1
     let idUser = 1
 

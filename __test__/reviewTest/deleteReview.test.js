@@ -15,7 +15,11 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('DELETE /users/:userId/reviews/:reviewId',function() {
-    let userId, access_token, reviewId, artistId, orderId
+    let userId
+    let access_token 
+    let reviewId = 2
+    let artistId = 1
+    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -28,23 +32,6 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
             }
 
             access_token = generateToken(payload)
-
-
-            return Artist.findOne({ where : { email : "user@mail.com"}})
-        })
-        .then(res => {
-            artistId = res.id
-
-            return Order.findOne({ where : { title : "testingforOrder"}})
-        })
-        then(response => {
-            orderId = response.id
-
-            return Review.findOne({ where : { title : "deleteReviewTesting"}})
-        })
-        then(rev => {
-            reviewId = rev.id
-
             done()
         })
         .catch(err => {
@@ -68,11 +55,10 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -91,8 +77,8 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

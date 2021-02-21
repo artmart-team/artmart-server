@@ -7,13 +7,15 @@ const { User } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================    POST /artists/:artistId/orders
 // ==================================================================================
 
 describe('POST /artists/:artistId/orders', function() {
-    let userId, access_token
+    let userId = null
+    let access_token = null
 
     beforeAll(done => {
         //dummy Artist login
@@ -102,7 +104,7 @@ describe('POST /artists/:artistId/orders', function() {
             paid : false,
             imageURL : 'link.google.com',
             artistId : 1,
-            UserId : userId       
+            UserId : userId
         }
     
         //excecute

@@ -66,7 +66,12 @@ class ArtistController {
               profilePicture: data.profilePicture
             }
             const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, username:data.username, profilePicture: data.profilePicture})
+
+            res.status (200).json ({
+              access_token, 
+              id: data.id, 
+              username:data.username, 
+              profilePicture: data.profilePicture})
           }
         }
       } else {
@@ -76,19 +81,30 @@ class ArtistController {
           }
         })
         if (!data) {
+
           next ({name: 'Invalid email / password'})
+        
         } else {
+
           let checked = checkPassword (password, data.password)
+          
           if (!checked) {
             next ({name: 'Invalid email / password'})
           } else {
+            
             const payload = {
               id: data.id,
               username: data.username,
               profilePicture: data.profilePicture
             }
+
             const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, username:data.username, profilePicture: data.profilePicture})
+
+            res.status (200).json ({
+              access_token, 
+              id: data.id, 
+              username:data.username, 
+              profilePicture: data.profilePicture})
           }
         }
       }

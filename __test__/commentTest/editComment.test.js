@@ -5,7 +5,7 @@
 // -- it error not login user
 
 const request = require('supertest')
-const { User, Comment } = require('../../models')
+const { User } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
@@ -15,8 +15,9 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('PUT /users/:userId/comments/:commentId',function() {
-    let userId, access_token
-    let commentId
+    let userId = null 
+    let access_token = null
+    let commentId = 2
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -29,11 +30,6 @@ describe('PUT /users/:userId/comments/:commentId',function() {
             }
             
             access_token = generateToken(decoded)
-
-            return Comment.findOne({ where : {description : "buat test edit comment"}})
-        })
-        then(res => {
-            commentId = res.id
             done()
         })
         .catch(err => {
@@ -86,8 +82,8 @@ describe('PUT /users/:userId/comments/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -114,10 +110,9 @@ describe('PUT /users/:userId/comments/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -140,8 +135,8 @@ describe('PUT /users/:userId/comments/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

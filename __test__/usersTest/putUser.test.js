@@ -29,7 +29,7 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('PUT /users/:userId',function() {
-    let userId
+    let userId = 3
     let access_token 
 
     beforeAll(done => {
@@ -61,7 +61,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .put(`/users/${userId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -75,12 +75,10 @@ describe('PUT /users/:userId',function() {
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
             expect(res.body).toHaveProperty('profilePicture')
-            expect(res.body).toEqual({
-                username : expect.any(String),
-                firstName : expect.any(String),
-                lastName : expect.any(String),
-                email : expect.any(String)
-            })
+            expect(typeof res.body.username).toEqual('string')
+            expect(typeof res.body.firstName).toEqual('string')
+            expect(typeof res.body.lastName).toEqual('string')
+            expect(typeof res.body.email).toEqual('string')
 
             done()
         })
@@ -95,7 +93,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .put(`/users/${userId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -104,8 +102,8 @@ describe('PUT /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -121,7 +119,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .put(`/users/${userId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -130,8 +128,8 @@ describe('PUT /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messagse).toEqual('string')
 
             done()
         })
@@ -147,7 +145,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .put(`/users/${userId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -156,8 +154,8 @@ describe('PUT /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -172,7 +170,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .put(`/users/${userId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -181,8 +179,8 @@ describe('PUT /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -197,7 +195,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .put(`/users/${userId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -206,8 +204,8 @@ describe('PUT /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -222,7 +220,7 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .patch(`/users/${userId}`)
+        .put(`/users/${userId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -230,8 +228,8 @@ describe('PUT /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toHaveProperty('string')
 
             done()
         })

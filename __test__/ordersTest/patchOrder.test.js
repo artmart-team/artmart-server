@@ -16,7 +16,9 @@ const app = require('../../app')
 
 
 describe('PATCH /artists/:artistId/orders', function() {
-    let artistId, access_token, orderId
+    let artistId = null
+    let access_token = null
+    let orderId = 3
 
     beforeAll(done => {
         //dummy Artist login
@@ -30,12 +32,6 @@ describe('PATCH /artists/:artistId/orders', function() {
             }
 
             access_token = generateToken(payload)
-
-            return Order.findOne({ where : { title : "patchForOrderTesting"}})
-
-        })
-        .then(res => {
-            orderId = res.id
             done()
         })
         .catch(err => {

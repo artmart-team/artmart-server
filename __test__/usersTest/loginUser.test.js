@@ -42,10 +42,8 @@ describe('POST /users/login',function() {
             expect(res.body).toHaveProperty('access_token')
             expect(res.body).toHaveProperty('id')
             expect(res.body).toHaveProperty('username')
-            expect(res.body).toEqual({
-                access_token : expect.any(String),
-                username : expect.any(String)
-            })
+            expect(typeof res.body.access_token).toEqual('string')
+            expect(typeof res.body.username).toEqual('string')
 
             done()
         })
@@ -73,11 +71,8 @@ describe('POST /users/login',function() {
             expect(res.body).toHaveProperty('access_token')
             expect(res.body).toHaveProperty('id')
             expect(res.body).toHaveProperty('username')
-            expect(res.body).toEqual({
-                access_token : expect.any(String),
-                username : expect.any(String)
-            })
-
+            expect(typeof res.body.access_token).toEqual('string')
+            expect(typeof res.body.username).toEqual('string')
 
             done()
         })
@@ -101,8 +96,8 @@ describe('POST /users/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -127,8 +122,8 @@ describe('POST /users/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -153,8 +148,8 @@ describe('POST /users/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -179,8 +174,8 @@ describe('POST /users/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
