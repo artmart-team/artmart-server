@@ -6,7 +6,7 @@ class OrderController {
     try {
       const data = await Order.findAll({
         attributes: [
-          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'options', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
         ],
         include: {
           model: Artist,
@@ -23,7 +23,7 @@ class OrderController {
     try {
       const data = await Order.findAll({
         attributes: [
-          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'options', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
         ],
         include: {
           model: User,
@@ -43,7 +43,7 @@ class OrderController {
           id: +req.params.orderId
         },
         attributes: [
-          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'options', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
         ],
         include: {
           model: Artist,
@@ -63,7 +63,7 @@ class OrderController {
           id: +req.params.orderId
         },
         attributes: [
-          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'options', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
         ],
         include: {
           model: User,
@@ -78,7 +78,7 @@ class OrderController {
 
   static async post (req, res, next) {
     try {
-      let { title, description, refPictureId } = req.body
+      let { title, description } = req.body
       let setRefPictureId = +req.body.refPictureId || null
       let price = null
       let totalPrice = null
@@ -103,7 +103,8 @@ class OrderController {
 
       const checkDuplicate = await Order.findAll({
         where: {
-          ArtistId: +req.params.artistId
+          ArtistId: +req.params.artistId,
+          UserId: +req.params.userId
         }
       })
       
@@ -130,7 +131,7 @@ class OrderController {
       }
       const data = await Order.create(obj, {
         attributes: [
-          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'userId', 'artistId', 'reviewId', 'ratingId'
+          'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'options', 'userId', 'artistId', 'reviewId', 'ratingId'
         ]
       })
       res.status(201).json(data)
