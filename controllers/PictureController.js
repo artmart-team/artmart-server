@@ -1,4 +1,4 @@
-const { Picture, User, Artist } = require ('../models/index')
+const { Picture, User, Artist, Rating } = require ('../models/index')
 
 class PictureController {
   static async getAll (req, res, next) {
@@ -12,6 +12,46 @@ class PictureController {
           attributes: [ 'id', 'username', 'profilePicture']
         }
       })
+
+      const artistData = await Artist.findAll()
+      let dataRating = await Rating.findAll()
+
+      let artistsRating = {}
+
+      if (artistData.length > 0) {
+        artistData.forEach(e => {
+          if (!artistsRating[e.id]) {
+            artistsRating[e.id] = []
+          }
+
+          if (dataRating.length > 0) {
+            dataRating.forEach (rating => {
+              if (rating.ArtistId === e.id) {
+                return artistsRating[e.id].push(rating.score)
+              }
+            })
+          }
+        })
+      }
+
+      for (let key in artistsRating) {
+        let total = null
+        artistsRating[key].forEach(score => {
+          total += score
+        })
+        artistsRating[key] = total / (artistsRating[key].length)
+        if (isNaN(artistsRating[key])) artistsRating[key] = null
+      }
+
+      data.forEach(picture => {
+        for (let key in artistsRating) {
+          if (picture.ArtistId == key) {
+            picture.Artist.dataValues.averageRating = artistsRating[key]
+          }
+        }
+
+      })
+
       res.status(200).json(data)
     } catch (err) {
       next(err)
