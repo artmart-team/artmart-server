@@ -9,7 +9,7 @@ class CommentController {
         },
         include: {
           model: User,
-          attributes: ['username', 'email', 'profilePicture']
+          attributes: [ 'id', 'username', 'profilePicture']
         }
       })
       res.status(200).json(data)
