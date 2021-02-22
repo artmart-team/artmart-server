@@ -130,6 +130,9 @@ async function authorizeUserPicture (req, res, next) {
         id: targetId
       }
     })
+    if (!data) {
+      return next({ name: 'Error not found' })
+    }
 
     if (data.UserId !== req.userId) {
       res.status (401).json ({message: 'Unauthorized'})
@@ -171,6 +174,9 @@ async function authorizeUserComment (req, res, next) {
         id: targetId
       }
     })
+    if (!data) {
+      return next({ name: 'Error not found' })
+    }
 
     if (data.UserId !== req.userId) {
       res.status (401).json ({message: 'Unauthorized'})
@@ -212,6 +218,31 @@ async function authorizeUserRating (req, res, next) {
         id: targetId
       }
     })
+    if (!data) {
+      return next({ name: 'Error not found' })
+    }
+
+    if (data.UserId !== req.userId) {
+      res.status (401).json ({message: 'Unauthorized'})
+    } else if (data.UserId === req.userId) {
+      next()
+    }
+  } catch (err) {
+    next (err)
+  }
+}
+
+async function authorizeUserReview (req, res, next) {
+  try {
+    const targetId = +req.params.reviewId
+    var data = await Review.findOne({
+      where: {
+        id: targetId
+      }
+    })
+    if (!data) {
+      return next({ name: 'Error not found' })
+    }
 
     if (data.UserId !== req.userId) {
       res.status (401).json ({message: 'Unauthorized'})
@@ -233,5 +264,6 @@ module.exports = {
   authorizeArtistPicture,
   authorizeUserComment,
   authorizeArtistOption,
-  authorizeUserRating
+  authorizeUserRating,
+  authorizeUserReview
 }

@@ -5,9 +5,9 @@
     "lastName": "jojo",
     "email": "shinta_jojo@mail.com",
     "password": "1234",
-    "profilePicture": "https://icotar.com/avatar/craig",
-    "completeDuration": 10,
-    "bankAccount": 1,
+    "profilePicture": "",
+    "completeDuration": 48,
+    "bankAccount": 123456789,
     "defaultPrice": 125000
   },
   {
@@ -17,19 +17,19 @@
     "email": "shin_juu@mail.com",
     "password": "1234",
     "profilePicture": "https://www.flaticon.com/svg/vstatic/svg/2922/2922561.svg?token=exp=1613905731~hmac=0eebde0f40c08ffecf9716860b125048",
-    "completeDuration": 10,
-    "bankAccount": 1,
+    "completeDuration": 72,
+    "bankAccount": 987654321,
     "defaultPrice": 100000
   },
   {
-    "username": "san_02",
+    "username": "san_03",
     "firstName": "shan",
     "lastName": "daaa",
     "email": "san_daaa@mail.com",
     "password": "1234",
     "profilePicture": "https://www.flaticon.com/svg/vstatic/svg/2922/2922478.svg?token=exp=1613905735~hmac=60b3cf78081fb4dad0ed8f4474c99d27",
-    "completeDuration": 10,
-    "bankAccount": 1,
+    "completeDuration": 96,
+    "bankAccount": 123459876,
     "defaultPrice": 50000
   }
 ]
