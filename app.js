@@ -1,7 +1,7 @@
 if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
     require('dotenv').config()
   }
-  
+
   const express = require('express')
   const router = require ('./routes/indexRouter')
   const errorHandlers = require ('./middlewares/errorHandlers')
@@ -22,3 +22,6 @@ if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
   app.listen(port, () => {
     console.log(`mARTerialize app listening at http://localhost:${port}`)
   })
+
+module.exports = app
+
