@@ -92,12 +92,41 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             //assert
             expect(res.statusCode).toEqual(400)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('errors')
+            expect(Array.isArray(res.body.errors)).toEqual(true)
 
             done()
         })
     })
+
+        // ======================== error internal server ==========================
+        it('should status 500, error internal server' ,function (done) {
+            //setup
+            const body = {
+                sssssss : "",
+                ssssssss : ""
+            }
+    
+            //excecute
+            request(app) 
+            .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
+            .set('access_token', access_token)
+            .send(body)
+            .end((err, res) => {
+                if(err) done(err)
+                        
+                //assert
+                expect(res.statusCode).toEqual(500)
+                expect (typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('messages')
+                expect(typeof res.body.messages).toEqual('string')
+    
+                done()
+            })
+        })
+
+
+
 
     // ======================== error user not login ==========================
     it('should status 403, error not login' ,function (done) {
@@ -115,7 +144,7 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')

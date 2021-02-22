@@ -3,7 +3,6 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
 
-
     const reviews = [
       {
         title : "testingForReview",

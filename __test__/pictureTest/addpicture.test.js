@@ -35,16 +35,14 @@ describe('POST /artists/:artistId/pictures', function() {
             artId = artis.id
 
             const payload = {
-                id : artist.id,
-                username : artist.username,
-                profilePicture : artist.profilePicture
+                id : artis.id,
+                username : artis.username,
+                profilePicture : artis.profilePicture
             }
 
             access_token = generateToken(payload)
-
-            if(artId && catId && idUser) {
                 done()
-            }
+
         })
         .catch(err => {
             console.log(err, "<< err beforeAll get token putUser.test.js")
@@ -81,12 +79,11 @@ describe('POST /artists/:artistId/pictures', function() {
             expect(res.body).toHaveProperty('CategoryId')
             expect(res.body).toHaveProperty('ArtistId')
             expect(res.body).toHaveProperty('UserId')
-            expect(res.body).toEqual({
-                name : expect.any(String),
-                price : expect.any(Number),
-                link : expect.any(String),
-                description : expect.any(String),
-            })
+            expect(typeof res.body.name).toEqual('string')
+            expect(typeof res.body.description).toEqual('string')
+            expect(typeof res.body.price).toEqual('number')
+            expect(typeof res.body.link).toEqual('string')
+
 
             done()
         })
@@ -203,10 +200,39 @@ describe('POST /artists/:artistId/pictures', function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+
+
+    // ====================== error internal server ===========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const body = {
+            adadasd : 'asdasdasds',
+            asdasdasdsa : '',
+            asdsadasdsa : 100000,
+            liasdsadnk : ''       
+        }
+    
+        //excecute
+        request(app) 
+        .post(`/artists/${artId}/pictures`)
+        .set("access_token", access_token)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toHaveProperty('string')
 
             done()
         })

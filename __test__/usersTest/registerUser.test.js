@@ -34,8 +34,7 @@ describe('POST /users/register',function() {
             firstName : 'test',
             lastName : 'user',
             email : 'testingforuser@mail.com',
-            password : '123456',
-            profilePicture : "link.google.com"         
+            password : '123456'        
         }
     
         //excecute
@@ -238,4 +237,33 @@ describe('POST /users/register',function() {
             done()
         })
     })
+
+        // ====================== error internal server ===========================
+        it('should status 500, error internal server' ,function (done) {
+            //setup
+            const body = {
+                ssss : 'testUser',
+                sssssss : 'test',
+                ssssdsd : 'user',
+                asdsadasd : 'testingforuser@mail.com',
+                asdsadasdas : '',
+                adsadasds : "link.google.com"         
+            }
+        
+            //excecute
+            request(app) 
+            .post('/users/register')
+            .send(body)
+            .end((err, res) => {
+                if(err) done(err)
+                        
+                //assert
+                expect(res.statusCode).toEqual(500)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('messages')
+                expect(typeof res.body.messages).toEqual('string')
+    
+                done()
+            })
+        })
 })

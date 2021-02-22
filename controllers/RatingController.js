@@ -14,6 +14,42 @@ class RatingController {
     }
   }
 
+  static async getRatingIdUser (req, res, next) {
+    try {
+      const data  = await Rating.findOne({ where : {
+        id : +req.params.ratingId,
+        UserId : +req.params.userId
+      }}) 
+
+      if(data) {
+        res.status(200).json(data)
+      } else {
+        next({ name : 'Error not found'})
+      }
+
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async getRatingIdArtist (req, res, next) {
+    try {
+      const data  = await Rating.findOne({ where : {
+        id : +req.params.ratingId,
+        ArtistId : +req.params.artistId
+      }}) 
+
+      if(data) {
+        res.status(200).json(data)
+      } else {
+        next({ name : 'Error not found'})
+      }
+
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async getAllByUser (req, res, next) {
     try {
       const data = await Rating.findAll({
@@ -46,7 +82,7 @@ class RatingController {
           id: +req.params.orderId
         }
       })
-      res.status(200).json(data)
+      res.status(201).json(data)
     } catch (err) {
       next(err)
     }
@@ -69,6 +105,7 @@ class RatingController {
         },
         returning: true
       })
+
       let isSuccess = data[0]
       
       if (isSuccess === 1) {
@@ -90,6 +127,11 @@ class RatingController {
           id: +req.params.ratingId
         }
       })
+
+      if(!data) {
+        next({ name : 'Error not found'})
+      }
+
       res.status(200).json({ messages: 'Rating deleted' })
     } catch (err) {
       next(err)

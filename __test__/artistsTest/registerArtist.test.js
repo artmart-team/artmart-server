@@ -35,7 +35,6 @@ describe('POST /artists/register',function() {
             lastName : 'artist',
             email : 'testingforregisterartist@mail.com',
             password : '123456',
-            profilePicture : "link.google.com",
             bankAccount : 23023023,
             completeDuration : 48,
             defaultPrice : 100000         
@@ -244,6 +243,35 @@ describe('POST /artists/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
+
+            done()
+        })
+    })
+
+
+       // ====================== error internal server ===========================
+       it('should status 500, error internal server' ,function (done) {
+        //setup
+        const body = {
+            ss : 'testArtist',
+            sss : 'test',
+            ssss : 'artist',
+            ssssss : 'testingforregisterartist@mail.com',
+            sssssss : '',       
+        }
+    
+        //excecute
+        request(app) 
+        .post('/artists/register')
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

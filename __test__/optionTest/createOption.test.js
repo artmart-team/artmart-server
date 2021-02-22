@@ -83,15 +83,15 @@ describe('POST /artists/:artisId/options',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('errors')
+            expect(Array.isArray(res.body.errors)).toEqual(true)
 
             done()
         })
     })
 
     // ======================== error user not login ==========================
-    it('should status 403, error not login' ,function (done) {
+    it('should status 401, error not login' ,function (done) {
         //setup
         const data = {
             title : "create new review",
@@ -106,10 +106,36 @@ describe('POST /artists/:artisId/options',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+
+    // ======================== error internal server ==========================
+    it('should status 500, internal server error' ,function (done) {
+        //setup
+        const body = {
+            ssss : "sadsadasd",
+            sssdsadasd : ""
+        }
+
+        //excecute
+        request(app) 
+        .post(`/artists/${artistId}/options`)
+        .set('access_token', access_token)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect (typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual("string")
 
             done()
         })

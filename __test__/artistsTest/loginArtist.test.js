@@ -184,4 +184,29 @@ describe('POST /artists/login',function() {
             done()
         })
     })
+
+
+        // ==========================  error internal server  ===============================
+        it('should status 500, error internal server' ,function (done) {
+            //setup
+            const body = {
+                sssssss : 'testinggggggg@mail.com'      
+            }
+        
+            //excecute
+            request(app) 
+            .post('/artists/login')
+            .send(body)
+            .end((err, res) => {
+                if(err) done(err)
+                        
+                //assert
+                expect(res.statusCode).toEqual(500)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('messages')
+                expect(typeof res.body.messages).toBe('string')
+    
+                done()
+            })
+        })
 })

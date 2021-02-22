@@ -10,7 +10,7 @@ const ratingsRouter = require ('./ratingsRouter')
 const categoryRouter = require('./catRouter')
 
 router.get('/', (req, res) => {
-    res.status(200).json({ message : "get mARTerialize back end "})
+    res.status(200).json({ messages : "get mARTerialize back end "})
 })
 
 router.use (categoryRouter)

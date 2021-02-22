@@ -17,10 +17,35 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('GET /users/:userId/ratings',function() {
+    let userId = 1
+
+    // ======================== successfull get all ratings ==========================
+    it('should status 200, successfull get all ratings' ,function (done) {
+        //setup
+
+        //excecute
+        request(app) 
+        .get(`/users/${userId}/ratings`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(200)
+            expect(Array.isArray (res.body)).toEqual(true)
+            res.body.forEach(rating => {
+                expect (typeof rating).toEqual('object')
+                expect (rating).toHaveProperty('score')
+                expect (typeof rating.score).toEqual('number')
+            })
+
+            done()
+        })
+    })
+})
+
+
+describe('GET /users/:userId/ratings',function() {
     let artistId = 1 
-    let orderId = 1 
-    let access_token = null
-    let userId = null
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -46,7 +71,7 @@ describe('GET /users/:userId/ratings',function() {
 
         //excecute
         request(app) 
-        .get(`/users/${userId}/artist/${artistId}/orders/${orderId}/ratings`)
+        .get(`/artists/${artistId}/ratings`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -54,9 +79,9 @@ describe('GET /users/:userId/ratings',function() {
             expect(res.statusCode).toEqual(200)
             expect(Array.isArray (res.body)).toEqual(true)
             res.body.forEach(rating => {
-                expect (typeof rating).toEqual('Object')
+                expect (typeof rating).toEqual('object')
                 expect (rating).toHaveProperty('score')
-                expect (typeof rating.score).toHaveProperty('number')
+                expect (typeof rating.score).toEqual('number')
             })
 
             done()

@@ -11,15 +11,15 @@ const app = require('../../app')
 const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
-// ==========================  DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratingId
+// ==========================  DELETE /users/:userId/artists/:artistId/ratings/:ratingId
 // ==================================================================================
 
-describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratingId',function() {
-    let userId
-    let access_token
+describe('DELETE /users/:userId/artists/:artistId/ratings/:ratingId',function() {
+    let userId = null
+    let access_token = null
     let ratingId = 4
     let artistId = 1
-    let orderId = 1
+
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -49,7 +49,7 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${id}`)
+        .delete(`/users/${userId}/artists/${artistId}/ratings/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -66,17 +66,17 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
 
 
     // ======================== error user not login ==========================
-    it('should status 403, error edit user not login' ,function (done) {
+    it('should status 401, error edit user not login' ,function (done) {
         //setup
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
+        .delete(`/users/${userId}/artists/${artistId}/ratings/${ratingId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
@@ -91,7 +91,7 @@ describe('DELETE /users/:userId/artists/:artistId/orders/:orderId/ratings/:ratin
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
+        .delete(`/users/${userId}/artists/${artistId}/ratings/${ratingId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)

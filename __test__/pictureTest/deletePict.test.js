@@ -16,26 +16,22 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
-    let artId, access_token
-    let pictId
-
+    let artId 
+    let access_token
+    let pictId = 1
+ 
     beforeAll(done => {
         Artist.findOne({ where : { email : "user@mail.com"}})
         .then(data => {
             artId = data.id
 
             const payload = {
-                id : artist.id,
-                username : artist.username,
-                profilePicture : artist.profilePicture
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
-            access_token = generateToken(paylaod)
-
-            return Picture.findOne({ where : { name : "delId picture testing"}})
-        })
-        .then(res => {
-            pictId = res.id
+            access_token = generateToken(payload)
             done()
         })
         .catch(err => {
@@ -44,6 +40,30 @@ describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
     })
 
     // error not login (belom dibuat)
+
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const idPict = "sadasdasd"
+
+        //excecute
+        request(app) 
+        .delete(`/artists/${artId}/pictures/${idPict}`)
+        .set('access_token', access_token )
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+
 
     // ======================== successfull delete picture ==========================
     it('should status 200, successfull delete' ,function (done) {
@@ -58,10 +78,12 @@ describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
     })
+
 })

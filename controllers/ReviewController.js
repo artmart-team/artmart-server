@@ -27,6 +27,42 @@ class ReviewController {
     }
   }
 
+  static async getReviewIdUser (req, res, next) {
+    try {
+      const data  = await Review.findOne({ where : {
+        id : +req.params.reviewId,
+        UserId : +req.params.userId
+      }}) 
+
+      if(data) {
+        res.status(200).json(data)
+      } else {
+        next({ name : 'Error not found'})
+      }
+
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async getRReviewIdArtist (req, res, next) {
+    try {
+      const data  = await Review.findOne({ where : {
+        id : +req.params.reviewId,
+        ArtistId : +req.params.artistId
+      }}) 
+
+      if(data) {
+        res.status(200).json(data)
+      } else {
+        next({ name : 'Error not found'})
+      }
+
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async post (req, res, next) {
     try {
       const { title, description } = req.body
@@ -48,7 +84,7 @@ class ReviewController {
           id: +req.params.orderId
         }
       })
-      res.status(200).json(data)
+      res.status(201).json(data)
     } catch (err) {
       next(err)
     }
@@ -96,6 +132,10 @@ class ReviewController {
           id: +req.params.reviewId
         }
       })
+      if(!data) {
+        next({ name: 'Error not found' })
+      }
+
       res.status(200).json({ messages: 'Review deleted' })
     } catch (err) {
       next(err)

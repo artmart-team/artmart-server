@@ -6,6 +6,10 @@ router.get ('/artists/:artistId/ratings', RatingController.getAllByArtist)
 
 router.get ('/users/:userId/ratings', RatingController.getAllByUser)
 
+router.get ('/users/:userId/ratings/:ratingId', RatingController.getRatingIdUser)
+
+router.get ('/artists/:artistId/ratings/:ratingId', RatingController.getRatingIdArtist)
+
 router.post ('/users/:userId/artists/:artistId/orders/:orderId/ratings/', authenticate, RatingController.post)
 
 router.put ('/users/:userId/artists/:artistId/ratings/:ratingId', authenticate, authorizeUserRating, RatingController.put)

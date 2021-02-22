@@ -17,6 +17,21 @@ class OptionController {
     }
   }
 
+  static async getOptionId (req, res, next) {
+    try {
+      const data  = await Option.findOne({ where : {id : +req.params.optionId}}) 
+
+      if(data) {
+        res.status(200).json(data)
+      } else {
+        next({ name : 'Error not found'})
+      }
+
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async post (req, res, next) {
     try {
       const { title, extraPrice } = req.body

@@ -12,22 +12,8 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/ratings/:ratingId',function() {
-    let userId = null
+    let userId = 1
     let ratingId = 2
-    let artistId = 1 
-    let orderId =  1
-
-    beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            userId = data.id
-            done()
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-    })
 
     // ======================== successfull get rating ==========================
     it('should status 200, successfull get rating id' ,function (done) {
@@ -35,15 +21,15 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .get(`/users/${userId}/artist/${artistId}/orders/${orderId}/ratings/${ratingId}`)
+        .get(`/users/${userId}/ratings/${ratingId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('description')
-            expect(typeof res.body.description).toEqual('string')
+            expect(res.body).toHaveProperty('score')
+            expect(typeof res.body.score).toEqual('number')
 
             done()
         })
@@ -57,7 +43,56 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .get(`/users/${userId}/artist/${artistId}/orders/${orderId}/ratings/${id}`)
+        .get(`/users/${userId}/ratings/${id}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(404)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+})
+
+
+
+describe('GET /users/:userId/ratings/:ratingId',function() {
+    let artistId = 1
+    let ratingId = 2
+
+    // ======================== successfull get rating ==========================
+    it('should status 200, successfull get rating id' ,function (done) {
+        //setup
+
+        //excecute
+        request(app) 
+        .get(`/artists/${artistId}/ratings/${ratingId}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(200)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('score')
+            expect(typeof res.body.score).toEqual('number')
+
+            done()
+        })
+    })
+
+
+    // ======================== error comments id not found ==========================
+    it('should status 404, error comment id not found' ,function (done) {
+        //setup
+        const id = 9999999
+
+        //excecute
+        request(app) 
+        .get(`/artists/${artistId}/ratings/${id}`)
         .end((err, res) => {
             if(err) done(err)
                     

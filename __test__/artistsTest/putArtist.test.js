@@ -233,4 +233,30 @@ describe('PUT /artists/:artistId',function () {
             done()
         })
     })
+
+
+        // ====================== error internal server ===========================
+        it('should status 500, error internal server' ,function (done) {
+            //setup
+            const body = {
+                sssssss : ''
+            }
+        
+            //excecute
+            request(app) 
+            .put(`/artists/${artistId}`)
+            .set('access_token', access_token)
+            .send(body)
+            .end((err, res) => {
+                if(err) done(err)
+                        
+                //assert
+                expect(res.statusCode).toEqual(500)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('messages')
+                expect(typeof res.body.messages).toEqual('string')
+    
+                done()
+            })
+        })
 })

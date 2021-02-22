@@ -41,7 +41,7 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
 
         //excecute
         request(app) 
-        .delete(`/artist/${artistId}/options/${id}`)
+        .delete(`/artists/${artistId}/options/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -63,14 +63,37 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
 
         //excecute
         request(app) 
-        .delete(`/artist/${artistId}/options/${optionId}`)
+        .delete(`/artists/${artistId}/options/${optionId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messagse')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const id = "sadasdasdas"
+
+        //excecute
+        request(app) 
+        .delete(`/artists/${artistId}/options/${id}`)
+        .set('access_token', access_token)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
 
             done()

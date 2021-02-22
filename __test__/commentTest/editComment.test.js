@@ -143,4 +143,30 @@ describe('PUT /users/:userId/comments/:commentId',function() {
             done()
         })
     })
+
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const body = {
+            ssssss : "sadads"
+        }
+
+        //excecute
+        request(app) 
+        .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
+        .set('access_token', access_token)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
 })

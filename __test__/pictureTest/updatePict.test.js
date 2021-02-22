@@ -11,13 +11,16 @@ const { Picture, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ================    PUT /artists/:artistId/pictures/:pictureId
 // ==================================================================================
 
 describe('PUT /artists/:artistId/pictures/:pictureId',function() {
-    let artId, pictId, access_token
+    let artId = 1
+    let pictId = 3
+    let access_token = null
 
     beforeAll(done => {
 
@@ -31,12 +34,6 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
             }
 
             access_token = generateToken(payload)
-
-            return Picture.findOne({where : {name : "editId picture testing"}})
-        })
-        .then(res => {
-            pictId = res.id
-
             done()
         })
         .catch(err => {
@@ -61,12 +58,12 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toEqual('Object')
+            expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('name')
             expect(res.body).toHaveProperty('description')
             expect(res.body).toHaveProperty('price')
             expect(res.body).toHaveProperty('link')
-            expect(typeof res.body.name).toEqual('name')
+            expect(typeof res.body.name).toEqual('string')
             expect(typeof res.body.description).toEqual('string')
             expect(typeof res.body.price).toEqual('number')
             expect(typeof res.body.link).toEqual('string')
@@ -92,9 +89,9 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
                         
                 //assert
                 expect(res.statusCode).toEqual(400)
-                expect(typeof res.body).toEqual('Object')
-                expect(res.body).toHaveProperty('messages')
-                expect(typeof res.body.messages).toEqual('string')
+                expect(typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('errors')
+                expect(Array.isArray(res.body.errors)).toEqual(true)
 
                 done()
             })
@@ -119,9 +116,9 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(typeof res.body).toEqual('object')
+            // expect(res.body).toHaveProperty('messages')
+            // expect(typeof res.body.messages).toEqual('string')
             
             done()
         })
@@ -129,7 +126,7 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
 
 
     // ======================== error artist not login ==========================
-    it('should status 403, error Artist id not login' ,function (done) {
+    it('should status 401, error Artist id not login' ,function (done) {
         //setup
         const body = {
             name : "keren deh"
@@ -143,10 +140,10 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.statusCode).toEqual(404)
+            expect(typeof res.body).toEqual('object')
+            // expect(res.body).toHaveProperty('messages')
+            // expect(typeof res.body.messages).toEqual('string')
             
             done()
         })

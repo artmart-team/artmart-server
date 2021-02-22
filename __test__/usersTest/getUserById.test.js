@@ -82,4 +82,25 @@ describe('GET /users/:userId',function() {
             done()
         })
     })
+
+        // ==========================  error internal server  ===============================
+        it('should status 500, error internal server' ,function (done) {
+            //setup
+            const id = "selat"
+        
+            //excecute
+            request(app) 
+            .get(`/users/${id}`)
+            .end((err, res) => {
+                if(err) done(err)
+                        
+                //assert
+                expect(res.statusCode).toEqual(500)
+                expect(typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('messages')
+                expect(typeof res.body.messages).toEqual('string')
+    
+                done()
+            })
+        })
 })

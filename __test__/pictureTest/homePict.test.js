@@ -1,7 +1,6 @@
 // describe GET /images
 // -- it success
 
-
 // 1 success test
 
 const request = require('supertest')
@@ -32,16 +31,16 @@ describe('GET /pictures',function() {
             expect(res.statusCode).toEqual(200)
             expect(Array.isArray (res.body)).toEqual(true)
             res.body.forEach(picture => {
-                expect (typeof picture).toEqual('Object')
+                expect (typeof picture).toEqual('object')
                 expect (picture).toHaveProperty('name')
                 expect (picture).toHaveProperty('description')
                 expect (picture).toHaveProperty('price')
                 expect (picture).toHaveProperty('link')
 
-                expect (typeof picture.name).toHaveProperty('string')
-                expect (typeof picture.description).toHaveProperty('string')
-                expect (typeof picture.price).toHaveProperty('number')
-                expect (typeof picture.link).toHaveProperty('string')
+                expect (typeof picture.name).toEqual('string')
+                expect (typeof picture.description).toEqual('string')
+                expect (typeof picture.price).toEqual('number')
+                expect (typeof picture.link).toEqual('string')
             })
 
             done()

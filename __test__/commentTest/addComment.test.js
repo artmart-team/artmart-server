@@ -120,4 +120,30 @@ describe('POST /users/:userId/comments',function() {
             done()
         })
     })
+
+
+        // ======================== error internal server ==========================
+        it('should status 500, error internal server' ,function (done) {
+            //setup
+            const data = {
+                ssssss : "sdsad"
+            }
+    
+            //excecute
+            request(app) 
+            .post(`/users/${userId}/artists/${artistId}/comments`)
+            .set('access_token', access_token)
+            .send(data)
+            .end((err, res) => {
+                if(err) done(err)
+                        
+                //assert
+                expect(res.statusCode).toEqual(500)
+                expect (typeof res.body).toEqual('object')
+                expect(res.body).toHaveProperty('messages')
+                expect(typeof res.body.messages).toEqual('string')
+    
+                done()
+            })
+        })
 })

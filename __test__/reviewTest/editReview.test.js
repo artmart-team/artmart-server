@@ -12,12 +12,11 @@ const app = require('../../app')
 const { generateToken } = require('../../helpers/jwt')
 
 
-describe('PUT /users/:userId/artist/:artistId/orders/:orderId/reviews/:reviewId',function() {
+describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
     let userId = null
     let access_token = null
     let reviewId = 3 
     let artistId = 1
-    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -35,7 +34,6 @@ describe('PUT /users/:userId/artist/:artistId/orders/:orderId/reviews/:reviewId'
         .catch(err => {
             console.log(err)
         })
-
     })
 
     // ======================== successfull edit reviews ==========================
@@ -47,7 +45,7 @@ describe('PUT /users/:userId/artist/:artistId/orders/:orderId/reviews/:reviewId'
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
+        .put(`/users/${userId}/artist/${artistId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -75,7 +73,7 @@ describe('PUT /users/:userId/artist/:artistId/orders/:orderId/reviews/:reviewId'
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
+        .put(`/users/${userId}/artist/${artistId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -103,7 +101,7 @@ describe('PUT /users/:userId/artist/:artistId/orders/:orderId/reviews/:reviewId'
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${id}`)
+        .put(`/users/${userId}/artist/${artistId}/reviews/${id}`)
         .set('access_token', access_token)
         .send(data)
         .end((err, res) => {
@@ -111,7 +109,7 @@ describe('PUT /users/:userId/artist/:artistId/orders/:orderId/reviews/:reviewId'
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
+            expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
 
@@ -129,13 +127,13 @@ describe('PUT /users/:userId/artist/:artistId/orders/:orderId/reviews/:reviewId'
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
+        .put(`/users/${userId}/artist/${artistId}/reviews/${reviewId}`)
         .send(data)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')

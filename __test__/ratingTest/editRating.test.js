@@ -18,9 +18,8 @@ const { generateToken } = require('../../helpers/jwt')
 describe('PUT /users/:userId/ratings/:ratingId',function() {
     let userId = null
     let access_token = null
-    let ratingId = 3 
+    let ratingId = 3
     let artistId = 1
-    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
@@ -51,7 +50,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/ratings/${ratingId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -61,7 +60,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('score')
-            expect(typeof res.body.description).toEqual('number')
+            expect(typeof res.body.score).toEqual('number')
 
             done()
         })
@@ -77,7 +76,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/ratings/${ratingId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -86,8 +85,8 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('errors')
+            expect(Array.isArray(res.body.errors)).toEqual(true)
 
             done()
         })
@@ -105,15 +104,15 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${id}`)
+        .put(`/users/${userId}/artists/${artistId}/ratings/${id}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
 
@@ -131,13 +130,13 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/ratings/${ratingId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
