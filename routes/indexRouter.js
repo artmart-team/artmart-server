@@ -15,6 +15,10 @@ router.get('/', (req, res) => {
 
 router.use (categoryRouter)
 
+router.get('/', (req, res) => {
+  res.send('Welcome to mARTerialize Server')
+})
+
 router.use (usersRouter)
 
 router.use (artistsRouter)
