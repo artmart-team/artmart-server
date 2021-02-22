@@ -8,6 +8,10 @@ const commentsRouter = require ('./commentsRouter')
 const reviewsRouter = require ('./reviewsRouter')
 const ratingsRouter = require ('./ratingsRouter')
 
+router.get('/', (req, res) => {
+  res.send('Welcome to mARTerialize Server')
+})
+
 router.use (usersRouter)
 
 router.use (artistsRouter)
