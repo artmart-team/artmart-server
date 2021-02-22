@@ -6,7 +6,7 @@ module.exports = {
 
     const rating = [
       {
-        score : 1,
+        score : 2,
         ArtistId : 1,
         UserId : 1,
         createdAt: new Date(),
@@ -21,7 +21,7 @@ module.exports = {
       },
       {
         score : 3,
-        ArtistId : 1,
+        ArtistId : 2,
         UserId : 1,
         createdAt: new Date(),
         updatedAt: new Date()

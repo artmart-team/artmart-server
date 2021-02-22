@@ -49,6 +49,7 @@ module.exports = (sequelize, DataTypes) => {
     done: DataTypes.BOOLEAN,
     paid: DataTypes.BOOLEAN,
     imageURL: DataTypes.STRING,
+    options: DataTypes.STRING,
     UserId: {
       type: DataTypes.INTEGER,
       validate: {
