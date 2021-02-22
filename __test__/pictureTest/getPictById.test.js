@@ -6,110 +6,30 @@
 
 const request = require('supertest')
 
-const { Picture, Artist, Category, User } = require('../../models')
+const { Picture, Artist } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
 const app = require('../../app')  
 
 // ===================================================================================
-// ==========================    GET /artists/:artistId/images
+// ==========================    GET /artists/:artistId/pictures
 // ==================================================================================
 
-describe('GET /artists/:artistId/images/:imageId',function() {
-    let artId, catId, pictId, idUser
+describe('GET /artists/:artistId/pictures/:pictureId',function() {
+    let artId 
+    let pictId = 2
 
     beforeAll(done => {
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com',
-            bankAccount : 23023023,
-            completeDuration: 48
-        })
+        Artist.findOne({ where  : { email : "user@mail.com"}})
         .then(data => {
             artId = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
-
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com'
-        })
-        .then(data => {
-            idUser = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
-
-        Category.create({
-            name : 'image'
-        })
-        .then(data => {
-            catId = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create image category test")
-        })
-
-        Picture.create({
-            name : 'asik nih',
-            description : '',
-            price : 100000,
-            link : 'www.google.com',
-            CategoryId : catId,
-            ArtistId : artId,
-            UserId : idUser
-        })
-        .then(data => {
-            pictId = data.id
             done()
         })
         .catch(err => {
-            console.log(err, "<< err create image test") 
-        })
-    })
-
-    afterAll(done => {
-        Picture.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete Image test")
+            console.log(err, "<< err getPictById.test.js")
         })
 
-        Category.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-
-        Artist.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-        
     })
     
     // ======================== successfull get image ==========================
@@ -118,24 +38,22 @@ describe('GET /artists/:artistId/images/:imageId',function() {
 
         //excecute
         request(app) 
-        .get(`/artists/${artId}/images/${pictId}`)
+        .get(`/artists/${artId}/pictures/${pictId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(200)
-            expect(typeof res.body).toEqual('Object')
+            expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('name')
             expect(res.body).toHaveProperty('description')
             expect(res.body).toHaveProperty('price')
             expect(res.body).toHaveProperty('link')
-            expect(res.body).toEqual({
-                name : expect.any(String),
-                description : expect.any(String),
-                price : expect.any(Number),
-                link : expect.any(String),
-
-            })
+            expect(typeof res.body.name).toEqual('string')
+            expect(typeof res.body.description).toEqual('string')
+            expect(typeof res.body.price).toEqual('number')
+            expect(typeof res.body.link).toEqual('string')
+            
             done()
         })
     })
@@ -147,17 +65,16 @@ describe('GET /artists/:artistId/images/:imageId',function() {
 
         //excecute
         request(app) 
-        .get(`/artists/${artId}/images/${idImage}`)
+        .get(`/artists/${artId}/pictures/${idImage}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })

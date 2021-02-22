@@ -4,7 +4,7 @@
 
 
 const request = require('supertest')
-const { User, Comment, Artist } = require('../../models')
+// const { User, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
@@ -13,30 +13,19 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/comments/:commentId',function() {
-    let userId
-    let commentId
+    let userId = 1
+    let commentId = 3
 
-    beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-        Comment.findOne({where : {description : "buat test get comment by id"}})
-        .then(data => {
-            commentId = data.id
-
-            if(userId && commentId) {
-                done()
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
+    // beforeAll(done => {
+    //     User.findOne({where : {email : "user@mail.com"}})
+    //     .then(data => {
+    //         userId = data.id
+    //         done()
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+    // })
 
     // ======================== successfull get comments ==========================
     it('should status 200, successfull get comments id' ,function (done) {
@@ -72,11 +61,10 @@ describe('GET /users/:userId/comments/:commentId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -88,30 +76,19 @@ describe('GET /users/:userId/comments/:commentId',function() {
 // ==================================================================================
 
 describe('GET /artists/:artistId/comments/:commentId',function() {
-    let artistId
-    let commentId
+    let artistId = 1
+    let commentId = 3
 
-    beforeAll(done => {
-        Artist.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            artistId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-        Comment.findOne({where : {description : "buat test get comment by id"}})
-        .then(data => {
-            commentId = data.id
-
-            if(artistId && commentId) {
-                done()
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
+    // beforeAll(done => {
+    //     Artist.findOne({where : {email : "user@mail.com"}})
+    //     .then(data => {
+    //         artistId = data.id
+    //         done()
+    //     })
+    //     .catch(err => {
+    //         console.log(err)
+    //     })
+    // })
 
     // ======================== successfull get comments ==========================
     it('should status 200, successfull get comments id' ,function (done) {

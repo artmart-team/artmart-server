@@ -5,38 +5,39 @@
 // -- it error not login user
 
 const request = require('supertest')
-const { User, Comment } = require('../../models')
+const { User } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  PUT /users/:userId/comments/:commentId
 // ==================================================================================
 
 describe('PUT /users/:userId/comments/:commentId',function() {
-    let userId
-    let commentId
+    let userId = null 
+    let access_token = null
+    let commentId = 2
+    let artistId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Comment.findOne({where : {description : "buat test edit comment"}})
-        .then(data => {
-            commentId = data.id
-
-            if(userId && commentId) {
-                done()
+            const decoded = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
             }
+            
+            access_token = generateToken(decoded)
+            done()
         })
         .catch(err => {
             console.log(err)
         })
+
     })
 
     // ======================== successfull edit comments ==========================
@@ -48,7 +49,7 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/comments/${commentId}`)
+        .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -74,7 +75,7 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/comments/${commentId}`)
+        .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -83,8 +84,8 @@ describe('PUT /users/:userId/comments/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -102,7 +103,7 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/comments/${id}`)
+        .put(`/users/${userId}/artists/${artistId}/comments/${id}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -110,11 +111,10 @@ describe('PUT /users/:userId/comments/:commentId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            // expect(res.body).toHaveProperty('messages')
+            // expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -129,7 +129,7 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/comments/${id}`)
+        .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -137,8 +137,8 @@ describe('PUT /users/:userId/comments/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

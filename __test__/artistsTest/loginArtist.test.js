@@ -11,9 +11,7 @@
 
 const request = require('supertest')
 
-const { Artist } = require('../../models')
-
-const { beforeAll, afterAll } = require("@jest/globals")
+// const { Artist } = require('../../models')
 
 const app = require ('../../app') 
 
@@ -22,40 +20,12 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /artists/login',function() {
-    beforeAll(done => {
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com',
-            bankAccount : 230230230,
-            completeDuration: 48
-        })
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err beforeAll loginArtist.test.js ")
-        })
-    })
-
-    afterAll(done => {
-        Artist.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err afterAll loginArtist.test.js ")
-        })
-    })
     
     // ======================== successfull login with usernmae ==========================
     it('should status 200, successfull login with username' ,function (done) {
         //setup
         const body = {
-            username : 'username',
+            username : 'testinguser',
             password : '123456',         
         }
     
@@ -72,10 +42,10 @@ describe('POST /artists/login',function() {
             expect(res.body).toHaveProperty('access_token')
             expect(res.body).toHaveProperty('id')
             expect(res.body).toHaveProperty('username')
-            expect(res.body).toEqual({
-                access_token : expect.any(String),
-                username : expect.any(String)
-            })
+            expect(typeof res.body.id).toEqual('number')
+            expect(typeof res.body.access_token).toEqual('string')
+            expect(typeof res.body.username).toEqual('string')
+
 
             done()
         })
@@ -86,7 +56,7 @@ describe('POST /artists/login',function() {
     it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
-            email : 'user@mail.com',
+            email : 'testing@mail.com',
             password : '123456',         
         }
     
@@ -103,10 +73,9 @@ describe('POST /artists/login',function() {
             expect(res.body).toHaveProperty('access_token')
             expect(res.body).toHaveProperty('id')
             expect(res.body).toHaveProperty('username')
-            expect(res.body).toEqual({
-                access_token : expect.any(String),
-                username : expect.any(String)
-            })
+            expect(typeof res.body.id).toEqual('number')
+            expect(typeof res.body.access_token).toEqual('string')
+            expect(typeof res.body.username).toEqual('string')
 
 
             done()
@@ -117,7 +86,7 @@ describe('POST /artists/login',function() {
     it('should status 400, invalid for password / not found in database' ,function (done) {
         //setup
         const body = {
-            username : 'userrrrrrrrrrrr@mail.com',
+            username : 'testinggggggg@mail.com',
             password : '123456',         
         }
     
@@ -131,8 +100,8 @@ describe('POST /artists/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toBe('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toBe('string')
 
             done()
         })
@@ -143,7 +112,7 @@ describe('POST /artists/login',function() {
     it('should status 400, invalid for password / not found in database' ,function (done) {
         //setup
         const body = {
-            email : 'user@mail.com',
+            email : 'testing@mail.com',
             password : '12345678910',         
         }
     
@@ -157,8 +126,8 @@ describe('POST /artists/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toBe('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toBe('string')
 
             done()
         })
@@ -183,8 +152,8 @@ describe('POST /artists/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toBe('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toBe('string')
 
             done()
         })
@@ -209,8 +178,8 @@ describe('POST /artists/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

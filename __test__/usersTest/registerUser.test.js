@@ -1,5 +1,3 @@
-
-
 // DONE REVISION AFISTA 19-02-2021 18.00
 
 // 7 testing -> 1 success test, 6 error test 
@@ -17,7 +15,7 @@
 
 const request = require('supertest')
 
-const { User } = require('../../models')
+// const { User } = require('../../models')
 
 const app = require ('../../app')  
 
@@ -27,24 +25,15 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /users/register',function() {
-    afterAll(done => {
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err delete afterAll registerUser.test.js ")
-        })
-    })
-    
+
     // ======================== successfull register ==========================
     it('should status 201, successfull created user' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            username : 'testUser',
+            firstName : 'test',
+            lastName : 'user',
+            email : 'testingforuser@mail.com',
             password : '123456',
             profilePicture : "link.google.com"         
         }
@@ -64,13 +53,11 @@ describe('POST /users/register',function() {
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
             expect(res.body).toHaveProperty('profilePicture')
-            expect(res.body).toEqual({
-                username : expect.any(String),
-                firstName : expect.any(String),
-                lastName : expect.any(String),
-                email : expect.any(String),
-                profilePicture : expect.any(String)
-            })
+            expect(typeof res.body.username).toEqual('string')
+            expect(typeof res.body.firstName).toEqual('string')
+            expect(typeof res.body.lastName).toEqual('string')
+            expect(typeof res.body.email).toEqual('string')
+            expect(typeof res.body.profilePicture).toEqual('string')
 
             done()
         })
@@ -81,9 +68,9 @@ describe('POST /users/register',function() {
         //setup
         const body = {
             username : '',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            firstName : 'test',
+            lastName : 'user',
+            email : 'testingforuser@mail.com',
             password : '123456',
             profilePicture : "link.google.com"         
         }
@@ -99,7 +86,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -110,10 +97,10 @@ describe('POST /users/register',function() {
     it('should status 400, error input firstname empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
+            username : 'testUser',
             firstName : '',
-            lastName : 'name',
-            email : 'user@mail.com',
+            lastName : 'user',
+            email : 'testingforuser@mail.com',
             password : '123456',
             profilePicture : "link.google.com"         
         }
@@ -129,7 +116,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -140,10 +127,10 @@ describe('POST /users/register',function() {
     it('should status 400, error input lastname empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
+            username : 'testUser',
+            firstName : 'test',
             lastName : '',
-            email : 'user@mail.com',
+            email : 'testingforuser@mail.com',
             password : '123456',
             profilePicture : "link.google.com"         
         }
@@ -159,7 +146,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -169,9 +156,9 @@ describe('POST /users/register',function() {
     it('should status 400, error input email format' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
+            username : 'testUser',
+            firstName : 'test',
+            lastName : 'user',
             email : 'user',
             password : '123456',
             profilePicture : "link.google.com"         
@@ -188,7 +175,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -198,9 +185,9 @@ describe('POST /users/register',function() {
     it('should status 400, error input email empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
+            username : 'testUser',
+            firstName : 'test',
+            lastName : 'user',
             email : '',
             password : '123456',
             profilePicture : "link.google.com"         
@@ -217,7 +204,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -227,10 +214,10 @@ describe('POST /users/register',function() {
     it('should status 400, error input password empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            username : 'testUser',
+            firstName : 'test',
+            lastName : 'user',
+            email : 'testingforuser@mail.com',
             password : '',
             profilePicture : "link.google.com"         
         }
@@ -246,7 +233,7 @@ describe('POST /users/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

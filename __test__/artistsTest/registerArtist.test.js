@@ -17,9 +17,7 @@
 
 const request = require('supertest')
 
-const { User } = require('../models')
-
-const app = require('../app')  
+const app = require('../../app')  
 
 
 // ===================================================================================
@@ -27,28 +25,20 @@ const app = require('../app')
 // ==================================================================================
 
 describe('POST /artists/register',function() {
-    afterAll(done => {
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err delete afterAll registerUser.test.js ")
-        })
-    })
-    
+   
     // ======================== successfull register ==========================
     it('should status 201, successfull created user' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            username : 'testArtist',
+            firstName : 'test',
+            lastName : 'artist',
+            email : 'testingforregisterartist@mail.com',
             password : '123456',
             profilePicture : "link.google.com",
             bankAccount : 23023023,
-            completeDuration : 48         
+            completeDuration : 48,
+            defaultPrice : 100000         
         }
     
         //excecute
@@ -66,13 +56,11 @@ describe('POST /artists/register',function() {
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
             expect(res.body).toHaveProperty('profilePicture')
-            expect(res.body).toEqual({
-                username : expect.any(String),
-                firstName : expect.any(String),
-                lastName : expect.any(String),
-                email : expect.any(String),
-                profilePicture : expect.any(String)
-            })
+            expect(typeof res.body.username).toHaveProperty('string')
+            expect(typeof res.body.firstName).toHaveProperty('string')
+            expect(typeof res.body.lastName).toHaveProperty('string')
+            expect(typeof res.body.email).toHaveProperty('string')
+            expect(typeof res.body.profilePicture).toHaveProperty('string')
 
             done()
         })
@@ -83,9 +71,9 @@ describe('POST /artists/register',function() {
         //setup
         const body = {
             username : '',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            firstName : 'test',
+            lastName : 'artists',
+            email : 'testingforregisterartist@mail.com',
             password : '123456',
             profilePicture : "link.google.com",
             bankAccount : 23023023,
@@ -113,10 +101,10 @@ describe('POST /artists/register',function() {
     it('should status 400, error input firstname empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
+            username : 'testArtist',
             firstName : '',
-            lastName : 'name',
-            email : 'user@mail.com',
+            lastName : 'artist',
+            email : 'testingforregisterartist@mail.com',
             password : '123456',
             profilePicture : "link.google.com",
             bankAccount : 23023023,
@@ -144,10 +132,10 @@ describe('POST /artists/register',function() {
     it('should status 400, error input lastname empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
+            username : 'testArtist',
+            firstName : 'test',
             lastName : '',
-            email : 'user@mail.com',
+            email : 'testingforregisterartist@mail.com',
             password : '123456',
             profilePicture : "link.google.com",
             bankAccount : 23023023,
@@ -174,10 +162,10 @@ describe('POST /artists/register',function() {
     it('should status 400, error input email format' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user',
+            username : 'testArtist',
+            firstName : 'test',
+            lastName : 'artist',
+            email : 'testingforregisterartist@mail.com',
             password : '123456',
             profilePicture : "link.google.com",
             bankAccount : 23023023,
@@ -194,7 +182,8 @@ describe('POST /artists/register',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toHaveProperty('string')
 
             done()
         })
@@ -204,9 +193,9 @@ describe('POST /artists/register',function() {
     it('should status 400, error input email empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
+            username : 'testArtist',
+            firstName : 'test',
+            lastName : 'artist',
             email : '',
             password : '123456',
             profilePicture : "link.google.com",
@@ -234,10 +223,10 @@ describe('POST /artists/register',function() {
     it('should status 400, error input password empty / null' ,function (done) {
         //setup
         const body = {
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
+            username : 'testArtist',
+            firstName : 'test',
+            lastName : 'artist',
+            email : 'testingforregisterartist@mail.com',
             password : '',
             profilePicture : "link.google.com",
             bankAccount : 23023023,

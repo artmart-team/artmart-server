@@ -4,121 +4,55 @@
 
 const request = require('supertest')
 
-const { Picture, Artist, User, Category } = require('../models')
+const { Picture, Artist } = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
-const app = require('../app')  
+const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================    DELETE /artists/:artistId/pictures/:pictureId
 // ==================================================================================
 
 describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
-    let artId 
-    let catId
+    let artId, access_token
     let pictId
-    let idUser
 
     beforeAll(done => {
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            bankAccount : 230230230,
-            completeDuration: 48,
-            profilePicture : 'link.google.com'
-        })
+        Artist.findOne({ where : { email : "user@mail.com"}})
         .then(data => {
             artId = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
 
+            const payload = {
+                id : artist.id,
+                username : artist.username,
+                profilePicture : artist.profilePicture
+            }
 
-        
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : "link.google.com",
+            access_token = generateToken(paylaod)
 
+            return Picture.findOne({ where : { name : "delId picture testing"}})
         })
-        .then(data => {
-            idUser = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create user getPict.test.js")
-        })
-
-
-        Category.create({
-            name : 'image'
-        })
-        .then(data => {
-            catId = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create image category test")
-        })
-
-
-        Picture.create({
-            name : 'asik nih',
-            description : '',
-            price : 100000,
-            link : 'www.google.com',
-            CategoryId : catId,
-            ArtistId : artId,
-            UserId : idUser 
-        })
-        .then(data => {
-            pictId = data.id
+        .then(res => {
+            pictId = res.id
             done()
         })
         .catch(err => {
-            console.log(err, "<< err create image test") 
+            console.log(err, "<< err findOne image delete test")
         })
     })
 
-    afterAll(done => {
-        Category.destory()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
+    // error not login (belom dibuat)
 
-        User.destroy()
-        .then(() => {            
-        })
-        .catch(err => {
-            console.log(err, "<< err delete User  getPict.test.js")
-        })
-
-        Artist.destory()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-        
-    })
-    
     // ======================== successfull delete picture ==========================
     it('should status 200, successfull delete' ,function (done) {
         //setup
-        const id = artId
 
         //excecute
         request(app) 
-        .delete(`/artists/${id}/pictures/${pictId}`)
+        .delete(`/artists/${artId}/pictures/${pictId}`)
+        .set('access_token', access_token )
         .end((err, res) => {
             if(err) done(err)
                     

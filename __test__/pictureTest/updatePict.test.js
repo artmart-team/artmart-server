@@ -6,89 +6,36 @@
 
 const request = require('supertest')
 
-const { Picture, Artist, Category, User } = require('../../models')
+const { Picture, Artist } = require('../../models')
 
-const { beforeAll, afterAll } = require("@jest/globals")
+const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
 
 // ===================================================================================
-// ==========================    PUT /artists/:artistId/images
+// ================    PUT /artists/:artistId/pictures/:pictureId
 // ==================================================================================
 
-describe('PATCH /artists/:artistId/images/:imageId',function() {
-    let artId, catId, pictId, idUser, access_token
+describe('PUT /artists/:artistId/pictures/:pictureId',function() {
+    let artId, pictId, access_token
 
     beforeAll(done => {
-        Artist.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com',
-            bankAccount : 23023023,
-            completeDuration: 48
-        })
-        .then(data => {
-            artId = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
-
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com'
-        })
-        .then(data => {
-            idUser = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create artist image test")
-        })
-
-        Category.create({
-            name : 'image'
-        })
-        .then(data => {
-            catId = data.id
-        })
-        .catch(err => {
-            console.log(err, "<< err create image category test")
-        })
-
-        Picture.create({
-            name : 'asik nih',
-            description : '',
-            price : 100000,
-            link : 'www.google.com',
-            CategoryId : catId,
-            ArtistId : artId,
-            UserId : idUser
-        })
-        .then(data => {
-            pictId = data.id
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err create image test") 
-        })
-
 
         //dummy Artist login
         Artist.findOne( { where : { email : "user@mail.com"}})
         .then(artis => {
             const payload = {
                 id : artis.id,
-                username : artis.username
+                username : artis.username,
+                profilePicture : artis.profilePicture
             }
 
             access_token = generateToken(payload)
+
+            return Picture.findOne({where : {name : "editId picture testing"}})
+        })
+        .then(res => {
+            pictId = res.id
 
             done()
         })
@@ -97,40 +44,8 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
         })
     })
 
-    afterAll(done => {
-        Picture.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete Image test")
-        })
-
-        Category.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-
-        Artist.destroy()
-        .then(() => {
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err delete category create image test")
-        })
-        
-    })
-    
-    // ======================== successfull update image ==========================
-    it('should status 200, successfull get all Image' ,function (done) {
+    // ======================== successfull update pictures ==========================
+    it('should status 200, successfull get all pictures' ,function (done) {
         //setup
         const body = {
             name : 'foto keren abis'
@@ -138,7 +53,7 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
 
         //excecute
         request(app) 
-        .put(`/artists/${artId}/images/${pictId}`)
+        .put(`/artists/${artId}/pictures/${pictId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -151,13 +66,11 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
             expect(res.body).toHaveProperty('description')
             expect(res.body).toHaveProperty('price')
             expect(res.body).toHaveProperty('link')
-            expect(res.body).toEqual({
-                name : expect.any(String),
-                description : expect.any(String),
-                price : expect.any(Number),
-                link : expect.any(String),
+            expect(typeof res.body.name).toEqual('name')
+            expect(typeof res.body.description).toEqual('string')
+            expect(typeof res.body.price).toEqual('number')
+            expect(typeof res.body.link).toEqual('string')
 
-            })
             done()
         })
     })
@@ -166,12 +79,12 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
         it('should status 400, error name required' ,function (done) {
             //setup
             const body = {
-                name = ""
+                title : ""
             }
     
             //excecute
             request(app) 
-            .put(`/artists/${artId}/images/${pictId}`)
+            .put(`/artists/${artId}/pictures/${pictId}`)
             .set('access_token', access_token)
             .send(body)
             .end((err, res) => {
@@ -180,10 +93,9 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
                 //assert
                 expect(res.statusCode).toEqual(400)
                 expect(typeof res.body).toEqual('Object')
-                expect(res.body).toHaveProperty('message')
-                expect(res.body).toEqual({
-                    message : expect.any(String),
-                })
+                expect(res.body).toHaveProperty('messages')
+                expect(typeof res.body.messages).toEqual('string')
+
                 done()
             })
         })
@@ -194,7 +106,7 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
         const idImage = 9999999
 
         const body = {
-            name = "keren deh"
+            name : "keren deh"
         }
 
         //excecute
@@ -208,10 +120,9 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+            
             done()
         })
     })
@@ -221,7 +132,7 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
     it('should status 403, error Artist id not login' ,function (done) {
         //setup
         const body = {
-            name = "keren deh"
+            name : "keren deh"
         }
 
         //excecute
@@ -234,10 +145,9 @@ describe('PATCH /artists/:artistId/images/:imageId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+            
             done()
         })
     })

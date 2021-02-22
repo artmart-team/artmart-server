@@ -3,7 +3,7 @@
 // -- it error rating id not found 
 
 const request = require('supertest')
-const { User, Rating, Artist } = require('../../models')
+const { User, Rating, Artist, Order } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
@@ -12,29 +12,21 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/ratings/:ratingId',function() {
-    let userId
-    let ratingId
+    let userId = null
+    let ratingId = 2
+    let artistId = 1 
+    let orderId =  1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
+            done()
         })
         .catch(err => {
             console.log(err)
         })
 
-        Rating.findOne({where : { score : 1 }})
-        .then(data => {
-            ratingId = data.id
-
-            if(userId && ratingId) {
-                done()
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
     })
 
     // ======================== successfull get rating ==========================
@@ -43,7 +35,7 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .get(`/users/${userId}/ratings/${ratingId}`)
+        .get(`/users/${userId}/artist/${artistId}/orders/${orderId}/ratings/${ratingId}`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -65,71 +57,15 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .get(`/users/${userId}/ratings/${id}`)
+        .get(`/users/${userId}/artist/${artistId}/orders/${orderId}/ratings/${id}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
-            done()
-        })
-    })
-})
-
-
-
-
-// ===================================================================================
-// ==========================  GET /artists/:artistId/ratings/:ratingId
-// ==================================================================================
-
-
-describe('GET /artists/:artistId/ratings/:ratingId',function() {
-    let artistId
-    let ratingId
-
-    beforeAll(done => {
-        Artist.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            artistId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-        Rating.findOne({where : { score : 1 }})
-        .then(data => {
-            ratingId = data.id
-
-            if(artistId && ratingId) {
-                done()
-            }
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
-
-    // ======================== successfull get rating ==========================
-    it('should status 200, successfull get rating id' ,function (done) {
-        //setup
-
-        //excecute
-        request(app) 
-        .get(`/artists/${artistId}/ratings/${ratingId}`)
-        .end((err, res) => {
-            if(err) done(err)
-                    
-            //assert
-            expect(res.statusCode).toEqual(200)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('description')
-            expect(typeof res.body.description).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
