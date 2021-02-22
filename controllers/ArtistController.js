@@ -47,52 +47,71 @@ class ArtistController {
     try {
       const { username, email, password } = req.body
 
-      if (username) {
-        let data = await Artist.findOne ({
-          where: {
-            username
-          }
-        })
-        if (!data) {
-          next ({name: 'Invalid email / password'})
-        } else {
-          let checked = checkPassword (password, data.password)
-          if (!checked) {
-            next ({name: 'Invalid email / password'})
+      let data
+
+      if(!email && username) {
+        data = await Artist.findOne({
+          where : { username }})
+
+          if(!data) {
+            next({ name : "Invalid email / password"})
           } else {
-            const payload = {
-              id: data.id,
-              username: data.username,
-              profilePicture: data.profilePicture
+            let checked = checkPassword (password, data.password)
+
+            if(checked) {
+              const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
+              }
+
+              const access_token = generateToken(payload)
+
+              res.status(200).json({
+                access_token, 
+                id: data.id, 
+                username:data.username, 
+                profilePicture: data.profilePicture
+              })
+            } else {
+              next ({name: 'Invalid email / password'})
             }
-            const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, username:data.username, profilePicture: data.profilePicture})
           }
-        }
-      } else {
-        let data = await Artist.findOne ({
-          where: {
-            email
-          }
-        })
-        if (!data) {
-          next ({name: 'Invalid email / password'})
-        } else {
-          let checked = checkPassword (password, data.password)
-          if (!checked) {
-            next ({name: 'Invalid email / password'})
-          } else {
-            const payload = {
-              id: data.id,
-              username: data.username,
-              profilePicture: data.profilePicture
-            }
-            const access_token = generateToken (payload)
-            res.status (200).json ({access_token, id: data.id, username:data.username, profilePicture: data.profilePicture})
-          }
-        }
       }
- 
+
+      if(!username && email) {
+        data = await Artist.findOne({
+          where : { email }})
+
+          if(!data) {
+            next({ name : "Invalid email / password"})
+          } else {
+            let checked = checkPassword (password, data.password)
+
+            if(checked) {
+              const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
+              }
+
+              const access_token = generateToken(payload)
+
+              res.status(200).json({
+                access_token, 
+                id: data.id, 
+                username:data.username, 
+                profilePicture: data.profilePicture
+              })
+            } else {
+              next ({name: 'Invalid email / password'})
+            }
+          }
+        }
+
+      if (!username && !email) {
+        next({name : 'Invalid email / password'})
+      }
     } catch (err) {
       next (err)
     }

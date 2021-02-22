@@ -1,5 +1,3 @@
-
-
 // CREATE AFISTA 18-02-2021 20.00
 // DONE REVISION AFISTA 19-02-2021 18.00
 
@@ -13,7 +11,7 @@ const request = require('supertest')
 
 const { User } = require('../../models')
 
-const { beforeAll, afterAll } = require("@jest/globals")
+const { beforeAll } = require("@jest/globals")
 
 const app = require ('../../app') 
 
@@ -25,14 +23,7 @@ describe('GET /users/:userId',function() {
     let userId 
 
     beforeAll(done => {
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : "link.google.com"
-        })
+        User.findOne({ where : {email : 'testing@mail.com'}})
         .then(data => {
             userId = data.id
             done()
@@ -42,16 +33,6 @@ describe('GET /users/:userId',function() {
         })
     })
 
-    afterAll(done => {
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err afterAll delete getUserById.test.js ")
-        })
-    })
-    
     // ======================== successfull get user Id ==========================
     it('should status 200, successfull get user ID' ,function (done) {
         //setup
@@ -95,8 +76,8 @@ describe('GET /users/:userId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

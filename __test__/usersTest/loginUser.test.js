@@ -11,9 +11,7 @@
 
 const request = require('supertest')
 
-const { User } = require('../../models')
-
-const { beforeAll, afterAll } = require("@jest/globals")
+// const { User } = require('../../models')
 
 const app = require ('../../app')  
 
@@ -22,38 +20,12 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /users/login',function() {
-    beforeAll(done => {
-        User.create({
-            username : 'username',
-            firstName : 'user',
-            lastName : 'name',
-            email : 'user@mail.com',
-            password : '123456',
-            profilePicture : 'link.google.com'
-        })
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err beforeAll loginUser.test.js ")
-        })
-    })
 
-    afterAll(done => {
-        User.destroy()
-        .then(() => {
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err afterAll loginUser.test.js ")
-        })
-    })
-    
     // ======================== successfull login with usernmae ==========================
     it('should status 200, successfull login with username' ,function (done) {
         //setup
         const body = {
-            username : 'username',
+            username : 'testinguser',
             password : '123456',         
         }
     
@@ -70,10 +42,9 @@ describe('POST /users/login',function() {
             expect(res.body).toHaveProperty('access_token')
             expect(res.body).toHaveProperty('id')
             expect(res.body).toHaveProperty('username')
-            expect(res.body).toEqual({
-                access_token : expect.any(String),
-                username : expect.any(String)
-            })
+            expect(typeof res.body.id).toEqual('number')
+            expect(typeof res.body.access_token).toEqual('string')
+            expect(typeof res.body.username).toEqual('string')
 
             done()
         })
@@ -84,7 +55,7 @@ describe('POST /users/login',function() {
     it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
-            email : 'user@mail.com',
+            email : 'testing@mail.com',
             password : '123456',         
         }
     
@@ -101,11 +72,9 @@ describe('POST /users/login',function() {
             expect(res.body).toHaveProperty('access_token')
             expect(res.body).toHaveProperty('id')
             expect(res.body).toHaveProperty('username')
-            expect(res.body).toEqual({
-                access_token : expect.any(String),
-                username : expect.any(String)
-            })
-
+            expect(typeof res.body.id).toEqual('number')
+            expect(typeof res.body.access_token).toEqual('string')
+            expect(typeof res.body.username).toEqual('string')
 
             done()
         })
@@ -129,8 +98,8 @@ describe('POST /users/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -141,7 +110,7 @@ describe('POST /users/login',function() {
     it('should status 400, invalid for password / not found in database' ,function (done) {
         //setup
         const body = {
-            email : 'user@mail.com',
+            email : 'testing@mail.com',
             password : '12345678910',         
         }
     
@@ -155,8 +124,8 @@ describe('POST /users/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -167,7 +136,7 @@ describe('POST /users/login',function() {
     it('should status 400, invalid for email / not found in database' ,function (done) {
         //setup
         const body = {
-            email : 'usernamename@mail.com',
+            email : 'testingggggggg@mail.com',
             password : '123456',         
         }
     
@@ -181,8 +150,8 @@ describe('POST /users/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            expect(typeof res.body.errors).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -207,8 +176,8 @@ describe('POST /users/login',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toHaveProperty('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

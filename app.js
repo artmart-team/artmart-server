@@ -7,7 +7,7 @@ const router = require ('./routes/indexRouter')
 const errorHandlers = require ('./middlewares/errorHandlers')
 var cors = require('cors')
 const app = express()
-const port = process.env.PORT || 3000
+
 
 app.use (cors())
 
@@ -19,6 +19,4 @@ app.use ('/', router)
 
 app.use (errorHandlers)
 
-app.listen(port, () => {
-console.log(`mARTerialize app listening at http://localhost:${port}`)
-})
+module.exports = app

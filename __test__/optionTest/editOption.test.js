@@ -1,35 +1,22 @@
-// decribe POST /artists/:artistId/review
-// -- it success
-// -- it error score empty
-// -- it error user not login
-// -- it error artis id not found
-// -- it error artis Id empty
-
 const request = require('supertest')
-
+const { Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
-
+const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
 
-const { User, Artist, Order } = require('../../models')
-
-const app = require('../../app')  
-
-
 // ===================================================================================
-// ==========================  POST /users/:userId/artists/:artistId/orders/:orderId/reviews
+// ==========================  PUT /artists/:artistId/options/:optionId
 // ==================================================================================
 
-describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',function() {
-    let userId = null
-    let artistId = 1
-    let orderId = 1
+describe('PUT /artists/:artistId/options/:optionId',function() {
+    let artistId = null
     let access_token = null
+    let optionId = 1
 
     beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
+        Artist.findOne({where : {email : "user@mail.com"}})
         .then(data => {
-            userId = data.id
+            artistId = data.id
 
             const payload = {
                 id : data.id,
@@ -45,45 +32,44 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
         })
     })
 
-    // ======================== successfull Create reviews ==========================
-    it('should status 201, successfull Create reviews' ,function (done) {
+    // ======================== successfull edit options ==========================
+    it('should status 200, successfull edit options' ,function (done) {
         //setup
         const body = {
-            title : "create new review",
-            description : "new review"
+            title : "edit berhasil"
         }
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
+        .put(`/artists/${artistId}/options/${optionId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(201)
-            expect (typeof res.body).toEqual('object')
+            expect(res.statusCode).toEqual(200)
+            expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('title')
-            expect(res.body).toHaveProperty('description')
+            expect(res.body).toHaveProperty('extraPrice')
             expect(typeof res.body.title).toEqual('string')
-            expect(typeof res.body.description).toEqual('string')
+            expect(typeof res.body.extraPrice).toEqual('number')
 
             done()
         })
     })
 
-    // ======================== description empty ==========================
-    it('should status 400, title dan desc empty' ,function (done) {
+
+    // ======================== error title options empty ==========================
+    it('should status 400, error title options empty' ,function (done) {
         //setup
         const body = {
-            title : "",
-            description : ""
+            title : ""
         }
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
+        .put(`/artists/${artistId}/options/${optionId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -91,7 +77,7 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
                     
             //assert
             expect(res.statusCode).toEqual(400)
-            expect (typeof res.body).toEqual('object')
+            expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
 
@@ -99,17 +85,16 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
         })
     })
 
-    // ======================== error user not login ==========================
-    it('should status 403, error not login' ,function (done) {
+    // ======================== error artist not login ==========================
+    it('should status 403, error edit artist not login' ,function (done) {
         //setup
         const data = {
-            title : "create new review",
-            description : "new review"
+            title : "tidak berhasil edit"
         }
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
+        .put(`/artists/${artistId}/options/${optionId}`)
         .send(data)
         .end((err, res) => {
             if(err) done(err)
@@ -117,7 +102,7 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
+            expect(res.body).toHaveProperty('messagess')
             expect(typeof res.body.messages).toEqual('string')
 
             done()

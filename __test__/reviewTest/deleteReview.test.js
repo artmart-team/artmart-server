@@ -5,38 +5,40 @@
 
 
 const request = require('supertest')
-const { User, Review } = require('../../models')
+const { User, Review, Order, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  DELETE /users/:userId/reviews/:reviewId
 // ==================================================================================
 
 describe('DELETE /users/:userId/reviews/:reviewId',function() {
-    let userId
-    let reviewId
+    let userId = null
+    let access_token = null
+    let reviewId = 2
+    let artistId = 1
+    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Review.findOne({where : {title : "buat test delete review"}})
-        .then(data => {
-            reviewId = data.id
-
-            if(userId && reviewId) {
-                done()
+            const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
             }
+
+            access_token = generateToken(payload)
+            done()
         })
         .catch(err => {
             console.log(err)
         })
+
     })
 
 
@@ -47,18 +49,17 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/reviews/${id}`)
+        .delete(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(404)
-            expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -70,15 +71,15 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/reviews/${reviewId}`)
+        .delete(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -90,7 +91,7 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/reviews/${reviewId}`)
+        .delete(`/users/${userId}/artist/${artistId}/orders/${orderId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)

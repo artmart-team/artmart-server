@@ -6,38 +6,40 @@
 // -- it error not login user
 
 const request = require('supertest')
-const { User, Rating } = require('../../models')
+const { User, Rating, Artist, Order } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  PUT /users/:userId/ratings/:ratingId
 // ==================================================================================
 
 describe('PUT /users/:userId/ratings/:ratingId',function() {
-    let userId
-    let ratingId
+    let userId = null
+    let access_token = null
+    let ratingId = 3 
+    let artistId = 1
+    let orderId = 1
 
     beforeAll(done => {
         User.findOne({where : {email : "user@mail.com"}})
         .then(data => {
             userId = data.id
-        })
-        .catch(err => {
-            console.log(err)
-        })
 
-        Rating.findOne({where : {score : 3}})
-        .then(data => {
-            ratingId = data.id
-
-            if(userId && ratingId) {
-                done()
+            const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
             }
+
+            access_token = generateToken(payload)
+            done()
         })
         .catch(err => {
             console.log(err)
         })
+
     })
 
     // ======================== successfull edit rating ==========================
@@ -49,7 +51,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -75,7 +77,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -84,8 +86,8 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -103,7 +105,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${id}`)
+        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${id}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -112,10 +114,9 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('Object')
-            expect(res.body).toHaveProperty('message')
-            expect(res.body).toEqual({
-                message : expect.any(String),
-            })
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
             done()
         })
     })
@@ -130,7 +131,7 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/ratings/${ratingId}`)
+        .put(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings/${ratingId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -138,8 +139,8 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
             //assert
             expect(res.statusCode).toEqual(403)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
