@@ -2,7 +2,7 @@ const router = require ('express').Router()
 const OptionController  = require ('../controllers/OptionController')
 const { authenticate, authorizeArtistOption } = require ('../middlewares/auth')
 
-router.get ('/artists/:artistId/options', authenticate, OptionController.getAll)
+router.get ('/artists/:artistId/options', OptionController.getAll)
 
 router.post ('/artists/:artistId/options', authenticate, OptionController.post)
 
