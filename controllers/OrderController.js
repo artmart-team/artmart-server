@@ -125,7 +125,7 @@ class OrderController {
         done: false,
         paid: false,
         imageURL: '',
-        UserId: +req.params.userId,
+        UserId: +req.userId,
         ArtistId: +req.params.artistId
       }
       const data = await Order.create(obj, {
@@ -179,6 +179,7 @@ class OrderController {
           id: +req.params.orderId
         }
       })
+
 
       if (orderData.deadline) {
         return next ({ name: 'Order already accepted' })
@@ -237,6 +238,15 @@ class OrderController {
 
   static async paidOrder (req, res, next) {
     try {
+      const checkPaid = await Order.findOne({
+        where: {
+          id: +req.params.orderId
+        }
+      })
+      if (checkPaid.paid) {
+        return next({ name: 'Order already paid' })
+      }
+
       const obj = { paid: true }
       const data = await Order.update (obj, {
         where: {

@@ -33,6 +33,15 @@ function errorHandlers (err, req, res, next) {
     case 'Order already accepted':
       res.status(403).json ({ messages: 'Order already accepted' })
       break;
+    case 'Order already paid':
+      res.status(403).json ({ messages: 'Order already paid' })
+      break;
+    case 'Already have rating':
+      res.status(403).json ({ messages: 'Already have rating' })
+      break;
+    case 'Already have review':
+      res.status(403).json ({ messages: 'Already have review' })
+      break;
     default:
       res.status(500).json ({ messages: 'Internal server error' })
   }

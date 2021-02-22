@@ -1,4 +1,5 @@
 'use strict';
+const { hashPassword } =  require ('../helpers/bcrypt')
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -13,6 +14,7 @@ module.exports = {
     */
     const artists = require('../seedDataJSON/artists.json')
     artists.forEach(item => {
+      item.password = hashPassword(item.password)
       item.createdAt = new Date()
       item.updatedAt = new Date()
     })
