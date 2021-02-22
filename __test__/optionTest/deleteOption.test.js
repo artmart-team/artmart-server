@@ -14,7 +14,7 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
     let access_token = null
 
     beforeAll(done => {
-        Artist.findOne({where : {email : "user@mail.com"}})
+        Artist.findOne({where : {email : "artist@mail.com"}})
         .then(data => {
             artistId = data.id
 
@@ -106,7 +106,7 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
 
         //excecute
         request(app) 
-        .delete(`/artist/${artistId}/options/${optionId}`)
+        .delete(`/artists/${artistId}/options/${optionId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)

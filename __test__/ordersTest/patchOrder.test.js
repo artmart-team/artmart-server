@@ -17,31 +17,29 @@ const { generateToken } = require('../../helpers/jwt')
 
 
 describe('PATCH /artists/:artistId/orders', function() {
-    let artistId = null
-    let access_token = null
+    let artistId = 1
+    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAxMjAyNn0.vQyZa-ldYGwO3blnq8KmSaGTe4GAr6duhOoX50hU95A"
     let orderId = 3
     let userId = 1
-    let idOrder = "asdadsadsa"
+    let idOrder = "zzz"
+    let userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JVU2VyIiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTQwMTEyOTd9.kEprekXCVV9xX_kfPZ_6y7P9xPMC1gFrsum6hsy0nPw"
 
-    beforeAll(done => {
-        //dummy Artist login
-        Artist.findOne( { where : { email : "user@mail.com"}})
-        .then(data => {
-            artistId = data.id
+    // beforeAll(done => {
+    //     //dummy Artist login
+    //     Artist.findOne( { where : { email : "artist@mail.com"}})
+    //     .then(data => {
+    //         artistId = data.id
 
-            const payload = {
-                id : data.id,
-                username : data.username,
-                profilePicture : data.profilePicture
-            }
+    //         const payload = {
+    //             id : data.id,
+    //             username : data.username,
+    //             profilePicture : data.profilePicture
+    //         }
 
-            access_token = generateToken(payload)
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err beforeAll get token putUser.test.js")
-        })
-    })
+    //         access_token = generateToken(payload)
+    //         done()
+    //     })
+    // })
 
 
     // ==============================================================================
@@ -52,7 +50,7 @@ describe('PATCH /artists/:artistId/orders', function() {
 
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}/orders/${orderId}/accepted`)
+        .patch(`/artists/1/orders/3/accepted`)
         .set("access_token", access_token)
 
         .end((err, res) => {
@@ -76,7 +74,7 @@ describe('PATCH /artists/:artistId/orders', function() {
 
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}/orders/${idOrder}/accepted`)
+        .patch(`/artists/1/orders/sss/accepted`)
         .set("access_token", access_token)
 
         .end((err, res) => {
@@ -104,7 +102,7 @@ describe('PATCH /artists/:artistId/orders', function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}/orders/${orderId}/done`)
+        .patch(`/artists/${artistId}/orders/3/done`)
         .set("access_token", access_token)
         .send(body)
         .end((err, res) => {
@@ -122,10 +120,10 @@ describe('PATCH /artists/:artistId/orders', function() {
     })
 
     // ======================== error internal server==========================
-    it('should status 500, error internal server' ,function (done) {
+    it('should status 400, error internal server' ,function (done) {
         //setup
         const body = {
-            imageURL : "link2.google.com"
+            imageURL : ""
         }
 
         //excecute
@@ -138,7 +136,7 @@ describe('PATCH /artists/:artistId/orders', function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(500)
+            expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
@@ -157,7 +155,7 @@ describe('PATCH /artists/:artistId/orders', function() {
         //excecute
         request(app) 
         .patch(`/users/${userId}/orders/${orderId}/paid`)
-        .set("access_token", access_token)
+        .set("access_token", userToken)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -172,28 +170,27 @@ describe('PATCH /artists/:artistId/orders', function() {
         })
     })
 
-        // ======================== error internal server==========================
-        it('should status 500, error internal server' ,function (done) {
-            //setup
-    
-            //excecute
-            request(app) 
-            .patch(`/users/${userId}/orders/${idOrder}/padi`)
-            .set("access_token", access_token)
-            .send(body)
-    
-            .end((err, res) => {
-                if(err) done(err)
-                        
-                //assert
-                expect(res.statusCode).toEqual(500)
-                expect(typeof res.body).toEqual('object')
-                expect(res.body).toHaveProperty('messages')
-                expect(typeof res.body.messages).toEqual('string')
-    
-                done()
-            })
+    // ======================== error internal server==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+
+        //excecute
+        request(app) 
+        .patch(`/users/${userId}/orders/${idOrder}/paid`)
+        .set("access_token", userToken)
+
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
         })
+    })
 
     
 

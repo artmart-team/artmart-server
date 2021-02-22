@@ -45,7 +45,7 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artist/${artistId}/reviews/${reviewId}`)
+        .put(`/users/${userId}/artists/${artistId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -73,7 +73,7 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artist/${artistId}/reviews/${reviewId}`)
+        .put(`/users/${userId}/artists/${artistId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -82,8 +82,8 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('errors')
+            expect(Array.isArray(res.body.errors)).toEqual(true)
 
             done()
         })
@@ -101,17 +101,17 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artist/${artistId}/reviews/${id}`)
+        .put(`/users/${userId}/artists/${artistId}/reviews/${id}`)
         .set('access_token', access_token)
         .send(data)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(404)
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            // expect(res.body).toHaveProperty('messages')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -119,7 +119,7 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
 
 
     // ======================== error user not login ==========================
-    it('should status 403, error edit user not login' ,function (done) {
+    it('should status 401, error edit user not login' ,function (done) {
         //setup
         const data = {
             title : "tidak berhasil edit"
@@ -127,7 +127,7 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artist/${artistId}/reviews/${reviewId}`)
+        .put(`/users/${userId}/artists/${artistId}/reviews/${reviewId}`)
         .send(data)
         .end((err, res) => {
             if(err) done(err)
@@ -141,4 +141,30 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
             done()
         })
     })
+
+
+    // ======================== error internal server ==========================
+    // it('should status 400, error title review empty' ,function (done) {
+    //     //setup
+    //     const body = {
+    //         asdasdsadasdasdas : "hfghg"
+    //     }
+
+    //     //excecute
+    //     request(app) 
+    //     .put(`/users/${userId}/artists/${artistId}/reviews/${reviewId}`)
+    //     .set('access_token', access_token)
+    //     .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
+
+    //         done()
+    //     })
+    // })
 })

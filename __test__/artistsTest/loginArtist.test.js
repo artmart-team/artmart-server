@@ -25,7 +25,7 @@ describe('POST /artists/login',function() {
     it('should status 200, successfull login with username' ,function (done) {
         //setup
         const body = {
-            username : 'testinguser',
+            username : 'testingartist',
             password : '123456',         
         }
     
@@ -56,7 +56,7 @@ describe('POST /artists/login',function() {
     it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
-            email : 'testing@mail.com',
+            email : 'testingartist@mail.com',
             password : '123456',         
         }
     
@@ -186,27 +186,27 @@ describe('POST /artists/login',function() {
     })
 
 
-        // ==========================  error internal server  ===============================
-        it('should status 500, error internal server' ,function (done) {
-            //setup
-            const body = {
-                sssssss : 'testinggggggg@mail.com'      
-            }
-        
-            //excecute
-            request(app) 
-            .post('/artists/login')
-            .send(body)
-            .end((err, res) => {
-                if(err) done(err)
-                        
-                //assert
-                expect(res.statusCode).toEqual(500)
-                expect(typeof res.body).toEqual('object')
-                expect(res.body).toHaveProperty('messages')
-                expect(typeof res.body.messages).toBe('string')
+    // ==========================  error internal server  ===============================
+    // it('should status 500, error internal server' ,function (done) {
+    //     //setup
+    //     const body = {
+    //         sssssss : 'testinggggggg@mail.com'      
+    //     }
     
-                done()
-            })
-        })
+    //     //excecute
+    //     request(app) 
+    //     .post('/artists/login')
+    //     .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toBe('string')
+
+    //         done()
+    //     })
+    // })
 })

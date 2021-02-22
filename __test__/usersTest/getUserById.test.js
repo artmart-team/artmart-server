@@ -23,7 +23,7 @@ describe('GET /users/:userId',function() {
     let userId 
 
     beforeAll(done => {
-        User.findOne({ where : {email : 'testing@mail.com'}})
+        User.findOne({ where : {email : 'testinguser@mail.com'}})
         .then(data => {
             userId = data.id
             done()
@@ -83,24 +83,24 @@ describe('GET /users/:userId',function() {
         })
     })
 
-        // ==========================  error internal server  ===============================
-        it('should status 500, error internal server' ,function (done) {
-            //setup
-            const id = "selat"
-        
-            //excecute
-            request(app) 
-            .get(`/users/${id}`)
-            .end((err, res) => {
-                if(err) done(err)
-                        
-                //assert
-                expect(res.statusCode).toEqual(500)
-                expect(typeof res.body).toEqual('object')
-                expect(res.body).toHaveProperty('messages')
-                expect(typeof res.body.messages).toEqual('string')
+    // ==========================  error internal server  ===============================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const id = "selat"
     
-                done()
-            })
+        //excecute
+        request(app) 
+        .get(`/users/${id}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
         })
+    })
 })

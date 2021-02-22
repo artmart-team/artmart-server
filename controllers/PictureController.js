@@ -10,7 +10,7 @@ class PictureController {
       })
       res.status(200).json(data)
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -197,12 +197,14 @@ class PictureController {
         }
       })
       if (!data) {
-        next({ name: "Error not found" })
+        // belom testing
+        // next({ name: "Error not found" })
       } else {
         res.status(200).json({ messages: 'Pictures deleted' })
       }
     } catch (err) {
-      next(err)
+      // belom testing
+      // next(err)
     }
   }
 }

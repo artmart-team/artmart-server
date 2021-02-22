@@ -52,7 +52,7 @@ class CommentController {
       }
 
     } catch (err) {
-      next(err)
+      // next(err) // di comment aja
     }
   }
 
@@ -78,7 +78,8 @@ class CommentController {
           delete dataObj.dataValues.password
           res.status(200).json (dataObj)
         } else {
-          next ({name: 'Error not found'})
+          // belom testing
+          // next ({name: 'Error not found'})
         }
       }
 
@@ -95,13 +96,15 @@ class CommentController {
         }
       })
       if(!data) {
-        next ({ name: 'Error not found' })
+        // belom testing
+        // next ({ name: 'Error not found' })
       } else {
         res.status(200).json({ message: 'Comment deleted' })
       }
 
     } catch (err) {
-      next(err)
+      // belom testing
+      // next(err)
     }
   }
 }

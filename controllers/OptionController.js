@@ -13,7 +13,7 @@ class OptionController {
       })
       res.status(200).json(data)
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -24,11 +24,12 @@ class OptionController {
       if(data) {
         res.status(200).json(data)
       } else {
-        next({ name : 'Error not found'})
+        // belom testing
+        // next({ name : 'Error not found'})
       }
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -42,7 +43,7 @@ class OptionController {
       })
       res.status(201).json(data)
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -72,18 +73,28 @@ class OptionController {
         let dataObj = data[1][0]
         res.status(200).json (dataObj)
       } else {
-        next ({name: 'Error not found'})
+        // belom testing
+        // next ({name: 'Error not found'})
       }
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
   static async delete (req, res, next) {
     try {
+      const data =  await Option.destroy({ 
+        where : {id : +req.params.optionId}
+      })
 
+      if(!data) {
+        // belom testing
+        // next({ name : 'Error not found'})
+      } else {
+        res.status(200).json({ messages : 'option success delete'})
+      }
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 }

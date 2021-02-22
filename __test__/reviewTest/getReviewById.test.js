@@ -58,6 +58,28 @@ describe('GET /users/:userId/reviews/:reviewId',function() {
             done()
         })
     })
+
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const id = "asdadasdsad"
+
+        //excecute
+        request(app) 
+        .get(`/users/${userId}/reviews/${id}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
 })
 
 
@@ -101,6 +123,27 @@ describe('GET /artists/:artisId/reviews/:reviewId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const id = "adsadsadsadasd"
+
+        //excecute
+        request(app) 
+        .get(`/artists/${artistId}/reviews/${id}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')

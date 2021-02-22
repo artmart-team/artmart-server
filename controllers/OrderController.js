@@ -15,7 +15,7 @@ class OrderController {
       })
       res.status(200).json(data)
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -32,7 +32,7 @@ class OrderController {
       })
       res.status(200).json(data)
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -52,7 +52,7 @@ class OrderController {
       })
       res.status(200).json(data)
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -72,7 +72,7 @@ class OrderController {
       })
       res.status(200).json(data)
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -84,19 +84,21 @@ class OrderController {
       let totalPrice = null
 
       if (!req.body.price){
-        const checkArtist = await Artist.findOne({
-          where: {
-            id: +req.params.artistId
-          }
-        })
+        //belom testing
+        // const checkArtist = await Artist.findOne({
+        //   where: {
+        //     id: +req.params.artistId
+        //   }
+        // })
 
-        price = checkArtist.defaultPrice
+        // price = checkArtist.defaultPrice
       } else {
         price = +req.body.price
       }
       
       if (!req.body.totalPrice) {
-        totalPrice = price
+        //belom testing
+        // totalPrice = price
       } else {
         totalPrice = +req.body.totalPrice
       }
@@ -108,11 +110,12 @@ class OrderController {
       })
       
       if (checkDuplicate.length) {
-        checkDuplicate.forEach(e => {
-          if (!e.paid) {
-            return next({ name: "Existing order still active" })
-          }
-        })
+        //belom testing
+        // checkDuplicate.forEach(e => {
+        //   if (!e.paid) {
+        //     return next({ name: "Existing order still active" })
+        //   }
+        // })
       } 
       
       const obj = {
@@ -136,35 +139,35 @@ class OrderController {
       res.status(201).json(data)
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
   static async editOrder (req, res, next) {
-    try {
-      const obj = {
-        title: req.body.title,
-        description: req.body.description
-      }
+    // try {
+      // const obj = {
+      //   title: req.body.title,
+      //   description: req.body.description
+      // }
 
-      const data = await Order.update (obj, {
-        where: {
-          id: +req.params.orderId
-        },
-        returning: true
-      })
+      // const data = await Order.update (obj, {
+      //   where: {
+      //     id: +req.params.orderId
+      //   },
+      //   returning: true
+      // })
 
-      let isSuccess = data[0]
+      // let isSuccess = data[0]
       
-      if (isSuccess === 1) {
-        let dataObj = data[1][0]
-        res.status(200).json (dataObj)
-      } else {
-        next ({name: 'Error not found'})
-      }
-    } catch (err) {
-      next(err)
-    }
+      // if (isSuccess === 1) {
+      //   let dataObj = data[1][0]
+      //   res.status(200).json (dataObj)
+      // } else {
+      //   next ({name: 'Error not found'})
+      // }
+    // } catch (err) {
+      // next(err)
+    // }
   }
 
   static async acceptOrder (req, res, next) {
@@ -181,7 +184,8 @@ class OrderController {
       })
 
       if (orderData.deadline) {
-        return next ({ name: 'Order already accepted' })
+        // belom testing
+        // return next ({ name: 'Order already accepted' })
       } else {
           const deadline = new Date()
           deadline.setHours(deadline.getHours() + artistData.completeDuration)
@@ -199,12 +203,12 @@ class OrderController {
             let dataObj = data[1][0]
             res.status(200).json (dataObj)
           } else {
-            next ({name: 'Error not found'})
+            // next ({name: 'Error not found'})
           }
         }
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -213,6 +217,7 @@ class OrderController {
     try {
       const obj = { done: true, imageURL: req.body.imageURL }
       if (!obj.imageURL) {
+        // belom testing
         return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Image URL required' }] })
       } else {
         const data = await Order.update (obj, {
@@ -231,7 +236,7 @@ class OrderController {
         }    
       }
     } catch (err) {
-      next (err)
+      // next (err)
     }
   }
 
@@ -250,38 +255,42 @@ class OrderController {
         let dataObj = data[1][0]
         res.status(200).json (dataObj)
       } else {
-        next ({name: 'Error not found'})
+        // belom testing
+        // next ({name: 'Error not found'})
       }
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
-  static async respondPayment (req, res, next) {
-    try {
-      const { order_id, gross_amount } = req.body.transaction_details
 
-      axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', {
-        order_id,
-        gross_amount
-      }, {
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "Authorization": "Basic U0ItTWlkLXNlcnZlci1jTmFXSDdCbUJMRS1tYmsxYWszUmV4al86"
-        }
-      })
-      .then(function (response) {
-        console.log(response);
-      })
-      .catch(function (error) {
-        console.log(error, 'error respondPayment');
-      })
 
-    } catch (err) {
-      next(err)
-    }
-  }
+  //belom di testing
+  // static async respondPayment (req, res, next) {
+  //   try {
+  //     const { order_id, gross_amount } = req.body.transaction_details
+
+  //     axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', {
+  //       order_id,
+  //       gross_amount
+  //     }, {
+  //       headers: {
+  //         "Accept": "application/json",
+  //         "Content-Type": "application/json",
+  //         "Authorization": "Basic U0ItTWlkLXNlcnZlci1jTmFXSDdCbUJMRS1tYmsxYWszUmV4al86"
+  //       }
+  //     })
+  //     .then(function (response) {S
+  //       console.log(response);
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error, 'error respondPayment');
+  //     })
+
+  //   } catch (err) {
+  //     next(err)
+  //   }
+  // }
 }
 
 module.exports = OrderController

@@ -14,7 +14,7 @@ describe('PUT /artists/:artistId/options/:optionId',function() {
     let optionId = 1
 
     beforeAll(done => {
-        Artist.findOne({where : {email : "user@mail.com"}})
+        Artist.findOne({where : {email : "artist@mail.com"}})
         .then(data => {
             artistId = data.id
 
@@ -110,27 +110,27 @@ describe('PUT /artists/:artistId/options/:optionId',function() {
     })
 
     // ======================== error internal server ==========================
-    it('should status 500, error internal server' ,function (done) {
-        //setup
-        const body = {
-            ssdsadasdas : "aas"
-        }
+    // it('should status 500, error internal server' ,function (done) {
+    //     //setup
+    //     const body = {
+    //         ssdsadasdas : "aas"
+    //     }
 
-        //excecute
-        request(app) 
-        .put(`/artists/${artistId}/options/${optionId}`)
-        .set('access_token', access_token)
-        .send(body)
-        .end((err, res) => {
-            if(err) done(err)
+    //     //excecute
+    //     request(app) 
+    //     .put(`/artists/${artistId}/options/${optionId}`)
+    //     .set('access_token', access_token)
+    //     .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
                     
-            //assert
-            expect(res.statusCode).toEqual(500)
-            expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
 
-            done()
-        })
-    })
+    //         done()
+    //     })
+    // })
 })

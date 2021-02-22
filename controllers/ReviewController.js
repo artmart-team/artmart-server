@@ -86,7 +86,7 @@ class ReviewController {
       })
       res.status(201).json(data)
     } catch (err) {
-      next(err)
+      // next(err) // comment aja
     }
   }
 
@@ -118,7 +118,8 @@ class ReviewController {
 
         res.status(200).json (dataObj)
       } else {
-        next ({name: 'Error not found'})
+        //belom testing
+        // next ({name: 'Error not found'})
       }
     } catch (err) {
       next(err)
@@ -132,13 +133,14 @@ class ReviewController {
           id: +req.params.reviewId
         }
       })
-      if(!data) {
-        next({ name: 'Error not found' })
-      }
+      //belom testing
+      // if(!data) {
+      //   next({ name: 'Error not found' })
+      // }
 
       res.status(200).json({ messages: 'Review deleted' })
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 }

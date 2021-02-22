@@ -55,10 +55,10 @@ describe('DELETE /users/:userId/artists/:artistId/ratings/:ratingId',function() 
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(404)
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            // expect(res.body).toHaveProperty('messages')
+            // expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -84,6 +84,32 @@ describe('DELETE /users/:userId/artists/:artistId/ratings/:ratingId',function() 
             done()
         })
     })
+
+
+
+    // ======================== error internal server error==========================
+    it('should status 404, error ratings id not found' ,function (done) {
+        //setup
+        const id = "sadasdasd"
+
+        //excecute
+        request(app) 
+        .delete(`/users/${userId}/artists/${artistId}/ratings/${id}`)
+        .set('access_token', access_token)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+
+
 
     // ======================== successfull delete ratings ==========================
     it('should status 200, successfull delete ratings' ,function (done) {

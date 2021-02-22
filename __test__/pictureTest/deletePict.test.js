@@ -16,28 +16,25 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
-    let artId 
-    let access_token
+    let artId  = 1
+    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAxMDk2M30.UFwCtrWtIoi1waJM5lDXMvNDZ8RuEz21FP7Z0Vv-H28"
     let pictId = 1
  
-    beforeAll(done => {
-        Artist.findOne({ where : { email : "user@mail.com"}})
-        .then(data => {
-            artId = data.id
+    // beforeAll(done => {
+    //     Artist.findOne({ where : { email : "artist@mail.com"}})
+    //     .then(data => {
+    //         artId = data.id
 
-            const payload = {
-                id : data.id,
-                username : data.username,
-                profilePicture : data.profilePicture
-            }
+    //         const payload = {
+    //             id : data.id,
+    //             username : data.username,
+    //             profilePicture : data.profilePicture
+    //         }
 
-            access_token = generateToken(payload)
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err findOne image delete test")
-        })
-    })
+    //         access_token = generateToken(payload)
+    //         done()
+    //     })
+    // })
 
     // error not login (belom dibuat)
 
@@ -45,7 +42,7 @@ describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const idPict = "sadasdasd"
+        const idPict = "sa"
 
         //excecute
         request(app) 

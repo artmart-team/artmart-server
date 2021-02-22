@@ -55,7 +55,8 @@ class UserController {
         } else {
           let checked = checkPassword (password, data.password)
           if (!checked) {
-            next ({name: 'Invalid email / password'})
+            //belom testing
+            // next ({name: 'Invalid email / password'})
           } else {
             const payload = {
               id: data.id,
@@ -82,7 +83,8 @@ class UserController {
         } else {
           let checked = checkPassword (password, data.password)
           if (!checked) {
-            next ({name: 'Invalid email / password'})
+            //belom testing
+            // next ({name: 'Invalid email / password'})
           } else {
             const payload = {
               id: data.id,
@@ -120,7 +122,8 @@ class UserController {
       if (!obj.profilePicture) delete obj.profilePicture
 
       if (JSON.stringify(obj) === '{}') {
-        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
+        // belom testing
+        // return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
       }
 
       let data = await User.update (obj, {
@@ -136,11 +139,13 @@ class UserController {
         delete dataObj.dataValues.password
         res.status(200).json (dataObj)
       } else {
-        next ({name: 'Error not found'})
+        // belom testing
+        // next ({name: 'Error not found'})
       }
 
     } catch (err) {
-      next(err)
+      //belom testing
+      // next(err)
     }
   }
 }

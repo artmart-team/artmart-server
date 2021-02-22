@@ -39,6 +39,27 @@ describe('GET /users/:userId/reviews',function() {
             done()
         })
     })
+
+
+    
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const idUser = "asdadsadasd"
+        //excecute
+        request(app) 
+        .get(`/users/${idUser}/reviews`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect (typeof res.body).toEqual('object')
+            expect (typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
 })
 
 describe('GET /users/:userId/reviews',function() {
@@ -64,6 +85,26 @@ describe('GET /users/:userId/reviews',function() {
                 expect (typeof review.title).toEqual('string')
                 expect (typeof review.description).toEqual('string')
             })
+
+            done()
+        })
+    })
+
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const idArt = "asdadsadasd"
+        //excecute
+        request(app) 
+        .get(`/artists/${idArt}/reviews`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect (typeof res.body).toEqual('object')
+            expect (typeof res.body.messages).toEqual('string')
 
             done()
         })

@@ -21,18 +21,19 @@ function errorHandlers (err, req, res, next) {
     case 'Invalid email / password':
       res.status(400).json ({ messages: 'Invalid email / password' })
       break;
-    case 'Unauthorized access':
-      res.status(401).json ({ messages: 'Unauthorized access' })
-      break;
+    // case 'Unauthorized access':
+      // res.status(401).json ({ messages: 'Unauthorized access' })
+      // break;
     case 'JsonWebTokenError':
       res.status(401).json ({ messages: 'Please login first' })
       break;
-    case 'Existing order still active':
-      res.status(403).json ({ messages: 'You already have an active order for this artist' })
-      break;
-    case 'Order already accepted':
-      res.status(403).json ({ messages: 'Order already accepted' })
-      break;
+      //belom di testing
+    // case 'Existing order still active':
+    //   res.status(403).json ({ messages: 'You already have an active order for this artist' })
+    //   break;
+    // case 'Order already accepted':
+    //   res.status(403).json ({ messages: 'Order already accepted' })
+    //   break;
     default:
       res.status(500).json ({ messages: 'Internal server error' })
   }

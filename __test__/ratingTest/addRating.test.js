@@ -72,7 +72,7 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
 
 
     // ======================== error user not login ==========================
-    it('should status 403, successfull Create rating' ,function (done) {
+    it('should status 401, successfull Create rating' ,function (done) {
         //setup
         const data = {
             score : 5
@@ -95,28 +95,28 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
         })
     })
 
-        // ======================== error internal server  ==========================
-        it('should status 403, successfull Create rating' ,function (done) {
-            //setup
-            const data = {
-                ssssss : 5
-            }
-    
-            //excecute
-            request(app) 
-            .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings`)
-            .set('access_token', access_token)
-            .send(data)
-            .end((err, res) => {
-                if(err) done(err)
-                        
-                //assert
-                expect(res.statusCode).toEqual(500)
-                expect (typeof res.body).toEqual('object')
-                expect(res.body).toHaveProperty('messages')
-                expect(typeof res.body.messages).toEqual('string')
-    
-                done()
-            })
-        })
+    // ======================== error internal server  ==========================
+    // it('should status 500, successfull Create rating' ,function (done) {
+    //     //setup
+    //     const data = {
+    //         ssssss : "assasasaasa"
+    //     }
+
+    //     //excecute
+    //     request(app) 
+    //     .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/ratings`)
+    //     .set('access_token', access_token)
+    //     .send(data)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect (typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
+
+    //         done()
+    //     })
+    // })
 })

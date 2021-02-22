@@ -23,7 +23,7 @@ describe('GET /artists/:artistId',function() {
     let artistId 
 
     beforeAll(done => {
-        Artist.findOne({ where: { email : "testing@mail.com"}})
+        Artist.findOne({ where: { email : "testingartist@mail.com"}})
         .then(data => {
             artistId = data.id
             done()

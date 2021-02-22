@@ -66,6 +66,27 @@ describe('GET /artists/:artistId/pictures/:pictureId',function() {
             done()
         })
     })
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const idImage = "ssdasdasdasd"
+
+        //excecute
+        request(app) 
+        .get(`/artists/${artId}/pictures/${idImage}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
 })
 
 
@@ -113,6 +134,28 @@ describe('GET /users/:userId/pictures/:pictureId',function() {
                     
             //assert
             expect(res.statusCode).toEqual(404)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const idImage = "sadasdadsada"
+
+        //excecute
+        request(app) 
+        .get(`/users/${userId}/pictures/${idImage}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')

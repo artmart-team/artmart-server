@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
   Picture.init({
     name: {
       type: DataTypes.STRING,
+      allowNull : false,
       validate: {
         notEmpty: {
           msg: 'Picture Name required'
@@ -28,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     price: {
       type: DataTypes.DOUBLE,
+      allowNull : false,
       validate: {
         notEmpty: {
           msg: 'Price required'

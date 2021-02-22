@@ -11,6 +11,7 @@ const { User } = require('../../models')
 
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
+const { disable } = require('../../app')
 
 // ===================================================================================
 // ==========================  GET /users/:userId/ratings
@@ -35,8 +36,29 @@ describe('GET /users/:userId/ratings',function() {
             res.body.forEach(rating => {
                 expect (typeof rating).toEqual('object')
                 expect (rating).toHaveProperty('score')
-                expect (typeof rating.score).toEqual('number')
             })
+
+            done()
+        })
+    })
+
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+
+        let idUser = "adsadasdasd"
+
+        //excecute
+        request(app) 
+        .get(`/users/${idUser}/ratings`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect (typeof res.body).toEqual('object')
+            expect (typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -46,24 +68,6 @@ describe('GET /users/:userId/ratings',function() {
 
 describe('GET /users/:userId/ratings',function() {
     let artistId = 1 
-
-    beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            userId = data.id
-
-            const payload = {
-                id : data.id,
-                username : data.username
-            }
-
-            access_token = generateToken(payload)
-            done()
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    })
 
     // ======================== successfull get all ratings ==========================
     it('should status 200, successfull get all ratings' ,function (done) {
@@ -81,8 +85,28 @@ describe('GET /users/:userId/ratings',function() {
             res.body.forEach(rating => {
                 expect (typeof rating).toEqual('object')
                 expect (rating).toHaveProperty('score')
-                expect (typeof rating.score).toEqual('number')
             })
+
+            done()
+        })
+    })
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+
+        let idArt = "adsadasdasd"
+
+        //excecute
+        request(app) 
+        .get(`/artists/${idArt}/ratings`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect (typeof res.body).toEqual('object')
+            expect (typeof res.body.messages).toEqual('string')
 
             done()
         })

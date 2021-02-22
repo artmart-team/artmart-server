@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
   Comment.init({
     description: {
       type: DataTypes.STRING,
+      allowNull : false,
       validate: {
         notEmpty: {
           msg: 'Description required'

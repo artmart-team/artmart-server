@@ -20,26 +20,25 @@ const { generateToken } = require('../../helpers/jwt')
 describe('PUT /artists/:artistId/pictures/:pictureId',function() {
     let artId = 1
     let pictId = 3
-    let access_token = null
+    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAxMDExNH0.k4_2bIwQbOX-fR6bgvZIKrqgXhCRh6kViWprA4VvlRI"
+    let userId = 1
+    let userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JVU2VyIiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTQwMTA2NzZ9.x7CTGbFT9gEhVe1G4GTblb1KAkhPXejdhQpBFSoPfJQ"
 
-    beforeAll(done => {
+    // beforeAll(done => {
 
-        //dummy Artist login
-        Artist.findOne( { where : { email : "user@mail.com"}})
-        .then(artis => {
-            const payload = {
-                id : artis.id,
-                username : artis.username,
-                profilePicture : artis.profilePicture
-            }
+    //     //dummy Artist login
+    //     Artist.findOne( { where : { email : "artist@mail.com"}})
+    //     .then(artis => {
+    //         const payload = {
+    //             id : artis.id,
+    //             username : artis.username,
+    //             profilePicture : artis.profilePicture
+    //         }
 
-            access_token = generateToken(payload)
-            done()
-        })
-        .catch(err => {
-            console.log(err, "<< err beforeAll get token putUser.test.js")
-        })
-    })
+    //         access_token = generateToken(payload)
+    //         done()
+    //     })
+    // })
 
     // ======================== successfull update pictures ==========================
     it('should status 200, successfull get all pictures' ,function (done) {
@@ -72,30 +71,30 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
         })
     })
 
-        // ======================== error name empty ==========================
-        it('should status 400, error name required' ,function (done) {
-            //setup
-            const body = {
-                title : ""
-            }
-    
-            //excecute
-            request(app) 
-            .put(`/artists/${artId}/pictures/${pictId}`)
-            .set('access_token', access_token)
-            .send(body)
-            .end((err, res) => {
-                if(err) done(err)
-                        
-                //assert
-                expect(res.statusCode).toEqual(400)
-                expect(typeof res.body).toEqual('object')
-                expect(res.body).toHaveProperty('errors')
-                expect(Array.isArray(res.body.errors)).toEqual(true)
+    // ======================== error name empty ==========================
+    it('should status 400, error name required' ,function (done) {
+        //setup
+        const body = {
+            title : ""
+        }
 
-                done()
-            })
+        //excecute
+        request(app) 
+        .put(`/artists/${artId}/pictures/${pictId}`)
+        .set('access_token', access_token)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(400)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('errors')
+            expect(Array.isArray(res.body.errors)).toEqual(true)
+
+            done()
         })
+    })
 
     // ======================== error image id not found ==========================
     it('should status 404, error image id not found' ,function (done) {
@@ -108,7 +107,7 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
 
         //excecute
         request(app) 
-        .put(`/artists/${artId}/images/${idImage}`)
+        .put(`/artists/${artId}/pictures/${idImage}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -117,12 +116,38 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
             //assert
             expect(res.statusCode).toEqual(404)
             expect(typeof res.body).toEqual('object')
-            // expect(res.body).toHaveProperty('messages')
-            // expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
             
             done()
         })
     })
+
+
+    // ======================== error internal server ==========================
+    // it('should status 500,error internal server' ,function (done) {
+    //     //setup
+    //     const body = {
+    //         asdasdasdasdsad : "keren deh"
+    //     }
+
+    //     //excecute
+    //     request(app) 
+    //     .put(`/artists/${artId}/pictures/${pictId}`)
+    //     .set('access_token', access_token)
+    //     .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
+            
+    //         done()
+    //     })
+    // })
 
 
     // ======================== error artist not login ==========================
@@ -134,17 +159,46 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
 
         //excecute
         request(app) 
-        .put(`/artists/${artId}/images/${pictId}`)
+        .put(`/artists/${artId}/pictures/${pictId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(404)
+            expect(res.statusCode).toEqual(401)
             expect(typeof res.body).toEqual('object')
-            // expect(res.body).toHaveProperty('messages')
-            // expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
             
+            done()
+        })
+    })
+
+
+    // hidden picture
+
+    // ======================== successfull hidden pictures ==========================
+    it('should status 200, successfull hidden picture' ,function (done) {
+        //setup
+        const body = {
+            hidden : true
+        }
+
+        //excecute
+        request(app) 
+        .patch(`/users/${userId}/pictures/${pictId}`)
+        .set('access_token', userToken)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(200)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('hidden')
+            expect(typeof res.body.hidden).toEqual('boolean')
+            expect(res.body.hidden).toEqual(true)
+
             done()
         })
     })

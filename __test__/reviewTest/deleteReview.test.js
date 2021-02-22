@@ -18,6 +18,7 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
     let userId = null
     let access_token = null
     let reviewId = 2
+    let revDel = 5  
     let artistId = 1
 
     beforeAll(done => {
@@ -42,19 +43,19 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
 
     // ======================== error reviews id not found ==========================
-    it('should status 404, error reviews id not found' ,function (done) {
+    it('should status 500, error reviews id not found' ,function (done) {
         //setup
         const id = 9999999
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artist/${artistId}/reviews/${id}`)
+        .delete(`/users/${userId}/artists/${artistId}/reviews/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(404)
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
             // expect(res.body).toHaveProperty('messages')
             // expect(typeof res.body.messages).toEqual('string')
@@ -70,7 +71,7 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artist/${artistId}/reviews/${reviewId}`)
+        .delete(`/users/${userId}/artists/${artistId}/reviews/${revDel}`)
         .end((err, res) => {
             if(err) done(err)
                     
@@ -84,13 +85,36 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
         })
     })
 
+
+    // ======================== error internal server ==========================
+    it('should status 500, errorinternal server' ,function (done) {
+        //setup
+        const id = "asdasdadadsd"
+
+        //excecute
+        request(app) 
+        .delete(`/users/${userId}/artists/${artistId}/reviews/${id}`)
+        .set('access_token', access_token)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+
     // ======================== successfull delete reviews ==========================
     it('should status 200, successfull delete reviews' ,function (done) {
         //setup
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artist/${artistId}/reviews/${reviewId}`)
+        .delete(`/users/${userId}/artists/${artistId}/reviews/${reviewId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)

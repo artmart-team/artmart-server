@@ -20,6 +20,6 @@ router.patch ('/artists/:artistId/orders/:orderId/done',  authenticate, authoriz
 
 router.patch ('/users/:userId/orders/:orderId/paid',  authenticate, authorizeArtistOrder, OrderController.paidOrder)
 
-router.post ('/requestPaymentGateway/orders/:orderId', authenticate, OrderController.respondPayment)
+// router.post ('/requestPaymentGateway/orders/:orderId', authenticate, OrderController.respondPayment)
 
 module.exports = router

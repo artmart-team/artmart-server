@@ -35,7 +35,15 @@ module.exports = {
         ArtistId : 1,
         createdAt: new Date(),
         updatedAt: new Date()
-      }
+      },
+      {
+        title : "deleteReviewTesting2",
+        description : "testing2",
+        UserId : 1,
+        ArtistId : 1,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
     ]
    await queryInterface.bulkInsert('Reviews', reviews)
   },

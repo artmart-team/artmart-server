@@ -30,34 +30,32 @@ const app = require ('../../app')
 
 describe('PUT /users/:userId',function() {
     let userId = 3
-    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJ0ZXN0aW5nZm9yZWRpdCIsInByb2ZpbGVQaWN0dXJlIjoibGluay5nb29nbGUuY29tIiwiaWF0IjoxNjEzOTE2MTM0fQ.Z-O8Pqnx1bvhd2c-SwgSPTew5GXMkOWvPx-cUvkbA-M"
+    let access_token = null
+    let tokenerror = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJiZXJoYXNpbGVkaXRVc2VyIiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTQwMDIzNzB9.ZmOnvDhDcfwiJJsi0I8KmdsXX8Pq9Du8I-Q_y9J9T8Y"
 
-    // beforeAll(done => {
-    //     //dummy user login
-    //     User.findOne( { where : { email : "testingedit@mail.com"}})
-    //     .then(user => {
-    //         userId = user.id
+    beforeAll(done => {
+        //dummy user login
+        User.findOne( { where : { id : 3}})
+        .then(user => {
+            userId = user.id
 
-    //         const payload = {
-    //             id : user.id,
-    //             username : user.username,
-    //             profilePicture : user.profilePicture
-    //         }
+            const payload = {
+                id : user.id,
+                username : user.username,
+                profilePicture : user.profilePicture
+            }
 
-    //         access_token = generateToken(payload)
+            access_token = generateToken(payload)
 
-    //         done()
-    //     })
-    //     .catch(err => {
-    //         console.log(err, "<< err beforeAll get token putUser.test.js")
-    //     })
-    // })
+            done()
+        })
+    })
     
     // ======================== successfull login ==========================
     it('should status 200, successfull update user' ,function (done) {
         //setup
         const body = {
-            username : 'usernamesss',      
+            username : 'editberhasilusername',      
         }
     
         //excecute
@@ -101,10 +99,10 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(401)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -127,10 +125,10 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(401)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messagse).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -153,17 +151,17 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(401)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
     })
 
     // ====================== email tidak sesuai format ===========================
-    it('should status 400, error input email format' ,function (done) {
+    it('should status 401, error input email format' ,function (done) {
         //setup
         const body = {
             email : 'user'       
@@ -178,10 +176,10 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(401)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -203,10 +201,10 @@ describe('PUT /users/:userId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(400)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -236,29 +234,54 @@ describe('PUT /users/:userId',function() {
         })
     })
 
-
-    // ==========================  error internal server ===============================
-    it('should status 500, error internal server' ,function (done) {
+    // ====================== error auth user edit ===========================
+    it('should status 401, error auth' ,function (done) {
         //setup
         const body = {
-            ssssss : '',      
+            firstName : 'asikdeh',      
         }
     
         //excecute
         request(app) 
         .put(`/users/${userId}`)
-        .set('access_token', access_token)
+        .set('access_token', tokenerror)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(500)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
     })
+
+
+    // ==========================  error internal server ===============================
+    // it('should status 500, error internal server' ,function (done) {
+    //     //setup
+    //     const body = {
+    //         ssssss : '',      
+    //     }
+    
+    //     //excecute
+    //     request(app) 
+    //     .put(`/users/${userId}`)
+    //     .set('access_token', access_token)
+    //     .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
+
+    //         done()
+    //     })
+    // })
 })

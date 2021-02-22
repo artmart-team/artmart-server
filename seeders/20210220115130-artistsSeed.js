@@ -10,7 +10,7 @@ module.exports = {
       username : "usernameTestingForArtist",
       firstName : "user",
       lastName : "name",
-      email : "user@mail.com",
+      email : "artist@mail.com",
       password : hashPassword('123456'),
       profilePicture : "link.google.com",
       completeDuration : 48,
@@ -20,10 +20,10 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      username : "testinguser",
+      username : "testingartist",
       firstName : "testing",
       lastName : "user",
-      email : "testing@mail.com",
+      email : "testingartist@mail.com",
       password : hashPassword('123456'),
       profilePicture : "link.google.com",
       completeDuration : 48,
@@ -33,10 +33,10 @@ module.exports = {
       updatedAt: new Date()
     },
     {
-      username : "testingforedit",
+      username : "testingforeditArtist",
       firstName : "testing",
       lastName : "edit",
-      email : "testingedit@mail.com",
+      email : "testingeditartist@mail.com",
       password : hashPassword('123456'),
       profilePicture : "link.google.com",
       completeDuration : 48,

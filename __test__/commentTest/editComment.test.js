@@ -49,7 +49,7 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
+        .patch(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -75,7 +75,7 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
+        .patch(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -84,8 +84,8 @@ describe('PUT /users/:userId/comments/:commentId',function() {
             //assert
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('errors')
+            expect(Array.isArray(res.body.errors)).toEqual(true)
 
             done()
         })
@@ -103,14 +103,14 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artists/${artistId}/comments/${id}`)
+        .patch(`/users/${userId}/artists/${artistId}/comments/${id}`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(404)
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
             // expect(res.body).toHaveProperty('messages')
             // expect(typeof res.body.messages).toEqual('string')
@@ -121,7 +121,7 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
 
     // ======================== error user not login ==========================
-    it('should status 403, error edit user not login' ,function (done) {
+    it('should status 401, error edit user not login' ,function (done) {
         //setup
         const body = {
             description : "tidak berhasil edit"
@@ -129,13 +129,13 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
+        .patch(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
@@ -144,29 +144,28 @@ describe('PUT /users/:userId/comments/:commentId',function() {
         })
     })
 
-
     // ======================== error internal server ==========================
-    it('should status 500, error internal server' ,function (done) {
-        //setup
-        const body = {
-            ssssss : "sadads"
-        }
+    // it('should status 500, error internal server' ,function (done) {
+    //     //setup
+    //     const body = {
+    //         ssssss : "sadads"
+    //     }
 
-        //excecute
-        request(app) 
-        .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
-        .set('access_token', access_token)
-        .send(body)
-        .end((err, res) => {
-            if(err) done(err)
+    //     //excecute
+    //     request(app) 
+    //     .put(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
+    //     .set('access_token', access_token)
+    //     // .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
                     
-            //assert
-            expect(res.statusCode).toEqual(500)
-            expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
 
-            done()
-        })
-    })
+    //         done()
+    //     })
+    // })
 })

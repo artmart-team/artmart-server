@@ -55,7 +55,7 @@ describe('POST /users/login',function() {
     it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
-            email : 'testing@mail.com',
+            email : 'testinguser@mail.com',
             password : '123456',         
         }
     

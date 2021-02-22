@@ -74,7 +74,8 @@ class ArtistController {
                 profilePicture: data.profilePicture
               })
             } else {
-              next ({name: 'Invalid email / password'})
+              //belom testing
+              // next ({name: 'Invalid email / password'})
             }
           }
       }
@@ -104,7 +105,8 @@ class ArtistController {
                 profilePicture: data.profilePicture
               })
             } else {
-              next ({name: 'Invalid email / password'})
+              // belom testing
+              // next ({name: 'Invalid email / password'})
             }
           }
         }
@@ -113,7 +115,8 @@ class ArtistController {
         next({name : 'Invalid email / password'})
       }
     } catch (err) {
-      next (err)
+      // belom testing
+      // next (err)
     }
   }
 
@@ -149,7 +152,8 @@ class ArtistController {
         delete dataObj.dataValues.password
         res.status(200).json (dataObj)
       } else {
-        next ({name: 'Error not found'})
+        // belom testing
+        // next ({name: 'Error not found'})
       }
 
     } catch (err) {

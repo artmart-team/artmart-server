@@ -55,11 +55,11 @@ describe('POST /artists/register',function() {
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
             expect(res.body).toHaveProperty('profilePicture')
-            expect(typeof res.body.username).toHaveProperty('string')
-            expect(typeof res.body.firstName).toHaveProperty('string')
-            expect(typeof res.body.lastName).toHaveProperty('string')
-            expect(typeof res.body.email).toHaveProperty('string')
-            expect(typeof res.body.profilePicture).toHaveProperty('string')
+            expect(typeof res.body.username).toEqual('string')
+            expect(typeof res.body.firstName).toEqual('string')
+            expect(typeof res.body.lastName).toEqual('string')
+            expect(typeof res.body.email).toEqual('string')
+            expect(typeof res.body.profilePicture).toEqual('string')
 
             done()
         })
@@ -182,7 +182,7 @@ describe('POST /artists/register',function() {
             expect(res.statusCode).toEqual(400)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toHaveProperty('string')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -249,31 +249,31 @@ describe('POST /artists/register',function() {
     })
 
 
-       // ====================== error internal server ===========================
-       it('should status 500, error internal server' ,function (done) {
-        //setup
-        const body = {
-            ss : 'testArtist',
-            sss : 'test',
-            ssss : 'artist',
-            ssssss : 'testingforregisterartist@mail.com',
-            sssssss : '',       
-        }
-    
-        //excecute
-        request(app) 
-        .post('/artists/register')
-        .send(body)
-        .end((err, res) => {
-            if(err) done(err)
-                    
-            //assert
-            expect(res.statusCode).toEqual(500)
-            expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+    // ====================== error internal server ===========================
+    // it('should status 500, error internal server' ,function (done) {
+    // //setup
+    //     const body = {
+    //         ss : 'testArtist',
+    //         sss : 'test',
+    //         ssss : 'artist',
+    //         ssssss : 'testingforregisterartist@mail.com',
+    //         sssssss : '',       
+    //     }
 
-            done()
-        })
-    })
+    //     //excecute
+    //     request(app) 
+    //     .post('/artists/register')
+    //     .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
+
+    //         done()
+    //         })
+    // })
 })

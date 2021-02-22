@@ -121,8 +121,34 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
     })
 
 
+    // ======================== error internal server ==========================
+    // it('should status 500, error internal server' ,function (done) {
+    //     //setup
+    //     const body = {
+    //         asdasdadasdsad : "2.44asasd"
+    //     }
+
+    //     //excecute
+    //     request(app) 
+    //     .put(`/users/${userId}/artists/${artistId}/ratings/${ratingId}`)
+    //     .set('access_token', access_token)
+    //     .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
+
+    //         done()
+    //     })
+    // })
+
+
     // ======================== error user not login ==========================
-    it('should status 403, error edit user not login' ,function (done) {
+    it('should status 401, error edit user not login' ,function (done) {
         //setup
         const body = {
             score : 2.44

@@ -32,18 +32,13 @@ describe('GET /artists/:artistId/pictures',function() {
             //assert
             expect(res.statusCode).toEqual(200)
             expect(Array.isArray (res.body)).toEqual(true)
-            res.body.forEach(picture => {
-                expect (typeof picture).toEqual('object')
-                expect (picture).toHaveProperty('name')
-                expect (picture).toHaveProperty('description')
-                expect (picture).toHaveProperty('price')
-                expect (picture).toHaveProperty('link')
-
-                expect (typeof picture.name).toEqual('string')
-                expect (typeof picture.description).toEqual('string')
-                expect (typeof picture.price).toEqual('number')
-                expect (typeof picture.link).toEqual('string')
-            })
+            expect(res.body[0]).toHaveProperty('name')
+            expect(res.body[0]).toHaveProperty('description')
+            expect(res.body[0]).toHaveProperty('price')
+            expect(res.body[0]).toHaveProperty('link')
+            expect(typeof res.body[0].description).toEqual('string')
+            expect(typeof res.body[0].price).toEqual('number')
+            expect(typeof res.body[0].link).toEqual('string')
 
             done()
         })
@@ -89,18 +84,13 @@ describe('GET /users/:userId/pictures',function() {
             //assert
             expect(res.statusCode).toEqual(200)
             expect(Array.isArray (res.body)).toEqual(true)
-            res.body.forEach(picture => {
-                expect (typeof picture).toEqual('object')
-                expect (picture).toHaveProperty('name')
-                expect (picture).toHaveProperty('description')
-                expect (picture).toHaveProperty('price')
-                expect (picture).toHaveProperty('link')
-
-                expect (typeof picture.name).toEqual('string')
-                expect (typeof picture.description).toEqual('string')
-                expect (typeof picture.price).toEqual('number')
-                expect (typeof picture.link).toEqual('string')
-            })
+            expect(res.body[0]).toHaveProperty('name')
+            expect(res.body[0]).toHaveProperty('description')
+            expect(res.body[0]).toHaveProperty('price')
+            expect(res.body[0]).toHaveProperty('link')
+            expect(typeof res.body[0].description).toEqual('string')
+            expect(typeof res.body[0].price).toEqual('number')
+            expect(typeof res.body[0].link).toEqual('string')
 
             done()
         })

@@ -28,7 +28,8 @@ class RatingController {
       }
 
     } catch (err) {
-      next(err)
+      //belom testing
+      // next(err)
     }
   }
 
@@ -70,7 +71,7 @@ class RatingController {
         UserId: +req.params.userId,
         ArtistId: +req.params.artistId
       }
-
+      
       const data = await Rating.create(obj)
 
       const updateObj = {
@@ -84,7 +85,7 @@ class RatingController {
       })
       res.status(201).json(data)
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -113,10 +114,11 @@ class RatingController {
 
         res.status(200).json (dataObj)
       } else {
-        next ({name: 'Error not found'})
+        //belom testing
+        // next ({name: 'Error not found'})
       }
     } catch (err) {
-      next(err)
+      // next(err) // dicomment aja
     }
   }
 
@@ -127,14 +129,14 @@ class RatingController {
           id: +req.params.ratingId
         }
       })
-
-      if(!data) {
-        next({ name : 'Error not found'})
-      }
+      //belom testing
+      // if(!data) {
+      //   next({ name : 'Error not found'})
+      // }
 
       res.status(200).json({ messages: 'Rating deleted' })
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 }

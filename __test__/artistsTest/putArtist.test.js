@@ -31,22 +31,24 @@ const app = require ('../../app')
 
 describe('PUT /artists/:artistId',function () {
     let artistId =  3
-    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlcm5hbWUiOiJ0ZXN0QXJ0aXN0IiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTM5MTI4NTR9.Y7XNvktMRcJnHr31BCEGqG9PQMmY8roSic85FynLMps"
+    let access_token = null
+    let tokens = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJiZXJoYXNpbGVkaXRBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAwMjU4Mn0.qwsFxww3aZx36t7NPsLzQhMCSsyt8uCELAM7EjFGFEs"
 
     beforeAll(done => {
         //dummy artist login
-        const data = {
-            email : 'testingedit@mail.com',
-            password : '123456'
-        }
+        Artist.findOne({ where : { email : "testingeditartist@mail.com"}})
+        .then(data => {
+            artistId = data.id
 
-        axios.post('artists/login', data)
-        .then(response => {
-            console.log(response)
+            let payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
+            }
+
+            access_token = generateToken(payload)
+
             done()
-        })
-        .catch(err => {
-            console.log(err)
         })
     })
     
@@ -54,7 +56,7 @@ describe('PUT /artists/:artistId',function () {
     it('should status 200, successfull update artist' ,function (done) {
         //setup
         const body = {
-            username : 'usernamesss',      
+            username : 'berhasileditArtist',      
         }
     
         //excecute
@@ -73,11 +75,11 @@ describe('PUT /artists/:artistId',function () {
             expect(res.body).toHaveProperty('lastName')
             expect(res.body).toHaveProperty('email')
             expect(res.body).toHaveProperty('profilePicture')
-            expect(typeof res.body.username).toHaveProperty('string')
-            expect(typeof res.body.firstName).toHaveProperty('string')
-            expect(typeof res.body.lastName).toHaveProperty('string')
-            expect(typeof res.body.email).toHaveProperty('string')
-            expect(typeof res.body.profilePicture).toHaveProperty('string')
+            expect(typeof res.body.username).toEqual('string')
+            expect(typeof res.body.firstName).toEqual('string')
+            expect(typeof res.body.lastName).toEqual('string')
+            expect(typeof res.body.email).toEqual('string')
+            expect(typeof res.body.profilePicture).toEqual('string')
 
             done()
         })
@@ -101,8 +103,8 @@ describe('PUT /artists/:artistId',function () {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -127,8 +129,8 @@ describe('PUT /artists/:artistId',function () {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -153,8 +155,8 @@ describe('PUT /artists/:artistId',function () {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -178,8 +180,8 @@ describe('PUT /artists/:artistId',function () {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -203,8 +205,8 @@ describe('PUT /artists/:artistId',function () {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })
@@ -234,29 +236,54 @@ describe('PUT /artists/:artistId',function () {
         })
     })
 
-
-        // ====================== error internal server ===========================
-        it('should status 500, error internal server' ,function (done) {
-            //setup
-            const body = {
-                sssssss : ''
-            }
-        
-            //excecute
-            request(app) 
-            .put(`/artists/${artistId}`)
-            .set('access_token', access_token)
-            .send(body)
-            .end((err, res) => {
-                if(err) done(err)
-                        
-                //assert
-                expect(res.statusCode).toEqual(500)
-                expect(typeof res.body).toEqual('object')
-                expect(res.body).toHaveProperty('messages')
-                expect(typeof res.body.messages).toEqual('string')
+    // ==========================  username diisi kosong  ===============================
+    it('should status 400, error input username empty / null' ,function (done) {
+        //setup
+        const body = {
+            username : '',      
+        }
     
-                done()
-            })
+        //excecute
+        request(app) 
+        .put(`/artists/${artistId}`)
+        .set('access_token', tokens)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(400)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('errors')
+            // expect(typeof res.body.message).toEqual('string')
+
+            done()
         })
+    })
+
+
+    // ====================== error internal server ===========================
+    // it('should status 500, error internal server' ,function (done) {
+    //     //setup
+    //     const body = {
+    //         sssssss : ''
+    //     }
+    
+    //     //excecute
+    //     request(app) 
+    //     .put(`/artists/${artistId}`)
+    //     .set('access_token', access_token)
+    //     .send(body)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
+
+    //         done()
+    //     })
+    // })
 })

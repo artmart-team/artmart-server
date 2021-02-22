@@ -10,7 +10,7 @@ describe ('GET /artists/:artistId/options/:optionId', function () {
     let access_token = null
 
     beforeAll(done => {
-        Artist.findOne({ where : {email : "user@mail.com"}})
+        Artist.findOne({ where : {email : "artist@mail.com"}})
         .then(data => {
             artistId = data.id
 
@@ -49,22 +49,22 @@ describe ('GET /artists/:artistId/options/:optionId', function () {
     })
 
     // error internal server
-    it ('should send response with 500 error internal server', function (done) {
-        let idOpt = "asdaasdas"
+    // it ('should send response with 500 error internal server', function (done) {
+    //     let idOpt = "asdaasdas"
 
 
-        request (app)
-          .get (`/artists/${artistId}/options/${idOpt}`)
-          .set('access_token', access_token)
-          .end (function (err, res) {
-            if (err) done (err)
+    //     request (app)
+    //       .get (`/artists/${artistId}/options/${idOpt}`)
+    //       .set('access_token', access_token)
+    //       .end (function (err, res) {
+    //         if (err) done (err)
   
-            expect(res.statusCode).toEqual(500)
-            expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
   
-            done()
-          })
-      })
+    //         done()
+    //       })
+    //   })
 })

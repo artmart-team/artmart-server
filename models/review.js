@@ -20,6 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   Review.init({
     title: {
       type: DataTypes.STRING,
+      allowNull : false,
       validate: {
         notEmpty: {
           msg: 'Title required'
@@ -28,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: {
       type: DataTypes.STRING,
+      allowNull : false,
       validate: {
         notEmpty: {
           msg: 'Description required'
