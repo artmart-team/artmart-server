@@ -26,7 +26,7 @@ class PictureController {
         },
         include: {
           model: Artist,
-          attributes: ['username', 'email', 'profilePicture']
+          attributes: [ 'id', 'username', 'profilePicture']
         }
       })
       res.status(200).json(data)
@@ -43,7 +43,7 @@ class PictureController {
         },
         include: {
           model: User,
-          attributes: ['username', 'email', 'profilePicture']
+          attributes: [ 'id', 'username', 'profilePicture']
         }
       })
       res.status(200).json(data)
@@ -60,7 +60,7 @@ class PictureController {
         },
         include: {
           model: Artist,
-          attributes: ['username', 'email', 'profilePicture']
+          attributes: [ 'id', 'username', 'profilePicture']
         }
       })
 
@@ -83,7 +83,7 @@ class PictureController {
         },
         include: {
           model: User,
-          attributes: ['username', 'email', 'profilePicture']
+          attributes: [ 'id', 'username', 'profilePicture']
         }
       })
 
@@ -128,7 +128,6 @@ class PictureController {
         link: req.body.link,
         hidden: req.body.hidden,
         CategoryId: req.body.CategoryId,
-        UserId: req.body.UserId
       }
       if (!obj.name) delete obj.name
       if (!obj.description) delete obj.description
@@ -136,7 +135,6 @@ class PictureController {
       if (!obj.link) delete obj.link
       if (!obj.hidden) delete obj.hidden
       if (!obj.CategoryId) delete obj.CategoryId
-      if (!obj.UserId) delete obj.UserId
 
       if (JSON.stringify(obj) === '{}') {
         return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })

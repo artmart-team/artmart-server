@@ -36,6 +36,9 @@ function errorHandlers (err, req, res, next) {
     case 'Order already paid':
       res.status(403).json ({ messages: 'Order already paid' })
       break;
+    case 'Order already done':
+      res.status(403).json ({ messages: 'Order already done' })
+      break;
     case 'Already have rating':
       res.status(403).json ({ messages: 'Already have rating' })
       break;
