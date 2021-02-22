@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "db:create": "npx sequelize-cli db:create",
     "db:create:development": "NODE_ENV=development npm run db:create",
     "db:create:test": "NODE_ENV=test npm run db:create",
