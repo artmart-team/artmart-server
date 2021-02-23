@@ -1,83 +1,102 @@
 [
-    {
-      "name": "Pillow 1",
-      "description": "My Pillow Color is Blue",
-      "price": "100000",
-      "link": "https://i.pinimg.com/564x/6e/23/90/6e2390297a401146940c24675cb59368.jpg",
-      "hidden": false,
-      "CategoryId": 1,
-      "ArtistId": 1,
-      "UserId": null
-    },
-    {
-      "name": "Pillow 2",
-      "description": "My Pillow Color is White",
-      "price": "150000",
-      "link": "https://i.pinimg.com/564x/7b/81/29/7b8129c724b043c57e135ed0491a5919.jpg",
-      "hidden": false,
-      "CategoryId": 2,
-      "ArtistId": 2,
-      "UserId": 1
-    },
-    {
-      "name": "Pillow 3",
-      "description": "My Pillow Color is Yellow",
-      "price": "50000",
-      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-14.jpg",
-      "hidden": false,
-      "CategoryId": 1,
-      "ArtistId": 2,
-      "UserId": 2
-    },
-    {
-      "name": "Pillow 4",
-      "description": "My Pillow Color is Purple",
-      "price": "200000",
-      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-10.jpg",
-      "hidden": false,
-      "CategoryId": 3,
-      "ArtistId": 1,
-      "UserId": 1
-    },
-    {
-      "name": "Pillow 5",
-      "description": "My Pillow Color is Orange",
-      "price": "10000",
-      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-20.jpg",
-      "hidden": false,
-      "CategoryId": 4,
-      "ArtistId": 1,
-      "UserId": 1
-    },
-    {
-      "name": "Pillow 6",
-      "description": "My Pillow Color is Red",
-      "price": "150000",
-      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-15.jpg",
-      "hidden": false,
-      "CategoryId": 3,
-      "ArtistId": 3,
-      "UserId": 3
-    },
-    {
-      "name": "Pillow 7",
-      "description": "My Pillow Color is Green",
-      "price": "100000",
-      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-17.jpg.jpg",
-      "hidden": false,
-      "CategoryId": 2,
-      "ArtistId": 2,
-      "UserId": 2
-    },
-    {
-      "name": "Pillow 8",
-      "description": "My Pillow Color is Silver",
-      "price": "50000",
-      "link": "https://image.freepik.com/free-psd/square-pillow-mockup_177774-19.jpg",
-      "hidden": false,
-      "CategoryId": 3,
-      "ArtistId": 2,
-      "UserId": 1
-    }
+  {
+    "name": "KyoAni Style",
+    "description": "Minim amet mollit consectetur consequat do mollit voluptate esse. Officia mollit velit Lorem veniam dolore officia ex ea nostrud sint enim ut velit. Id deserunt veniam proident veniam voluptate amet aute. Irure occaecat occaecat consectetur proident esse fugiat consectetur consequat elit voluptate reprehenderit tempor deserunt. Nulla pariatur voluptate adipisicing amet eiusmod exercitation veniam quis id. Reprehenderit labore et nisi aliqua enim culpa. Enim ut adipisicing cillum amet ut nulla exercitation sint sint. https://pixiv.me/lemondseven",
+    "price": 125000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Flemond2.jpg?alt=media&token=832ff844-143c-4a53-b7e7-d9b3f2b9ca89",
+    "hidden": false,
+    "CategoryId": 3,
+    "ArtistId": 1,
+    "UserId": null
+  },
+  {
+    "name": "Techwear Suit",
+    "description": "Adipisicing sit elit labore voluptate ad et mollit deserunt exercitation incididunt. Est dolor irure voluptate aute nostrud tempor veniam fugiat et voluptate velit magna nostrud ullamco. Dolore aliquip reprehenderit amet anim eu occaecat mollit anim nisi do adipisicing fugiat in. Cupidatat id amet do reprehenderit Lorem tempor ex magna. https://pixiv.me/lemondseven (Lemond)",
+    "price": 150000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Flemond1.jpg?alt=media&token=d6590d8a-8410-42a4-982a-6a4f9b53ff28",
+    "hidden": false,
+    "CategoryId": 3,
+    "ArtistId": 1,
+    "UserId": null
+  },
+  {
+    "name": "Daliism",
+    "description": "Veniam non minim in ad ullamco excepteur nostrud ad eiusmod duis. Duis in ipsum eiusmod cillum dolor eu qui aliqua. Ut excepteur veniam velit pariatur esse do veniam eiusmod ea do anim et laboris. Pariatur commodo duis aliqua amet dolor nulla aliqua ea. Ut magna minim exercitation in pariatur laborum.",
+    "price": 175000000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fsalvator1.jpg?alt=media&token=8b304430-403b-446a-9063-6b2a9fd75c42",
+    "hidden": false,
+    "CategoryId": 2,
+    "ArtistId": 2,
+    "UserId": null
+  },
+  {
+    "name": "Da Vinci Enigma",
+    "description": "Voluptate id qui magna do occaecat veniam. Elit anim commodo deserunt nostrud labore. Excepteur occaecat non est officia enim pariatur consequat irure ullamco magna esse elit. Duis esse duis commodo irure et ipsum do sint anim enim. Ullamco cupidatat exercitation consectetur dolor labore ullamco sunt ex Lorem cillum officia enim eu amet. Est exercitation adipisicing minim in excepteur veniam labore minim cillum ea voluptate do. Deserunt aliqua adipisicing sit sit minim amet.",
+    "price": 275000000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fdavinci1.jpeg?alt=media&token=cec00272-e6b1-44aa-b2dc-3b78a73cce4a",
+    "hidden": false,
+    "CategoryId": 6,
+    "ArtistId": 3,
+    "UserId": null
+  },
+  {
+    "name": "Cell shade style",
+    "description": "Nostrud mollit ad nisi duis dolore cillum magna voluptate. Id ex cillum deserunt commodo anim quis nostrud. Excepteur laborum sit proident sint occaecat aliqua nulla sit exercitation consectetur dolore ea. Excepteur quis qui dolor magna. Non dolore cupidatat incididunt ut proident amet nisi ullamco. Tempor labore velit consequat est ea sint veniam aliquip elit irure. Et irure laborum ipsum laborum. https://www.pixiv.net/en/users/57000922 (NatKa27)",
+    "price": 125000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2FNatKa21%20-%201.png?alt=media&token=d35a53a4-7433-4083-9eeb-a73e2563ecaf",
+    "hidden": false,
+    "CategoryId": 3,
+    "ArtistId": 4,
+    "UserId": null
+  },
+  {
+    "name": "Anime Painting Style",
+    "description": "Id est sint veniam nostrud tempor sit laboris dolor sunt. Ullamco consectetur voluptate proident aliquip. Veniam laborum officia labore cupidatat sint consectetur ex est cupidatat sint minim ad. Tempor ea veniam cillum labore ex aute laborum ex. Ullamco irure adipisicing ipsum laborum in. Duis excepteur esse cillum eu pariatur. Ut consequat duis ullamco elit commodo velit reprehenderit deserunt id nulla ullamco dolore. https://www.pixiv.net/en/users/57000922 (NatKa27)",
+    "price": 125000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2FNatKa21%20-%202.png?alt=media&token=da516c0c-b65b-43ae-b5aa-bfb552641338",
+    "hidden": false,
+    "CategoryId": 3,
+    "ArtistId": 4,
+    "UserId": null
+  },
+  {
+    "name": "TechDesign Draw",
+    "description": "Dolor enim commodo ex id voluptate ad ipsum excepteur commodo duis duis elit. Pariatur anim minim exercitation id magna eu. Laborum nostrud mollit aliquip dolore incididunt in. In quis aute aliqua voluptate id cillum in veniam. https://www.pixiv.net/en/users/40557980 (Itsuwami)",
+    "price": 125000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fitsuwami1.jpg?alt=media&token=6140e386-9f14-4281-a02b-c6283ce83582",
+    "hidden": false,
+    "CategoryId": 1,
+    "ArtistId": 5,
+    "UserId": null
+  },
+  {
+    "name": "VTuber Fanart",
+    "description": "Reprehenderit ipsum mollit proident eiusmod mollit. Qui anim velit aliqua labore tempor irure ex exercitation velit. Enim officia laboris veniam ipsum consectetur enim reprehenderit veniam dolor. Ullamco tempor commodo velit sit ad excepteur officia in do. Ipsum ex pariatur pariatur do eiusmod aliquip occaecat sunt. https://www.pixiv.net/en/users/40557980 (Itsuwami)",
+    "price": 130000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fitsuwami2.jpg?alt=media&token=4148f369-fb78-4eaa-8ae2-6f5f6f8fe0d8",
+    "hidden": false,
+    "CategoryId": 3,
+    "ArtistId": 5,
+    "UserId": null
+  },
+  {
+    "name": "Full Minimalist",
+    "description": "Dolor enim commodo ex id voluptate ad ipsum excepteur commodo duis duis elit. Pariatur anim minim exercitation id magna eu. Laborum nostrud mollit aliquip dolore incididunt in. In quis aute aliqua voluptate id cillum in veniam. https://pixiv.me/stmzu (Satomiz.)",
+    "price": 250000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fpla_Card3.png?alt=media&token=50300146-8b1e-4c3d-b10f-300feb7cc184",
+    "hidden": false,
+    "CategoryId": 5,
+    "ArtistId": 6,
+    "UserId": null
+  },
+  {
+    "name": "Simple Deep Minimalist",
+    "description": "Sit ad in excepteur in eu incididunt pariatur laborum. Eu officia amet mollit sunt id consequat. Anim anim incididunt dolor proident eu id labore ea aliqua labore minim pariatur nulla velit. Enim id nostrud anim quis pariatur officia proident excepteur exercitation sunt culpa ut ad. Deserunt nulla proident consectetur sit dolor cillum dolor ullamco sint nostrud tempor sint est elit. Ad occaecat fugiat duis eiusmod elit laboris culpa est nostrud. https://pixiv.me/stmzu (Satomiz.)",
+    "price": 260000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fpla_Card.png?alt=media&token=0152dd59-6c26-4a3b-8fc1-3757e8a7b69a",
+    "hidden": false,
+    "CategoryId": 5,
+    "ArtistId": 6,
+    "UserId": null
+  }
 ]
-
