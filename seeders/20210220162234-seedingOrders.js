@@ -14,60 +14,42 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
 
     const orders = [
-      {
-        title :"testingforOrder",
-        description: "",
-        refPictureId : 1,
-        deadline : dateDeadline.addDays(2),
-        price :100000,
-        totalPrice : 120000,
-        accepted : false,
-        done : false,
-        paid : false,
-        imageURL : 'link.google.com',
-        UserId : 2,
-        ArtistId : 2,
-        ReviewId : 1,
-        RatingId : 1,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        title :"orderIdTesting",
-        description: "",
-        refPictureId : 1,
-        deadline : dateDeadline.addDays(2),
-        price :100000,
-        totalPrice : 120000,
-        accepted : false,
-        done : false,
-        paid : false,
-        imageURL : 'link.google.com',
-        UserId : 2,
-        ArtistId : 1,
-        ReviewId : 1,
-        RatingId : 2,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        title :"patchForOrderTesting",
-        description: "",
-        refPictureId : 1,
-        deadline : dateDeadline.addDays(2),
-        price :100000,
-        totalPrice : 120000,
-        accepted : false,
-        done : false,
-        paid : false,
-        imageURL : 'link.google.com',
-        UserId : 3,
-        ArtistId : 1,
-        ReviewId : 1,
-        RatingId : 3,
-        createdAt: new Date(),
-        updatedAt: new Date()
-      }
+      // {
+      //   title :"testingforOrder",
+      //   description: "",
+      //   refPictureId : 1,
+      //   deadline : dateDeadline.addDays(2),
+      //   price :100000,
+      //   totalPrice : 120000,
+      //   accepted : false,
+      //   done : false,
+      //   paid : false,
+      //   imageURL : 'link.google.com',
+      //   UserId : 2,
+      //   ArtistId : 2,
+      //   ReviewId : 1,
+      //   RatingId : 1,
+      //   createdAt: new Date(),
+      //   updatedAt: new Date()
+      // },
+      // {
+      //   title :"orderIdTesting",
+      //   description: "",
+      //   refPictureId : 1,
+      //   deadline : dateDeadline.addDays(2),
+      //   price :100000,
+      //   totalPrice : 120000,
+      //   accepted : false,
+      //   done : false,
+      //   paid : false,
+      //   imageURL : 'link.google.com',
+      //   UserId : 2,
+      //   ArtistId : 1,
+      //   ReviewId : 1,
+      //   RatingId : 2,
+      //   createdAt: new Date(),
+      //   updatedAt: new Date()
+      // }
     ]
 
    await queryInterface.bulkInsert('Orders', orders)

@@ -18,12 +18,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: "Realism",
-        createdAt: new Date(),
-        updatedAt: new Date()
-      },
-      {
-        name: "Design",
+        name: "Abstract",
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -33,12 +28,17 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        name: "Abstract",
+        name: "Cartoon",
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
-        name: "Cartoon",
+        name: "Design",
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        name: "Realism",
         createdAt: new Date(),
         updatedAt: new Date()
       }

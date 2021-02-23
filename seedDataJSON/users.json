@@ -1,26 +1,42 @@
 [
   {
-    "username": "user_01",
-    "firstName": "shinta",
-    "lastName": "jojo",
-    "email": "user1@mail.com",
-    "password": "1234",
-    "profilePicture": ""
+    "username": "mr.cat",
+    "firstName": "Mr",
+    "lastName": "Cat",
+    "email": "mrcat@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fmrcat.jpg?alt=media&token=251247b7-1146-4d2d-846e-fdfaf8415fc7"
   },
   {
-    "username": "user_02",
-    "firstName": "shin",
-    "lastName": "juu",
-    "email": "user2@mail.com",
-    "password": "1234",
-    "profilePicture": "https://www.flaticon.com/svg/vstatic/svg/2922/2922561.svg?token=exp=1613905731~hmac=0eebde0f40c08ffecf9716860b125048"
+    "username": "mr.dog",
+    "firstName": "Mr",
+    "lastName": "Dog",
+    "email": "mrdog@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fmrdog.webp?alt=media&token=a0833b91-7283-4774-ae47-6611be67901a"
   },
   {
-    "username": "user_03",
-    "firstName": "shan",
-    "lastName": "daaa",
-    "email": "user3@mail.com",
-    "password": "1234",
-    "profilePicture": "https://www.flaticon.com/svg/vstatic/svg/2922/2922478.svg?token=exp=1613905735~hmac=60b3cf78081fb4dad0ed8f4474c99d27"
+    "username": "mr.fox",
+    "firstName": "Mr",
+    "lastName": "Fox",
+    "email": "mrfox@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fmrfox.jpg?alt=media&token=bf40916e-e7b2-4fce-8c2a-efa4655350c3"
+  },
+  {
+    "username": "OhtoAi",
+    "firstName": "Ohto",
+    "lastName": "Ai",
+    "email": "ohtoai@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fohtoai.jpg?alt=media&token=fb0ccd1f-a9b1-47a5-a3cb-5b94c6763060"
+  },
+  {
+    "username": "YusukeFox",
+    "firstName": "Kitagawa",
+    "lastName": "Yusuke",
+    "email": "yusukefox@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fyusuke.png?alt=media&token=a5b39ed5-059e-4e84-b257-5693940be0eb"
   }
 ]
