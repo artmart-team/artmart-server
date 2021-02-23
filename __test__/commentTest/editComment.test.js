@@ -74,26 +74,6 @@ describe('PUT /users/:userId/comments/:commentId',function() {
         })
     })
 
-    beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
-        .then(data => {
-            userId = data.id
-
-            const decoded = {
-                id : data.id,
-                username : data.username,
-                profilePicture : data.profilePicture
-            }
-            
-            access_token = generateToken(decoded)
-            done()
-        })
-        .catch(err => {
-            console.log(err)
-        })
-
-    })
-
     // ======================== successfull edit comments ==========================
     it('should status 200, successfull edit COmment' ,function (done) {
         //setup

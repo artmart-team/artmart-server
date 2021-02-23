@@ -30,10 +30,10 @@ describe('POST /artists/:artistId/pictures', function() {
 
     beforeAll(done => {
         Artist.create({
-            username : "deletePictureTesting",
+            username : "testingPictureAkunArtist",
             firstName : "artist",
             lastName : "idsearch",
-            email : "deletePictureTesting@mail.com",
+            email : "testingPictureAkunArtist@mail.com",
             password : '123456',
             profilePicture : "link.google.com",
             completeDuration : 48,
