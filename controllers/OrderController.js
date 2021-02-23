@@ -5,6 +5,9 @@ class OrderController {
   static async getAllByUser (req, res, next) {
     try {
       const data = await Order.findAll({
+        where: {
+          UserId: +req.userId
+        },
         attributes: [
           'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'options', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
         ],
@@ -13,7 +16,26 @@ class OrderController {
           attributes: [ 'id', 'username', 'profilePicture']
         }
       })
-      res.status(200).json(data)
+
+      let newData = []
+      
+      data.forEach(async (e, idx) => {
+        if (e.refPictureId) {
+          let picture = await Picture.findOne({
+            where: {
+              id: e.refPictureId
+            }
+          })
+          e.dataValues.refLink = picture.link
+          newData.push(e)
+          
+        } else {
+          newData.push(e)
+        }
+      })
+      setTimeout(function(){
+        res.status(200).json(newData)
+       }, 500);
     } catch (err) {
       next(err)
     }
@@ -22,6 +44,10 @@ class OrderController {
   static async getAllByArtist (req, res, next) {
     try {
       const data = await Order.findAll({
+        where: {
+          ArtistId: +req.artistId,
+          paid: true
+        },
         attributes: [
           'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'options', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
         ],
@@ -30,7 +56,25 @@ class OrderController {
           attributes: [ 'id', 'username', 'profilePicture']
         }
       })
-      res.status(200).json(data)
+
+      let newData = []
+
+      data.forEach(async (e, idx) => {
+        if (e.refPictureId) {
+          let picture = await Picture.findOne({
+            where: {
+              id: e.refPictureId
+            }
+          })
+          e.dataValues.refLink = picture.link
+          newData.push(e)
+        } else {
+          newData.push(e)
+        }
+      })
+      setTimeout(function(){
+        res.status(200).json(newData)
+       }, 500);
     } catch (err) {
       next(err)
     }
@@ -78,7 +122,7 @@ class OrderController {
 
   static async post (req, res, next) {
     try {
-      let { title, description } = req.body
+      let { title, description, options } = req.body
       let setRefPictureId = +req.body.refPictureId || null
       let price = null
       let totalPrice = null
@@ -125,6 +169,7 @@ class OrderController {
         accepted: false,
         done: false,
         paid: false,
+        options,
         imageURL: '',
         UserId: +req.userId,
         ArtistId: +req.params.artistId
@@ -313,7 +358,7 @@ class OrderController {
     try {
       const obj = {
         transaction_details: {
-          order_id: 'TEST_ORDER' + Number(req.params.orderId),
+          order_id: 'TEST_ORDERS' + Number(req.params.orderId),
           gross_amount: +req.body.gross_amount
         }
       }
@@ -334,6 +379,36 @@ class OrderController {
         console.log(error, 'error respondPayment')
       })
 
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async getLatestOrderByUser (req, res, next) {
+    try {
+      const latestOrder = await Order.findOne({
+        order: [ [ 'id', 'DESC' ]],
+        attributes:  ['id']
+      })
+
+      if (!latestOrder) {
+        next({ name: 'Error not found' })
+      } else {
+        res.status(200).json(latestOrder)
+      }
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async orderDeclineByArtist (req, res, next) {
+    try {
+      const data = await Order.destroy({
+        where: {
+          id: +req.params.orderId
+        }
+      })
+      res.status(200).json({ messages: 'Order declined' })
     } catch (err) {
       next(err)
     }

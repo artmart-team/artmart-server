@@ -2,6 +2,8 @@ const router = require ('express').Router()
 const OrderController = require ('../controllers/OrderController')
 const { authenticate, authorizeUserOrder, authorizeArtistOrder } = require ('../middlewares/auth')
 
+router.get ('/users/:userId/order/latest', OrderController.getLatestOrderByUser)
+
 router.get ('/users/:userId/orders', authenticate, OrderController.getAllByUser)
 
 router.get ('/artists/:artistId/orders', authenticate, OrderController.getAllByArtist)
@@ -21,5 +23,7 @@ router.patch ('/artists/:artistId/orders/:orderId/done',  authenticate, authoriz
 router.patch ('/users/:userId/orders/:orderId/paid',  authenticate, authorizeUserOrder, OrderController.paidOrder)
 
 router.post ('/users/:userId/requestPaymentGateway/orders/:orderId', authenticate, OrderController.respondPayment)
+
+router.delete ('/artists/:artistId/orders/:orderId', authenticate, authorizeArtistOrder,  OrderController.orderDeclineByArtist)
 
 module.exports = router
