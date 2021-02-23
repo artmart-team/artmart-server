@@ -16,6 +16,8 @@ router.post ('/users/:userId/artists/:artistId/orders/', authenticate, OrderCont
 
 router.put ('/users/:userId/orders/:orderId', authenticate, authorizeUserOrder, OrderController.editOrder)
 
+router.delete ('/users/:userId/orders/:orderId', authenticate, authorizeUserOrder, OrderController.cancelOrder)
+
 router.patch ('/artists/:artistId/orders/:orderId/accepted',  authenticate, authorizeArtistOrder, OrderController.acceptOrder)
 
 router.patch ('/artists/:artistId/orders/:orderId/done',  authenticate, authorizeArtistOrder, OrderController.doneOrder)

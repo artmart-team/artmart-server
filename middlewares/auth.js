@@ -23,7 +23,7 @@ async function authenticate (req, res, next) {
       if (!dataUser) {
         req.artistId = dataArtist.id
         next ()
-
+        
       } else {
         req.userId = dataUser.id
         next ()

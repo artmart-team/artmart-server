@@ -290,7 +290,6 @@ class OrderController {
         },
         returning: true
       })
-
       if (!obj.imageURL) {
         return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Image URL required' }] })
       } else {
@@ -304,7 +303,7 @@ class OrderController {
             name: `Commission from ${orderData.User.username}`,
             description: '',
             price: +orderData.price,
-            link: orderData.imageURL,
+            link: req.body.imageURL,
             hidden: false,
             CategoryId: 1,
             ArtistId: +orderData.ArtistId,
@@ -358,7 +357,7 @@ class OrderController {
     try {
       const obj = {
         transaction_details: {
-          order_id: 'TEST_ORDERS' + Number(req.params.orderId),
+          order_id: 'TESTORDER' + Number(req.params.orderId),
           gross_amount: +req.body.gross_amount
         }
       }
@@ -409,6 +408,19 @@ class OrderController {
         }
       })
       res.status(200).json({ messages: 'Order declined' })
+    } catch (err) {
+      next(err)
+    }
+  }
+
+  static async cancelOrder (req, res, next) {
+    try {
+      const data = await Order.destroy({
+        where: {
+          id: +req.params.orderId
+        }
+      })
+      res.status(200).json({ messages: 'Order canceled' })
     } catch (err) {
       next(err)
     }
