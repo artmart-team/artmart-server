@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.98% </span>
+                <span class="strong">97.92% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>39/47</span>
+                <span class='fraction'>47/48</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">85.71% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>6/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.22% </span>
+                <span class="strong">97.83% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>37/45</span>
+                <span class='fraction'>45/46</span>
             </div>
         
             
@@ -204,7 +204,7 @@
 <a name='L145'></a><a href='#L145'>145</a>
 <a name='L146'></a><a href='#L146'>146</a>
 <a name='L147'></a><a href='#L147'>147</a>
-<a name='L148'></a><a href='#L148'>148</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">38x</span>
+<a name='L148'></a><a href='#L148'>148</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -270,29 +270,29 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -351,7 +351,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">38x</span></td><td class="text"><pre class="prettyprint lang-js">const { Review, Order } = require ('../models/index')
+<span class="cline-any cline-yes">39x</span></td><td class="text"><pre class="prettyprint lang-js">const { Review, Order } = require ('../models/index')
 &nbsp;
 class ReviewController {
   static async getAllByArtist (req, res, next) {
@@ -416,30 +416,30 @@ class ReviewController {
     }
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  st</span>atic async post (req, res, next) {
-<span class="cstat-no" title="statement not covered" >    try {</span>
-      const { title, description } = <span class="cstat-no" title="statement not covered" >req.body</span>
-      const obj = <span class="cstat-no" title="statement not covered" >{</span>
+  static async post (req, res, next) {
+    try {
+      const { title, description } = req.body
+      const obj = {
         title,
         description,
         UserId: +req.params.userId,
         ArtistId: +req.params.artistId
       }
 &nbsp;
-      const data = <span class="cstat-no" title="statement not covered" >await Review.create(obj)</span>
+      const data = await Review.create(obj)
 &nbsp;
-      const updateObj = <span class="cstat-no" title="statement not covered" >{</span>
+      const updateObj = {
         ReviewId: data.id
       }
 &nbsp;
-      const updatedOrderData = <span class="cstat-no" title="statement not covered" >await Order.update(updateObj, {</span>
+      const updatedOrderData = await Order.update(updateObj, {
         where: {
           id: +req.params.orderId
         }
       })
-<span class="cstat-no" title="statement not covered" >      res.status(201).json(data)</span>
+      res.status(201).json(data)
     } catch (err) {
-      // next(err) // comment aja
+      next(err) // comment aja
     }
   }
 &nbsp;
@@ -505,7 +505,7 @@ module.exports = ReviewController</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Feb 23 2021 08:13:06 GMT+0700 (Western Indonesia Time)
+                at Tue Feb 23 2021 08:23:32 GMT+0700 (Western Indonesia Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

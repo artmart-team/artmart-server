@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1614042787164" clover="3.2.0">
-  <project timestamp="1614042787165" name="All files">
-    <metrics statements="731" coveredstatements="707" conditionals="251" coveredconditionals="173" methods="91" coveredmethods="89" elements="1073" coveredelements="969" complexity="0" loc="731" ncloc="731" packages="7" files="35" classes="35"/>
+<coverage generated="1614043412839" clover="3.2.0">
+  <project timestamp="1614043412839" name="All files">
+    <metrics statements="728" coveredstatements="711" conditionals="251" coveredconditionals="173" methods="91" coveredmethods="90" elements="1070" coveredelements="974" complexity="0" loc="728" ncloc="728" packages="7" files="35" classes="35"/>
     <package name="artmart-server">
       <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="3" methods="0" coveredmethods="0"/>
       <file name="app.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\app.js">
         <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="3" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="cond" truecount="3" falsecount="1"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="6" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="8" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="12" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="16" count="38" type="stmt"/>
-        <line num="18" count="38" type="stmt"/>
-        <line num="20" count="38" type="stmt"/>
-        <line num="22" count="38" type="stmt"/>
+        <line num="1" count="39" type="cond" truecount="3" falsecount="1"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="8" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="12" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="16" count="39" type="stmt"/>
+        <line num="18" count="39" type="stmt"/>
+        <line num="20" count="39" type="stmt"/>
+        <line num="22" count="39" type="stmt"/>
       </file>
     </package>
     <package name="artmart-server.config">
       <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="4" methods="0" coveredmethods="0"/>
       <file name="config.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\config\config.js">
         <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="4" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="cond" truecount="1" falsecount="1"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="4" count="38" type="cond" truecount="3" falsecount="1"/>
-        <line num="6" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="8" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="10" count="38" type="stmt"/>
-        <line num="12" count="38" type="stmt"/>
+        <line num="1" count="39" type="cond" truecount="1" falsecount="1"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="4" count="39" type="cond" truecount="3" falsecount="1"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="8" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="10" count="39" type="stmt"/>
+        <line num="12" count="39" type="stmt"/>
       </file>
     </package>
     <package name="artmart-server.controllers">
-      <metrics statements="387" coveredstatements="366" conditionals="156" coveredconditionals="111" methods="51" coveredmethods="49"/>
+      <metrics statements="388" coveredstatements="374" conditionals="156" coveredconditionals="111" methods="51" coveredmethods="50"/>
       <file name="ArtistController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\ArtistController.js">
         <metrics statements="55" coveredstatements="54" conditionals="36" coveredconditionals="29" methods="4" coveredmethods="4"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
         <line num="7" count="3" type="stmt"/>
         <line num="8" count="3" type="stmt"/>
         <line num="13" count="2" type="cond" truecount="2" falsecount="0"/>
@@ -94,11 +94,11 @@
         <line num="152" count="1" type="stmt"/>
         <line num="153" count="1" type="stmt"/>
         <line num="160" count="0" type="stmt"/>
-        <line num="165" count="38" type="stmt"/>
+        <line num="165" count="39" type="stmt"/>
       </file>
       <file name="CommentController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\CommentController.js">
         <metrics statements="34" coveredstatements="33" conditionals="10" coveredconditionals="8" methods="5" coveredmethods="5"/>
-        <line num="1" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
         <line num="15" count="1" type="stmt"/>
@@ -131,11 +131,11 @@
         <line num="93" count="1" type="stmt"/>
         <line num="98" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="102" count="1" type="stmt"/>
-        <line num="112" count="38" type="stmt"/>
+        <line num="112" count="39" type="stmt"/>
       </file>
       <file name="OptionController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\OptionController.js">
         <metrics statements="29" coveredstatements="29" conditionals="12" coveredconditionals="8" methods="5" coveredmethods="5"/>
-        <line num="1" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="14" count="1" type="stmt"/>
@@ -163,12 +163,12 @@
         <line num="86" count="1" type="stmt"/>
         <line num="90" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="94" count="1" type="stmt"/>
-        <line num="102" count="38" type="stmt"/>
+        <line num="102" count="39" type="stmt"/>
       </file>
       <file name="OrderController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\OrderController.js">
         <metrics statements="60" coveredstatements="56" conditionals="18" coveredconditionals="10" methods="9" coveredmethods="8"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
@@ -226,11 +226,11 @@
         <line num="256" count="1" type="stmt"/>
         <line num="259" count="0" type="stmt"/>
         <line num="262" count="0" type="stmt"/>
-        <line num="296" count="38" type="stmt"/>
+        <line num="296" count="39" type="stmt"/>
       </file>
       <file name="PictureController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\PictureController.js">
         <metrics statements="68" coveredstatements="61" conditionals="32" coveredconditionals="20" methods="9" coveredmethods="9"/>
-        <line num="1" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
@@ -297,11 +297,11 @@
         <line num="201" count="0" type="stmt"/>
         <line num="203" count="1" type="stmt"/>
         <line num="207" count="0" type="stmt"/>
-        <line num="212" count="38" type="stmt"/>
+        <line num="212" count="39" type="stmt"/>
       </file>
       <file name="RatingController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\RatingController.js">
         <metrics statements="40" coveredstatements="40" conditionals="10" coveredconditionals="9" methods="7" coveredmethods="7"/>
-        <line num="1" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
@@ -340,11 +340,11 @@
         <line num="126" count="1" type="stmt"/>
         <line num="127" count="1" type="stmt"/>
         <line num="137" count="1" type="stmt"/>
-        <line num="144" count="38" type="stmt"/>
+        <line num="144" count="39" type="stmt"/>
       </file>
       <file name="ReviewController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\ReviewController.js">
-        <metrics statements="45" coveredstatements="37" conditionals="12" coveredconditionals="10" methods="7" coveredmethods="6"/>
-        <line num="1" count="38" type="stmt"/>
+        <metrics statements="46" coveredstatements="45" conditionals="12" coveredconditionals="10" methods="7" coveredmethods="7"/>
+        <line num="1" count="39" type="stmt"/>
         <line num="5" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
         <line num="11" count="1" type="stmt"/>
@@ -365,13 +365,14 @@
         <line num="56" count="1" type="stmt"/>
         <line num="58" count="1" type="stmt"/>
         <line num="62" count="1" type="stmt"/>
-        <line num="67" count="0" type="stmt"/>
-        <line num="68" count="0" type="stmt"/>
-        <line num="69" count="0" type="stmt"/>
-        <line num="76" count="0" type="stmt"/>
-        <line num="78" count="0" type="stmt"/>
-        <line num="82" count="0" type="stmt"/>
-        <line num="87" count="0" type="stmt"/>
+        <line num="67" count="2" type="stmt"/>
+        <line num="68" count="2" type="stmt"/>
+        <line num="69" count="2" type="stmt"/>
+        <line num="76" count="2" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="82" count="1" type="stmt"/>
+        <line num="87" count="1" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
         <line num="94" count="2" type="stmt"/>
         <line num="95" count="2" type="stmt"/>
         <line num="96" count="2" type="stmt"/>
@@ -388,13 +389,13 @@
         <line num="130" count="1" type="stmt"/>
         <line num="131" count="1" type="stmt"/>
         <line num="141" count="1" type="stmt"/>
-        <line num="148" count="38" type="stmt"/>
+        <line num="148" count="39" type="stmt"/>
       </file>
       <file name="UserController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\UserController.js">
         <metrics statements="51" coveredstatements="51" conditionals="26" coveredconditionals="17" methods="4" coveredmethods="4"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
         <line num="7" count="3" type="stmt"/>
         <line num="8" count="3" type="stmt"/>
         <line num="13" count="2" type="cond" truecount="2" falsecount="0"/>
@@ -442,61 +443,59 @@
         <line num="138" count="1" type="stmt"/>
         <line num="139" count="1" type="stmt"/>
         <line num="140" count="1" type="stmt"/>
-        <line num="153" count="38" type="stmt"/>
+        <line num="153" count="39" type="stmt"/>
       </file>
       <file name="categoriesController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\categoriesController.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
-        <line num="1" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
       </file>
     </package>
     <package name="artmart-server.helpers">
       <metrics statements="15" coveredstatements="15" conditionals="6" coveredconditionals="4" methods="4" coveredmethods="4"/>
       <file name="bcrypt.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\helpers\bcrypt.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="1" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
         <line num="4" count="3" type="stmt"/>
         <line num="5" count="3" type="stmt"/>
         <line num="6" count="3" type="stmt"/>
         <line num="10" count="4" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
       </file>
       <file name="jwt.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\helpers\jwt.js">
         <metrics statements="9" coveredstatements="9" conditionals="6" coveredconditionals="4" methods="2" coveredmethods="2"/>
-        <line num="1" count="38" type="cond" truecount="3" falsecount="1"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="cond" truecount="1" falsecount="1"/>
+        <line num="1" count="39" type="cond" truecount="3" falsecount="1"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="24" type="stmt"/>
         <line num="11" count="24" type="stmt"/>
-        <line num="15" count="74" type="stmt"/>
-        <line num="16" count="58" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
+        <line num="15" count="77" type="stmt"/>
+        <line num="16" count="60" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
       </file>
     </package>
     <package name="artmart-server.middlewares">
-      <metrics statements="109" coveredstatements="107" conditionals="66" coveredconditionals="42" methods="13" coveredmethods="13"/>
+      <metrics statements="105" coveredstatements="103" conditionals="66" coveredconditionals="42" methods="13" coveredmethods="13"/>
       <file name="auth.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\middlewares\auth.js">
-        <metrics statements="91" coveredstatements="89" conditionals="58" coveredconditionals="34" methods="11" coveredmethods="11"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="5" count="74" type="stmt"/>
-        <line num="6" count="74" type="stmt"/>
-        <line num="8" count="58" type="stmt"/>
-        <line num="14" count="58" type="stmt"/>
-        <line num="20" count="58" type="cond" truecount="4" falsecount="0"/>
+        <metrics statements="89" coveredstatements="87" conditionals="58" coveredconditionals="34" methods="11" coveredmethods="11"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="5" count="77" type="stmt"/>
+        <line num="6" count="77" type="stmt"/>
+        <line num="8" count="60" type="stmt"/>
+        <line num="14" count="60" type="stmt"/>
+        <line num="20" count="60" type="cond" truecount="4" falsecount="0"/>
         <line num="21" count="11" type="stmt"/>
-        <line num="23" count="47" type="cond" truecount="2" falsecount="0"/>
-        <line num="24" count="23" type="stmt"/>
-        <line num="25" count="23" type="stmt"/>
-        <line num="26" count="23" type="stmt"/>
+        <line num="23" count="49" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="25" type="stmt"/>
+        <line num="26" count="25" type="stmt"/>
         <line num="29" count="24" type="stmt"/>
-        <line num="30" count="24" type="stmt"/>
         <line num="31" count="24" type="stmt"/>
-        <line num="35" count="16" type="stmt"/>
+        <line num="35" count="17" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
         <line num="41" count="1" type="stmt"/>
         <line num="42" count="1" type="stmt"/>
@@ -571,292 +570,290 @@
         <line num="254" count="3" type="cond" truecount="1" falsecount="1"/>
         <line num="255" count="3" type="stmt"/>
         <line num="258" count="3" type="stmt"/>
-        <line num="262" count="38" type="stmt"/>
+        <line num="262" count="39" type="stmt"/>
       </file>
       <file name="errorHandlers.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\middlewares\errorHandlers.js">
-        <metrics statements="18" coveredstatements="18" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
-        <line num="2" count="83" type="stmt"/>
-        <line num="4" count="83" type="stmt"/>
-        <line num="5" count="83" type="cond" truecount="2" falsecount="0"/>
-        <line num="6" count="22" type="stmt"/>
-        <line num="7" count="25" type="stmt"/>
-        <line num="11" count="83" type="cond" truecount="6" falsecount="0"/>
-        <line num="13" count="21" type="stmt"/>
-        <line num="14" count="21" type="stmt"/>
+        <metrics statements="16" coveredstatements="16" conditionals="8" coveredconditionals="8" methods="2" coveredmethods="2"/>
+        <line num="5" count="85" type="cond" truecount="2" falsecount="0"/>
+        <line num="6" count="23" type="stmt"/>
+        <line num="7" count="27" type="stmt"/>
+        <line num="11" count="85" type="cond" truecount="6" falsecount="0"/>
+        <line num="13" count="22" type="stmt"/>
+        <line num="14" count="22" type="stmt"/>
         <line num="16" count="1" type="stmt"/>
         <line num="17" count="1" type="stmt"/>
         <line num="19" count="12" type="stmt"/>
         <line num="20" count="12" type="stmt"/>
         <line num="22" count="8" type="stmt"/>
         <line num="23" count="8" type="stmt"/>
-        <line num="28" count="16" type="stmt"/>
-        <line num="29" count="16" type="stmt"/>
+        <line num="28" count="17" type="stmt"/>
+        <line num="29" count="17" type="stmt"/>
         <line num="38" count="25" type="stmt"/>
-        <line num="42" count="38" type="stmt"/>
+        <line num="42" count="39" type="stmt"/>
       </file>
     </package>
     <package name="artmart-server.models">
       <metrics statements="91" coveredstatements="90" conditionals="13" coveredconditionals="9" methods="23" coveredmethods="23"/>
       <file name="artist.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\artist.js">
         <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="6" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="16" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
-        <line num="20" count="38" type="stmt"/>
-        <line num="21" count="38" type="stmt"/>
-        <line num="22" count="38" type="stmt"/>
-        <line num="23" count="38" type="stmt"/>
-        <line num="26" count="38" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="16" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
+        <line num="20" count="39" type="stmt"/>
+        <line num="21" count="39" type="stmt"/>
+        <line num="22" count="39" type="stmt"/>
+        <line num="23" count="39" type="stmt"/>
+        <line num="26" count="39" type="stmt"/>
         <line num="103" count="2" type="stmt"/>
         <line num="104" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="105" count="1" type="stmt"/>
-        <line num="110" count="38" type="stmt"/>
+        <line num="110" count="39" type="stmt"/>
       </file>
       <file name="category.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\category.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="31" count="38" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="31" count="39" type="stmt"/>
       </file>
       <file name="comment.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\comment.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
-        <line num="18" count="38" type="stmt"/>
-        <line num="48" count="38" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="18" count="39" type="stmt"/>
+        <line num="48" count="39" type="stmt"/>
       </file>
       <file name="index.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\index.js">
         <metrics statements="20" coveredstatements="19" conditionals="9" coveredconditionals="6" methods="3" coveredmethods="3"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="6" count="38" type="stmt"/>
-        <line num="7" count="38" type="cond" truecount="1" falsecount="1"/>
-        <line num="8" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="12" count="38" type="cond" truecount="1" falsecount="1"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="cond" truecount="1" falsecount="1"/>
+        <line num="8" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="12" count="39" type="cond" truecount="1" falsecount="1"/>
         <line num="14" count="0" type="stmt"/>
-        <line num="16" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
-        <line num="22" count="380" type="cond" truecount="3" falsecount="0"/>
-        <line num="25" count="342" type="stmt"/>
-        <line num="26" count="342" type="stmt"/>
-        <line num="29" count="38" type="stmt"/>
-        <line num="30" count="342" type="cond" truecount="1" falsecount="1"/>
-        <line num="31" count="342" type="stmt"/>
-        <line num="35" count="38" type="stmt"/>
-        <line num="36" count="38" type="stmt"/>
-        <line num="38" count="38" type="stmt"/>
+        <line num="16" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
+        <line num="22" count="390" type="cond" truecount="3" falsecount="0"/>
+        <line num="25" count="351" type="stmt"/>
+        <line num="26" count="351" type="stmt"/>
+        <line num="29" count="39" type="stmt"/>
+        <line num="30" count="351" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="351" type="stmt"/>
+        <line num="35" count="39" type="stmt"/>
+        <line num="36" count="39" type="stmt"/>
+        <line num="38" count="39" type="stmt"/>
       </file>
       <file name="option.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\option.js">
         <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="46" count="38" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="46" count="39" type="stmt"/>
       </file>
       <file name="order.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\order.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
-        <line num="16" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="20" count="38" type="stmt"/>
-        <line num="72" count="38" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="16" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="20" count="39" type="stmt"/>
+        <line num="72" count="39" type="stmt"/>
       </file>
       <file name="picture.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\picture.js">
         <metrics statements="7" coveredstatements="7" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
-        <line num="16" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
-        <line num="62" count="38" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="16" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
+        <line num="62" count="39" type="stmt"/>
       </file>
       <file name="rating.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\rating.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="20" count="38" type="stmt"/>
-        <line num="49" count="38" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="20" count="39" type="stmt"/>
+        <line num="49" count="39" type="stmt"/>
       </file>
       <file name="review.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\review.js">
         <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="20" count="38" type="stmt"/>
-        <line num="59" count="38" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="20" count="39" type="stmt"/>
+        <line num="59" count="39" type="stmt"/>
       </file>
       <file name="user.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\models\user.js">
         <metrics statements="14" coveredstatements="14" conditionals="2" coveredconditionals="1" methods="3" coveredmethods="3"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="6" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="16" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
-        <line num="22" count="38" type="stmt"/>
-        <line num="25" count="38" type="stmt"/>
-        <line num="26" count="38" type="stmt"/>
-        <line num="27" count="38" type="stmt"/>
-        <line num="30" count="38" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="16" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
+        <line num="22" count="39" type="stmt"/>
+        <line num="25" count="39" type="stmt"/>
+        <line num="26" count="39" type="stmt"/>
+        <line num="27" count="39" type="stmt"/>
+        <line num="30" count="39" type="stmt"/>
         <line num="83" count="1" type="stmt"/>
         <line num="84" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="85" count="1" type="stmt"/>
-        <line num="90" count="38" type="stmt"/>
+        <line num="90" count="39" type="stmt"/>
       </file>
     </package>
     <package name="artmart-server.routes">
       <metrics statements="107" coveredstatements="107" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <file name="artistsRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\artistsRouter.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
       </file>
       <file name="catRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\catRouter.js">
         <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="8" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="8" count="39" type="stmt"/>
       </file>
       <file name="commentsRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\commentsRouter.js">
         <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
       </file>
       <file name="indexRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\indexRouter.js">
         <metrics statements="20" coveredstatements="20" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="4" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="6" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="8" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="10" count="38" type="stmt"/>
-        <line num="12" count="38" type="stmt"/>
-        <line num="14" count="38" type="stmt"/>
-        <line num="16" count="38" type="stmt"/>
-        <line num="18" count="38" type="stmt"/>
-        <line num="20" count="38" type="stmt"/>
-        <line num="22" count="38" type="stmt"/>
-        <line num="24" count="38" type="stmt"/>
-        <line num="26" count="38" type="stmt"/>
-        <line num="28" count="38" type="stmt"/>
-        <line num="31" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="4" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="6" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="8" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="10" count="39" type="stmt"/>
+        <line num="12" count="39" type="stmt"/>
+        <line num="14" count="39" type="stmt"/>
+        <line num="16" count="39" type="stmt"/>
+        <line num="18" count="39" type="stmt"/>
+        <line num="20" count="39" type="stmt"/>
+        <line num="22" count="39" type="stmt"/>
+        <line num="24" count="39" type="stmt"/>
+        <line num="26" count="39" type="stmt"/>
+        <line num="28" count="39" type="stmt"/>
+        <line num="31" count="39" type="stmt"/>
       </file>
       <file name="optionsRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\optionsRouter.js">
         <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
       </file>
       <file name="ordersRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\ordersRouter.js">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
-        <line num="21" count="38" type="stmt"/>
-        <line num="25" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
+        <line num="21" count="39" type="stmt"/>
+        <line num="25" count="39" type="stmt"/>
       </file>
       <file name="picturesRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\picturesRouter.js">
         <metrics statements="13" coveredstatements="13" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
-        <line num="21" count="38" type="stmt"/>
-        <line num="24" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
+        <line num="21" count="39" type="stmt"/>
+        <line num="24" count="39" type="stmt"/>
       </file>
       <file name="ratingsRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\ratingsRouter.js">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
       </file>
       <file name="reviewsRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\reviewsRouter.js">
         <metrics statements="11" coveredstatements="11" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
-        <line num="15" count="38" type="stmt"/>
-        <line num="17" count="38" type="stmt"/>
-        <line num="19" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
+        <line num="15" count="39" type="stmt"/>
+        <line num="17" count="39" type="stmt"/>
+        <line num="19" count="39" type="stmt"/>
       </file>
       <file name="usersRouter.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\routes\usersRouter.js">
         <metrics statements="8" coveredstatements="8" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-        <line num="1" count="38" type="stmt"/>
-        <line num="2" count="38" type="stmt"/>
-        <line num="3" count="38" type="stmt"/>
-        <line num="5" count="38" type="stmt"/>
-        <line num="7" count="38" type="stmt"/>
-        <line num="9" count="38" type="stmt"/>
-        <line num="11" count="38" type="stmt"/>
-        <line num="13" count="38" type="stmt"/>
+        <line num="1" count="39" type="stmt"/>
+        <line num="2" count="39" type="stmt"/>
+        <line num="3" count="39" type="stmt"/>
+        <line num="5" count="39" type="stmt"/>
+        <line num="7" count="39" type="stmt"/>
+        <line num="9" count="39" type="stmt"/>
+        <line num="11" count="39" type="stmt"/>
+        <line num="13" count="39" type="stmt"/>
       </file>
     </package>
   </project>
