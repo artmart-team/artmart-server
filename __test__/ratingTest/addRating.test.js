@@ -21,13 +21,20 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',function() {
-    let userId = null 
+    let userId = null
     let access_token = null
-    let artistId = 1
-    let orderId = 1
+    let artistId = null
+    let orderId = null
 
     beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
+        User.create({ 
+            username : "addRatingByUser",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "addRatingByUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
         .then(data => {
             userId = data.id
 
@@ -38,10 +45,39 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
             }
 
             access_token = generateToken(payload)
-            done()
+
+            return Artist.create({
+                username : "addRatingByArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "addRatingByArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
         })
-        .catch(err => {
-            console.log(err)
+        .then(datas => {
+            artistId = datas.id
+
+            return Order.create({
+                title : 'testingAddRatingData',
+                description : 'testingAddRatingData',
+                deadline : new Date(),
+                price : 100000,
+                totalPrice : 120000,
+                accepted : false,
+                done : false,
+                paid : false,
+                imageURL : 'link.google.com',
+                ArtistId : artistId,
+                UserId : userId  
+            })
+        })
+        .then(res => {
+            orderId = res.id
+            done()
         })
     })
 

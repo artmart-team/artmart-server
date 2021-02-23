@@ -6,9 +6,7 @@
 
 const request = require('supertest')
 
-const { Picture, Artist } = require('../../models')
-
-const { beforeAll, afterAll } = require("@jest/globals")
+const { Picture, Artist, Category, User } = require('../../models')
 
 const app = require('../../app')  
 
@@ -17,8 +15,60 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /artists/:artistId/pictures/:pictureId',function() {
-    let artId = 1
-    let pictId = 2
+    let artId = null
+    let userId = null
+    let catId = null
+    let pictId = null
+
+    beforeAll(done => {
+        //dummy Artist login
+        Artist.create({
+            username : "pictIdgetTesting",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "pictIdgetTesting@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
+        .then(artis => {
+            artId = artis.id
+
+            return Category.create({
+                name: "PictIdgetTesting"
+            }) 
+        })
+        .then(cat => {
+            catId = cat.id
+            return User.create({
+                username : "getTestPictureUser",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "getTestPictureUser@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com"
+            })
+        })
+        .then(user => {
+            userId = user.id
+            return Picture.create({
+                name : 'testing buat get Id',
+                description : 'asik pokoknya',
+                price : 100000,
+                link : 'www.google.com',
+                hidden : false,
+                CategoryId : catId,
+                ArtistId : artId,
+                UserId : userId
+            })
+        })
+        .then(res => {
+            pictId = res.id
+            done()
+        })
+    })
 
     // ======================== successfull get image ==========================
     it('should status 200, successfull get all Image' ,function (done) {
@@ -49,7 +99,7 @@ describe('GET /artists/:artistId/pictures/:pictureId',function() {
     // ======================== error image id not found ==========================
     it('should status 404, error image id not found' ,function (done) {
         //setup
-        const idImage = 9999999
+        const idImage = 999
 
         //excecute
         request(app) 
@@ -70,7 +120,7 @@ describe('GET /artists/:artistId/pictures/:pictureId',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const idImage = "ssdasdasdasd"
+        const idImage = "szz"
 
         //excecute
         request(app) 
@@ -87,14 +137,13 @@ describe('GET /artists/:artistId/pictures/:pictureId',function() {
             done()
         })
     })
-})
 
 
 
-describe('GET /users/:userId/pictures/:pictureId',function() {
-    let userId = 1
-    let pictId = 2
-    
+    // ====================================================
+    // testing for user pict id
+    // ====================================================
+
     // ======================== successfull get image ==========================
     it('should status 200, successfull get all Image' ,function (done) {
         //setup
@@ -124,7 +173,7 @@ describe('GET /users/:userId/pictures/:pictureId',function() {
     // ======================== error image id not found ==========================
     it('should status 404, error image id not found' ,function (done) {
         //setup
-        const idImage = 9999999
+        const idImage = 999
 
         //excecute
         request(app) 
@@ -146,7 +195,7 @@ describe('GET /users/:userId/pictures/:pictureId',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const idImage = "sadasdadsada"
+        const idImage = "sad"
 
         //excecute
         request(app) 

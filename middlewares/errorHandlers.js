@@ -1,7 +1,7 @@
 function errorHandlers (err, req, res, next) {
-  // console.log (err.name, 'err.name')
+  console.log (err.name, 'err.name')
   // console.log (err.message, 'err.message')
-  // console.log (err)
+  console.log (err)
   if (err.errors) {
     var errors = err.errors.map (e => {
       return e.message
@@ -21,19 +21,20 @@ function errorHandlers (err, req, res, next) {
     case 'Invalid email / password':
       res.status(400).json ({ messages: 'Invalid email / password' })
       break;
-    // case 'Unauthorized access':
-      // res.status(401).json ({ messages: 'Unauthorized access' })
-      // break;
+      // belom testing
+    case 'Unauthorized access':
+      res.status(401).json ({ messages: 'Unauthorized access' })
+      break;
     case 'JsonWebTokenError':
       res.status(401).json ({ messages: 'Please login first' })
       break;
       //belom di testing
-    // case 'Existing order still active':
-    //   res.status(403).json ({ messages: 'You already have an active order for this artist' })
-    //   break;
-    // case 'Order already accepted':
-    //   res.status(403).json ({ messages: 'Order already accepted' })
-    //   break;
+    case 'Existing order still active':
+      res.status(403).json ({ messages: 'You already have an active order for this artist' })
+      break;
+    case 'Order already accepted':
+      res.status(403).json ({ messages: 'Order already accepted' })
+      break;
     case 'Order already done':
       res.status(403).json ({ messages: 'Order already done' })
       break;

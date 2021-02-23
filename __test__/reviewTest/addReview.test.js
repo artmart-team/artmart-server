@@ -15,7 +15,6 @@ const { User, Artist, Order } = require('../../models')
 
 const app = require('../../app')  
 
-
 // ===================================================================================
 // ==========================  POST /users/:userId/artists/:artistId/orders/:orderId/reviews
 // ==================================================================================
@@ -39,9 +38,9 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             userId = data.id
 
             const payload = {
-                id : res.id,
-                username : res.username,
-                profilePicture : res.profilePicture
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)
@@ -62,7 +61,7 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             artistId = datas.id
 
             return Order.create({
-                title : 'testing orders data',
+                title : 'testingAddReviewToOrder',
                 description : 'testing',
                 deadline : new Date(),
                 price : 100000,
@@ -93,7 +92,7 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/artists/1/orders/2/reviews`)
+        .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -122,7 +121,7 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
 
         //excecute
         request(app) 
-        .post(`/users/${userId}/artists/1/orders/2/reviews`)
+        .post(`/users/${userId}/artists/${artistId}/orders/${orderId}/reviews`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {

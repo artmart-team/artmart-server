@@ -3,7 +3,7 @@
 // -- it error rating id not found 
 
 const request = require('supertest')
-const { User, Rating, Artist, Order } = require('../../models')
+const { User, Rating, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
@@ -12,8 +12,57 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/ratings/:ratingId',function() {
-    let userId = 1
-    let ratingId = 2
+    let userId = null
+    let access_token = null
+    let ratingId = null
+    let artistId = null
+
+    beforeAll(done => {
+        User.create({ 
+            username : "getByIdRatingUser",
+            firstName : "users",
+            lastName : "idsearch",
+            email : "getByIdRatingUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
+
+            const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
+            }
+
+            access_token = generateToken(payload)
+
+            return Artist.create({
+                username : "getByIdRatingArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "getByIdRatingArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+
+            return Rating.create({
+                score : 5,
+                ArtistId : artistId,
+                UserId : userId
+            })
+        })
+        .then(res => {
+            ratingId = res.id
+            done()
+        })
+    })
 
     // ======================== successfull get rating ==========================
     it('should status 200, successfull get rating id' ,function (done) {
@@ -39,7 +88,7 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
     // ======================== error comments id not found ==========================
     it('should status 404, error comment id not found' ,function (done) {
         //setup
-        const id = 9999999
+        const id = 999
 
         //excecute
         request(app) 
@@ -56,13 +105,7 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
             done()
         })
     })
-})
 
-
-
-describe('GET /users/:userId/ratings/:ratingId',function() {
-    let artistId = 1
-    let ratingId = 2
 
     // ======================== successfull get rating ==========================
     it('should status 200, successfull get rating id' ,function (done) {
@@ -88,7 +131,7 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
     // ======================== error comments id not found ==========================
     it('should status 404, error comment id not found' ,function (done) {
         //setup
-        const id = 9999999
+        const id = 99
 
         //excecute
         request(app) 
@@ -110,7 +153,7 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const id = "adasdasads"
+        const id = "ad"
 
         //excecute
         request(app) 

@@ -11,28 +11,88 @@ const { generateToken } = require('../../helpers/jwt')
 // -- it success
 
 describe('GET /users/:userId/orders', function () {
-  let userId = 1
-  let access_token = null
+  let userId = null
+  let accessUser = null
+  let artistId = null
+  let accessArtist = null
+  let orderId = null
 
   beforeAll(done => {
-    User.findOne({ where : { email : "user@mail.com"}})
-    .then(data => {
-        const payload = {
-          id : data.id,
-          username : data.username,
-          profilePicture : data.profilePicture
+      User.create({ 
+          username : "getOrderIdUser",
+          firstName : "artist",
+          lastName : "idsearch",
+          email : "getOrderIdUser@mail.com",
+          password : '123456',
+          profilePicture : ""
+      })
+      .then(data => {
+          userId = data.id
+
+          const payload = {
+              id : data.id,
+              username : data.username,
+              profilePicture : data.profilePicture
+          }
+
+          accessUser = generateToken(payload)
+
+          return Artist.create({
+              username : "getOrderIdArtist",
+              firstName : "artist",
+              lastName : "idsearch",
+              email : "getOrderIdArtist@mail.com",
+              password : '123456',
+              profilePicture : "link.google.com",
+              completeDuration : 48,
+              bankAccount : 230230230,
+              defaultPrice : 100000
+          })
+      })
+      .then(datas => {
+          artistId = datas.id
+
+          const payloads = {
+            id : datas.id,
+            username : datas.username,
+            profilePicture : datas.profilePicture
         }
 
-        access_token = generateToken(payload)
+        accessArtist = generateToken(payloads)
 
-        done()
+          return Order.create({
+              title : 'testingOrderGetAll',
+              description : 'getAll',
+              deadline : new Date(),
+              price : 100000,
+              totalPrice : 120000,
+              accepted : true,
+              done : true,
+              paid : true,
+              imageURL : 'link.google.com',
+              ArtistId : artistId,
+              UserId : userId  
+          })
+      })
+      .then(res => {
+          orderId = res.id
+          done()
+      })
+  })
+
+  afterAll(done => {
+    Order.destroy({ where : { title : "testingOrderGetAll" }})
+    .then(data => {
+      done()
     })
   })
 
+
+  // testing if success
   it ('should status 200, successfull get all orders by userId', function (done) {
     request (app)
       .get(`/users/${userId}/orders`)
-      .set('access_token', access_token)
+      .set('access_token', accessUser)
       .end(function (err, res) {
         if (err) done (err)
 
@@ -85,35 +145,11 @@ describe('GET /users/:userId/orders', function () {
   //       done()
   //   })
   // })
-})
-
-// describe /artists/:artistId/orders  (get orders by userId)
-// -- it success
-
-describe('GET /artists/:artistId/orders', function () {
-
-  let artistId = 1
-  let access_token = null
-
-  beforeAll(done => {
-    Artist.findOne({ where : { email : "artist@mail.com"}})
-    .then(data => {
-        const payload = {
-          id : data.id,
-          username : data.username,
-          profilePicture : data.profilePicture
-        }
-
-        access_token = generateToken(payload)
-
-        done()
-    })
-  })
 
   it ('should status 200, successfull get all orders by artistId', function (done) {
     request (app)
       .get(`/artists/${artistId}/orders`)
-      .set('access_token', access_token)
+      .set('access_token', accessArtist)
       .end(function (err, res) {
         if (err) done (err)
 
@@ -139,26 +175,5 @@ describe('GET /artists/:artistId/orders', function () {
         done()
       })
   })
-
-
-  // error internal server
-  // it('should status 500, error internal server' ,function (done) {
-  //   const idArt = "asdadsad"
-
-
-  //   request(app) 
-  //   .get(`/artists/${idArt}/orders`)
-  //   .set('access_token',access_token)
-  //   .end((err, res) => {
-  //       if(err) done(err)
-                
-  //       //assert
-  //       expect(res.statusCode).toEqual(500)
-  //       expect(typeof res.body).toEqual('object')
-  //       expect(res.body).toHaveProperty('messages')
-  //       expect(typeof res.body.messages).toEqual('string')
-
-  //       done()
-  //   })
-  // })
 })
+

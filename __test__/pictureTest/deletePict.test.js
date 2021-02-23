@@ -4,7 +4,7 @@
 
 const request = require('supertest')
 
-const { Picture, Artist } = require('../../models')
+const { Picture, Artist, Category} = require('../../models')
 
 const { beforeAll, afterAll } = require("@jest/globals")
 
@@ -16,27 +16,59 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
-    let artId  = 1
-    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAxMDk2M30.UFwCtrWtIoi1waJM5lDXMvNDZ8RuEz21FP7Z0Vv-H28"
-    let pictId = 1
- 
-    // beforeAll(done => {
-    //     Artist.findOne({ where : { email : "artist@mail.com"}})
-    //     .then(data => {
-    //         artId = data.id
+    let artId = null
+    let access_token = null
+    let catId = null
+    let pictId = null
 
-    //         const payload = {
-    //             id : data.id,
-    //             username : data.username,
-    //             profilePicture : data.profilePicture
-    //         }
+    beforeAll(done => {
+        //dummy Artist login
+        Artist.create({
+            username : "deleteTestingPcitArtist",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "deleteTestingPcitArtist@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
+        .then(artis => {
+            artId = artis.id
 
-    //         access_token = generateToken(payload)
-    //         done()
-    //     })
-    // })
+            const payload = {
+                id : artis.id,
+                username : artis.username,
+                profilePicture : artis.profilePicture
+            }
 
-    // error not login (belom dibuat)
+            access_token = generateToken(payload)
+
+            return Category.create({
+                name: "testingGetdelete"
+            })
+            
+        })
+        .then(data => {
+            catId = data.id
+
+            return Picture.create({
+                name : 'testing nih buat delete',
+                description : 'deleteTestingPict',
+                price : 100000,
+                link : 'www.google.com',
+                hidden : false,
+                CategoryId : catId,
+                ArtistId : artId,
+                UserId : ""
+            })
+        })
+        .then(pict => {
+            pictId = pict.id
+            done()
+        })
+    })
 
 
     // testing error

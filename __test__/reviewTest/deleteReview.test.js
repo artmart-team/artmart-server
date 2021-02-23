@@ -5,7 +5,7 @@
 
 
 const request = require('supertest')
-const { User } = require('../../models')
+const { User, Artist,Review } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
@@ -17,12 +17,18 @@ const { generateToken } = require('../../helpers/jwt')
 describe('DELETE /users/:userId/reviews/:reviewId',function() {
     let userId = null
     let access_token = null
-    let reviewId = 2
-    let revDel = 5  
-    let artistId = 1
+    let reviewId = null
+    let artistId = null
 
     beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
+        User.create({ 
+            username : "deleteReviewByUser",
+            firstName : "users",
+            lastName : "idsearch",
+            email : "deleteReviewByUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
         .then(data => {
             userId = data.id
 
@@ -33,19 +39,39 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
             }
 
             access_token = generateToken(payload)
+
+            return Artist.create({
+                username : "deleteReviewByArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "deleteReviewByArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+
+            return Review.create({
+                title : "deleteReviewForTesting",
+                description : "deleteReviewForTesting",
+                UserId : userId,
+                ArtistId : artistId
+            })
+        })
+        .then(res => {
+            reviewId = res.id
             done()
         })
-        .catch(err => {
-            console.log(err)
-        })
-
     })
-
 
     // ======================== error reviews id not found ==========================
     it('should status 500, error reviews id not found' ,function (done) {
         //setup
-        const id = 9999999
+        const id = 99
 
         //excecute
         request(app) 
@@ -89,7 +115,7 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
     // ======================== error internal server ==========================
     it('should status 500, errorinternal server' ,function (done) {
         //setup
-        const id = "asdasdadadsd"
+        const id = "asd"
 
         //excecute
         request(app) 

@@ -11,12 +11,13 @@
 
 const request = require('supertest')
 
-const { Artist } = require('../../models')
+const { Artist, Category } = require('../../models')
 
 const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
+const { stack } = require('../../routes/catRouter')
 
 // ===================================================================================
 // ==========================    POST /artists/:artistId/pictures
@@ -25,12 +26,20 @@ const { generateToken } = require('../../helpers/jwt')
 describe('POST /artists/:artistId/pictures', function() {
     let artId = null
     let access_token = null
-    let catId = 1
-    let idUser = 1
+    let catId = null
 
     beforeAll(done => {
-        //dummy Artist login
-        Artist.findOne( { where : { email : "artist@mail.com"}})
+        Artist.create({
+            username : "deletePictureTesting",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "deletePictureTesting@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
         .then(artis => {
             artId = artis.id
 
@@ -41,11 +50,15 @@ describe('POST /artists/:artistId/pictures', function() {
             }
 
             access_token = generateToken(payload)
-                done()
 
+            return Category.create({
+                name: "theTestPictureAdd"
+            })
+            
         })
-        .catch(err => {
-            console.log(err, "<< err beforeAll get token putUser.test.js")
+        .then(data => {
+            catId = data.id
+            done()
         })
     })
 
@@ -58,7 +71,7 @@ describe('POST /artists/:artistId/pictures', function() {
             price : 100000,
             link : 'www.google.com',
             CategoryId : catId,
-            UserId : idUser       
+            UserId : ""      
         }
     
         //excecute
@@ -78,7 +91,6 @@ describe('POST /artists/:artistId/pictures', function() {
             expect(res.body).toHaveProperty('link')
             expect(res.body).toHaveProperty('CategoryId')
             expect(res.body).toHaveProperty('ArtistId')
-            expect(res.body).toHaveProperty('UserId')
             expect(typeof res.body.name).toEqual('string')
             expect(typeof res.body.description).toEqual('string')
             expect(typeof res.body.price).toEqual('number')
@@ -98,7 +110,7 @@ describe('POST /artists/:artistId/pictures', function() {
             price : 100000,
             link : 'www.google.com',
             CategoryId : catId,
-            UserId : idUser       
+            UserId : ""       
         }
     
         //excecute
@@ -128,7 +140,7 @@ describe('POST /artists/:artistId/pictures', function() {
             price : "",
             link : 'www.google.com',
             CategoryId : catId,
-            UserId : idUser       
+            UserId : ""       
         }
     
         //excecute
@@ -158,7 +170,7 @@ describe('POST /artists/:artistId/pictures', function() {
             price : 100000,
             link : '',
             CategoryId : catId,
-            UserId : idUser       
+            UserId : ""       
         }
     
         //excecute
@@ -189,7 +201,7 @@ describe('POST /artists/:artistId/pictures', function() {
             link : 'www.google.com',
             CategoryId : catId,
             ArtistId : artId,
-            UserId : idUser       
+            UserId : ""       
         }
     
         //excecute
@@ -219,7 +231,6 @@ describe('POST /artists/:artistId/pictures', function() {
     //         asdsadasdsa : 100000,
     //         liasdsadnk : ''       
     //     }
-    
     //     //excecute
     //     request(app) 
     //     .post(`/artists/${artId}/pictures`)

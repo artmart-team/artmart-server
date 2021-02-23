@@ -11,14 +11,64 @@ const { User } = require('../../models')
 
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
-const { disable } = require('../../app')
+// const { disable } = require('../../app')
 
 // ===================================================================================
 // ==========================  GET /users/:userId/ratings
 // ==================================================================================
 
 describe('GET /users/:userId/ratings',function() {
-    let userId = 1
+    let userId = null
+    let access_token = null
+    let ratingId = null
+    let artistId = null
+
+    beforeAll(done => {
+        User.create({ 
+            username : "getAllRatingUser",
+            firstName : "users",
+            lastName : "idsearch",
+            email : "getAllRatingUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
+
+            const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
+            }
+
+            access_token = generateToken(payload)
+
+            return Artist.create({
+                username : "getAllRatingByArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "getAllRatingByArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+
+            return Rating.create({
+                score : 1,
+                ArtistId : artistId,
+                UserId : userId
+            })
+        })
+        .then(res => {
+            ratingId = res.id
+            done()
+        })
+    })
 
     // ======================== successfull get all ratings ==========================
     it('should status 200, successfull get all ratings' ,function (done) {
@@ -111,11 +161,6 @@ describe('GET /users/:userId/ratings',function() {
             done()
         })
     })
-})
-
-
-describe('GET /artists/:artistId/ratings/average',function() {
-    let artistId = 1 
 
     // ================ successfull average rating ===================
     it('should status 200, success average ratings' ,function (done) {

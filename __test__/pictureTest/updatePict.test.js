@@ -6,7 +6,7 @@
 
 const request = require('supertest')
 
-const { Picture, Artist } = require('../../models')
+const { Picture, Artist, User, Category } = require('../../models')
 
 const { beforeAll } = require("@jest/globals")
 
@@ -18,27 +18,79 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('PUT /artists/:artistId/pictures/:pictureId',function() {
-    let artId = 1
-    let pictId = 3
-    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAxMDExNH0.k4_2bIwQbOX-fR6bgvZIKrqgXhCRh6kViWprA4VvlRI"
-    let userId = 1
-    let userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JVU2VyIiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTQwMTA2NzZ9.x7CTGbFT9gEhVe1G4GTblb1KAkhPXejdhQpBFSoPfJQ"
+    let artId = null
+    let artisToken = null
+    let userId = null
+    let userToken = null
+    let catId = null
+    let pictId = null
 
-    // beforeAll(done => {
+    beforeAll(done => {
+        //dummy Artist login
+        Artist.create({
+            username : "updatePictArtist",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "updatePictArtist@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
+        .then(artis => {
+            artId = artis.id
 
-    //     //dummy Artist login
-    //     Artist.findOne( { where : { email : "artist@mail.com"}})
-    //     .then(artis => {
-    //         const payload = {
-    //             id : artis.id,
-    //             username : artis.username,
-    //             profilePicture : artis.profilePicture
-    //         }
+            const tokenArt = {
+                id : artis.id,
+                username : artis.username,
+                profilePicture : artis.profilePicture
+            }
 
-    //         access_token = generateToken(payload)
-    //         done()
-    //     })
-    // })
+            artisToken = generateToken(tokenArt)
+
+            return Category.create({
+                name: "updatePictData"
+            }) 
+        })
+        .then(cat => {
+            catId = cat.id
+            return User.create({
+                username : "updaetPictUser",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "updaetPictUser@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com"
+            })
+        })
+        .then(user => {
+            userId = user.id
+
+            const tokenUser = {
+                id : user.id,
+                username : user.username,
+                profilePicture : user.profilePicture
+            }
+
+            userToken = generateToken(tokenUser)
+
+            return Picture.create({
+                name : 'testing pict to edit',
+                description : 'asik pokoknya',
+                price : 100000,
+                link : 'www.google.com',
+                hidden : false,
+                CategoryId : catId,
+                ArtistId : artId,
+                UserId : userId
+            })
+        })
+        .then(res => {
+            pictId = res.id
+            done()
+        })
+    })
 
     // ======================== successfull update pictures ==========================
     it('should status 200, successfull get all pictures' ,function (done) {
@@ -50,7 +102,7 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
         //excecute
         request(app) 
         .put(`/artists/${artId}/pictures/${pictId}`)
-        .set('access_token', access_token)
+        .set('access_token', artisToken)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -81,7 +133,7 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
         //excecute
         request(app) 
         .put(`/artists/${artId}/pictures/${pictId}`)
-        .set('access_token', access_token)
+        .set('access_token', artisToken)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
@@ -108,7 +160,7 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
         //excecute
         request(app) 
         .put(`/artists/${artId}/pictures/${idImage}`)
-        .set('access_token', access_token)
+        .set('access_token', artisToken)
         .send(body)
         .end((err, res) => {
             if(err) done(err)

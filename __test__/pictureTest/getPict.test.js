@@ -17,7 +17,59 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /artists/:artistId/pictures',function() {
-    let artId = 1
+    let artId = null
+    let userId = null
+    let catId = null
+
+    beforeAll(done => {
+        Artist.create({
+            username : "PictureArtistTestGet",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "PictureArtistTestGet@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
+        .then(artis => {
+            artId = artis.id
+
+            return Category.create({
+                name: "testGetPictAll"
+            })
+        })
+        .then(cat => {
+            catId = cat.id
+
+            return User.create({
+                username : "getUserforPictGet",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "getUserforPictGet@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com"
+            })
+        })
+        .then(data => {
+            userId = data.id
+            return Picture.create({
+                name : 'testing nih buat get',
+                description : 'asik pokoknya',
+                price : 100000,
+                link : 'www.google.com',
+                hidden : false,
+                CategoryId : catId,
+                ArtistId : artId,
+                UserId : ""
+            })
+        })
+        .then(res => {
+            done()
+        })
+    })
+
     
     // ======================== successfull get image ==========================
     it('should status 200, successfull get all Image' ,function (done) {
@@ -65,14 +117,14 @@ describe('GET /artists/:artistId/pictures',function() {
             done()
         })
     })
-})
 
 
-describe('GET /users/:userId/pictures',function() {
-    let userId = 1
-    
-    // ======================== successfull get image ==========================
-    it('should status 200, successfull get all Image' ,function (done) {
+    // =====================
+    // testing get by user
+    // =======================
+
+     // ======================== successfull get image ==========================
+     it('should status 200, successfull get all Image' ,function (done) {
         //setup
 
         //excecute

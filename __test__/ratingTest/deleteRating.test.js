@@ -5,7 +5,7 @@
 
 
 const request = require('supertest')
-const { User, Rating, Order, Artist } = require('../../models')
+const { User, Rating, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
@@ -17,12 +17,18 @@ const { generateToken } = require('../../helpers/jwt')
 describe('DELETE /users/:userId/artists/:artistId/ratings/:ratingId',function() {
     let userId = null
     let access_token = null
-    let ratingId = 4
-    let artistId = 1
-
+    let ratingId = null
+    let artistId = null
 
     beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
+        User.create({ 
+            username : "deleteRatingByUser",
+            firstName : "users",
+            lastName : "idsearch",
+            email : "deleteRatingByUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
         .then(data => {
             userId = data.id
 
@@ -33,19 +39,39 @@ describe('DELETE /users/:userId/artists/:artistId/ratings/:ratingId',function() 
             }
 
             access_token = generateToken(payload)
+
+            return Artist.create({
+                username : "deleteReviewByArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "deleteReviewByArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+
+            return Rating.create({
+                score : 4,
+                ArtistId : artistId,
+                UserId : userId
+            })
+        })
+        .then(res => {
+            scoreId = res.id
             done()
         })
-        .catch(err => {
-            console.log(err)
-        })
-
     })
 
 
     // ======================== error ratings id not found ==========================
     it('should status 404, error ratings id not found' ,function (done) {
         //setup
-        const id = 9999999
+        const id = 999
 
         //excecute
         request(app) 
@@ -90,7 +116,7 @@ describe('DELETE /users/:userId/artists/:artistId/ratings/:ratingId',function() 
     // ======================== error internal server error==========================
     it('should status 404, error ratings id not found' ,function (done) {
         //setup
-        const id = "sadasdasd"
+        const id = "sad"
 
         //excecute
         request(app) 

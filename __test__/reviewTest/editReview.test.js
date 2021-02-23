@@ -6,7 +6,7 @@
 // -- it error not login user
 
 const request = require('supertest')
-const { User, Review, Order, Artist} = require('../../models')
+const { User, Review, Artist} = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
@@ -15,11 +15,18 @@ const { generateToken } = require('../../helpers/jwt')
 describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
     let userId = null
     let access_token = null
-    let reviewId = 3 
-    let artistId = 1
+    let reviewId = null
+    let artistId = null
 
     beforeAll(done => {
-        User.findOne({where : {email : "user@mail.com"}})
+        User.create({ 
+            username : "editReviewIdUser",
+            firstName : "users",
+            lastName : "idsearch",
+            email : "editReviewIdUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
         .then(data => {
             userId = data.id
 
@@ -28,11 +35,34 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
                 username : data.username,
                 profilePicture : data.profilePicture
             }
+
             access_token = generateToken(payload)
-            done()
+
+            return Artist.create({
+                username : "editReviewByArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "editReviewByArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
         })
-        .catch(err => {
-            console.log(err)
+        .then(datas => {
+            artistId = datas.id
+
+            return Review.create({
+                title : "editREviewForTesting",
+                description : "editREviewForTesting",
+                UserId : userId,
+                ArtistId : artistId
+            })
+        })
+        .then(res => {
+            reviewId = res.id
+            done()
         })
     })
 

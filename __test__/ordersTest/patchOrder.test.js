@@ -24,23 +24,82 @@ describe('PATCH /artists/:artistId/orders', function() {
     let idOrder = "zzz"
     let userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JVU2VyIiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTQwMTEyOTd9.kEprekXCVV9xX_kfPZ_6y7P9xPMC1gFrsum6hsy0nPw"
 
-    // beforeAll(done => {
-    //     //dummy Artist login
-    //     Artist.findOne( { where : { email : "artist@mail.com"}})
-    //     .then(data => {
-    //         artistId = data.id
 
-    //         const payload = {
-    //             id : data.id,
-    //             username : data.username,
-    //             profilePicture : data.profilePicture
-    //         }
-
-    //         access_token = generateToken(payload)
-    //         done()
-    //     })
-    // })
-
+    let userId = null
+    let accessUser = null
+    let accessArtist = null
+    let artistId = null
+    let orderId = null
+  
+    beforeAll(done => {
+        User.create({ 
+            username : "patchOrderByUser",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "patchOrderByUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
+  
+            const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
+            }
+  
+            accessUser = generateToken(payload)
+  
+            return Artist.create({
+                username : "patchOrderByArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "patchOrderByArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+  
+            const payloads = {
+              id : datas.id,
+              username : datas.username,
+              profilePicture : datas.profilePicture
+          }
+  
+          accessArtist = generateToken(payloads)
+  
+            return Order.create({
+                title : 'testingOrderForPatching',
+                description : 'testing',
+                deadline : new Date(),
+                price : 100000,
+                totalPrice : 120000,
+                accepted : false,
+                done : false,
+                paid : false,
+                imageURL : '',
+                ArtistId : artistId,
+                UserId : userId  
+            })
+        })
+        .then(res => {
+            orderId = res.id
+            done()
+        })
+    })
+  
+    afterAll(done => {
+      Order.destroy({ where : { title : "testingOrderForPatching" }})
+      .then(data => {
+        done()
+      })
+    })
 
     // ==============================================================================
     // ==============================================================================
@@ -50,7 +109,7 @@ describe('PATCH /artists/:artistId/orders', function() {
 
         //excecute
         request(app) 
-        .patch(`/artists/1/orders/3/accepted`)
+        .patch(`/artists/${artistId}/orders/${orderId}/accepted`)
         .set("access_token", access_token)
 
         .end((err, res) => {
@@ -104,7 +163,7 @@ describe('PATCH /artists/:artistId/orders', function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}/orders/3/done`)
+        .patch(`/artists/${artistId}/orders/${orderId}/done`)
         .set("access_token", access_token)
         .send(body)
         .end((err, res) => {
@@ -114,7 +173,7 @@ describe('PATCH /artists/:artistId/orders', function() {
             expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(typeof res.body.messages).toEqual('strings')
             // expect(res.body).toHaveProperty('done')
             // expect(typeof res.body.done).toEqual('boolean')
             // expect(res.body.done).toEqual(true)
@@ -133,7 +192,7 @@ describe('PATCH /artists/:artistId/orders', function() {
     
         //excecute
         request(app) 
-        .patch(`/artists/${artistId}/orders/1/done`)
+        .patch(`/artists/${artistId}/orders/${orderId}/done`)
         .set("access_token", access_token)
         .send(body)
         .end((err, res) => {
@@ -185,7 +244,7 @@ describe('PATCH /artists/:artistId/orders', function() {
     
         //excecute
         request(app) 
-        .patch(`/users/1/orders/3/paid`)
+        .patch(`/users/${userId}/orders/${orderId}/paid`)
         .set("access_token", access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -208,7 +267,7 @@ describe('PATCH /artists/:artistId/orders', function() {
     
         //excecute
         request(app) 
-        .patch(`/users/1/orders/1/paid`)
+        .patch(`/users/${userId}/orders/${orderId}/paid`)
         .set("access_token", access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -269,7 +328,7 @@ describe('PATCH /artists/:artistId/orders', function() {
     })
 
     // ====================== payment gateway =====================
-    //  ============= harusnya 200 tapi ini jadi 400
+    //  ============= using mock
     it('should status 400, error payment gateway' ,function (done) {
         //setup
         const body = {

@@ -1,13 +1,6 @@
-// describe GET /images
-// -- it success
-
-// 1 success test
-
 const request = require('supertest')
 
-// const { Picture, Artist, Category, User } = require('../../models')
-
-// const { beforeAll, afterAll } = require("@jest/globals")
+const { Picture, Artist, Category } = require('../../models')
 
 const app = require('../../app')  
 
@@ -16,6 +9,46 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /pictures',function() {
+    let artId = null
+    let catId = null
+
+    beforeAll(done => {
+        Artist.create({
+            username : "getAllPictHome",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "getAllPictHome@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
+        .then(artis => {
+            artId = artis.id
+
+            return Category.create({
+                name: "getAllPictHome"
+            })
+        })
+        .then(cat => {
+            catId = cat.id
+
+            return Picture.create({
+                name : 'testing nih buat get',
+                description : 'asik pokoknya',
+                price : 100000,
+                link : 'www.google.com',
+                hidden : false,
+                CategoryId : catId,
+                ArtistId : artId,
+                UserId : ""
+            })
+        })
+        .then(res => {
+            done()
+        })
+    })
 
     // ======================== successfull get image ==========================
     it('should status 200, successfull get all Image' ,function (done) {

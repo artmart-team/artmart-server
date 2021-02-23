@@ -4,7 +4,7 @@
 // -- it error rating id not found 
 
 const request = require('supertest')
-const { User, Review, Artist, Order } = require('../../models')
+const { User, Review, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
@@ -13,8 +13,58 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/reviews/:reviewId',function() {
-    let userId = 1
-    let reviewId = 3
+    let userId = null
+    let artistId = null
+    let reviewId = null
+
+    beforeAll(done => {
+        User.create({ 
+            username : "getReviewByIdUser",
+            firstName : "users",
+            lastName : "idsearch",
+            email : "getReviewByIdUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
+
+            // const payload = {
+            //     id : res.id,
+            //     username : res.username,
+            //     profilePicture : res.profilePicture
+            // }
+
+            // access_token = generateToken(payload)
+
+            return Artist.create({
+                username : "getReviewByIdArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "getReviewByIdArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+
+            return Review.create({
+                title : "getReviewByIdData",
+                description : "getReviewByIdData",
+                UserId : userId,
+                ArtistId : artistId
+            })
+        })
+        .then(res => {
+            reviewId = res.id
+            done()
+        })
+    })
+
     // ======================== successfull get reviews ==========================
     it('should status 200, successfull get reviews id' ,function (done) {
         //setup
@@ -41,7 +91,7 @@ describe('GET /users/:userId/reviews/:reviewId',function() {
     // ======================== error comments id not found ==========================
     it('should status 404, error comment id not found' ,function (done) {
         //setup
-        const id = 9999999
+        const id = 999
 
         //excecute
         request(app) 
@@ -63,7 +113,7 @@ describe('GET /users/:userId/reviews/:reviewId',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const id = "asdadasdsad"
+        const id = "asda"
 
         //excecute
         request(app) 
@@ -113,7 +163,7 @@ describe('GET /artists/:artisId/reviews/:reviewId',function() {
     // ======================== error comments id not found ==========================
     it('should status 404, error comment id not found' ,function (done) {
         //setup
-        const id = 9999999
+        const id = 999
 
         //excecute
         request(app) 
@@ -134,7 +184,7 @@ describe('GET /artists/:artisId/reviews/:reviewId',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const id = "adsadsadsadasd"
+        const id = "ads"
 
         //excecute
         request(app) 

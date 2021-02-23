@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.STRING,
     price: {
       type: DataTypes.DOUBLE,
-      allowNull : false,
+      allowNull : falses,
       validate: {
         notEmpty: {
           msg: 'Price required'
