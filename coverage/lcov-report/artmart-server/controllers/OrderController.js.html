@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">91.04% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>56/60</span>
+                <span class='fraction'>61/67</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">88.89% </span>
+                <span class="strong">83.33% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>8/9</span>
+                <span class='fraction'>10/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">93.33% </span>
+                <span class="strong">91.04% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>56/60</span>
+                <span class='fraction'>61/67</span>
             </div>
         
             
@@ -352,7 +352,9 @@
 <a name='L293'></a><a href='#L293'>293</a>
 <a name='L294'></a><a href='#L294'>294</a>
 <a name='L295'></a><a href='#L295'>295</a>
-<a name='L296'></a><a href='#L296'>296</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">39x</span>
+<a name='L296'></a><a href='#L296'>296</a>
+<a name='L297'></a><a href='#L297'>297</a>
+<a name='L298'></a><a href='#L298'>298</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-yes">39x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -619,6 +621,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -627,22 +638,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -913,33 +917,35 @@ class OrderController {
   }
 &nbsp;
 &nbsp;
+  static async respondPayment (req, res, next) {
+    try {
+      const obj = {
+        transaction_details: {
+          order_id: 'TEST_ORDER' + Number(req.params.orderId),
+          gross_amount: +req.body.gross_amount
+        }
+      }
 &nbsp;
-  //belom di testing
-  // static async respondPayment (req, res, next) {
-  //   try {
-  //     const { order_id, gross_amount } = req.body.transaction_details
+      await axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', obj
+      , {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Basic U0ItTWlkLXNlcnZlci1jTmFXSDdCbUJMRS1tYmsxYWszUmV4al86"
+        }
+      })
+      .then(<span class="fstat-no" title="function not covered" >fu</span>nction (response) {
+<span class="cstat-no" title="statement not covered" >        res.status(201).json(response.data)</span>
+      })
+      .catch(function (error) {
+        res.status(400).json(error)
+        console.log(error, 'error respondPayment');
+      })
 &nbsp;
-  //     axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', {
-  //       order_id,
-  //       gross_amount
-  //     }, {
-  //       headers: {
-  //         "Accept": "application/json",
-  //         "Content-Type": "application/json",
-  //         "Authorization": "Basic U0ItTWlkLXNlcnZlci1jTmFXSDdCbUJMRS1tYmsxYWszUmV4al86"
-  //       }
-  //     })
-  //     .then(function (response) {S
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error, 'error respondPayment');
-  //     })
-&nbsp;
-  //   } catch (err) {
-  //     next(err)
-  //   }
-  // }
+    } catch (err) {
+<span class="cstat-no" title="statement not covered" >      next(err)</span>
+    }
+  }
 }
 &nbsp;
 module.exports = OrderController</pre></td></tr></table></pre>
@@ -949,7 +955,7 @@ module.exports = OrderController</pre></td></tr></table></pre>
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Tue Feb 23 2021 08:23:32 GMT+0700 (Western Indonesia Time)
+                at Tue Feb 23 2021 08:57:36 GMT+0700 (Western Indonesia Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

@@ -216,4 +216,30 @@ describe('PATCH /artists/:artistId/orders', function() {
             done()
         })
     })
+
+    // ====================== payment gateway =====================
+    //  ============= harusnya 200 tapi ini jadi 400
+    it('should status 400, error payment gateway' ,function (done) {
+        //setup
+        const body = {
+            gross_amount : 200000
+        }
+    
+        //excecute
+        request(app) 
+        .post(`/users/1/requestPaymentGateway/orders/1`)
+        .set("access_token", userToken)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(400)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('message')
+            expect(res.body).toHaveProperty("name")
+
+            done()
+        })
+    })
 })

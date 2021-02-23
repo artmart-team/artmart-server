@@ -264,33 +264,35 @@ class OrderController {
   }
 
 
+  static async respondPayment (req, res, next) {
+    try {
+      const obj = {
+        transaction_details: {
+          order_id: 'TEST_ORDER' + Number(req.params.orderId),
+          gross_amount: +req.body.gross_amount
+        }
+      }
 
-  //belom di testing
-  // static async respondPayment (req, res, next) {
-  //   try {
-  //     const { order_id, gross_amount } = req.body.transaction_details
+      await axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', obj
+      , {
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Authorization": "Basic U0ItTWlkLXNlcnZlci1jTmFXSDdCbUJMRS1tYmsxYWszUmV4al86"
+        }
+      })
+      .then(function (response) {
+        res.status(201).json(response.data)
+      })
+      .catch(function (error) {
+        res.status(400).json(error)
+        console.log(error, 'error respondPayment');
+      })
 
-  //     axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', {
-  //       order_id,
-  //       gross_amount
-  //     }, {
-  //       headers: {
-  //         "Accept": "application/json",
-  //         "Content-Type": "application/json",
-  //         "Authorization": "Basic U0ItTWlkLXNlcnZlci1jTmFXSDdCbUJMRS1tYmsxYWszUmV4al86"
-  //       }
-  //     })
-  //     .then(function (response) {S
-  //       console.log(response);
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error, 'error respondPayment');
-  //     })
-
-  //   } catch (err) {
-  //     next(err)
-  //   }
-  // }
+    } catch (err) {
+      next(err)
+    }
+  }
 }
 
 module.exports = OrderController
