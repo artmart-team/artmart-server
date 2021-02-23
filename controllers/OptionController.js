@@ -66,7 +66,12 @@ class OptionController {
 
   static async delete (req, res, next) {
     try {
-
+      const data = Option.destroy({
+        where: {
+          id: +req.params.optionId
+        }
+      })
+      res.status(200).json({ messages: 'Option deleted' })
     } catch (err) {
       next(err)
     }
