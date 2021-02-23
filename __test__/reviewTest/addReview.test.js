@@ -14,7 +14,6 @@ const { generateToken } = require('../../helpers/jwt')
 const { User, Artist, Order } = require('../../models')
 
 const app = require('../../app')  
-const { JsonWebTokenError } = require('jsonwebtoken')
 
 
 // ===================================================================================
@@ -23,11 +22,10 @@ const { JsonWebTokenError } = require('jsonwebtoken')
 jest.setTimeout(() => {
     describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',function() {
 
-
         let userId = 1
         let artistId = 1
         let orderId = 1
-        let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JVU2VyIiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTQwMTAwNTF9.o_Iw631DB75dxdfFcI5YkNL2pZxqPxsincrNd2vkvTM"
+        let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDA0MjU3Mn0.WDW6CklcYnDeDjtD0J1mSQANepoolZ5gwwoaCvvLvP4"
 
         // beforeAll(done => {
         //     User.findOne({where : {id : 1}})

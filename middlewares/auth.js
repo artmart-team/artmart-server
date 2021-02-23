@@ -22,12 +22,12 @@ async function authenticate (req, res, next) {
     } else {
       if (!dataUser) {
         req.artistId = dataArtist.id
-        console.log(req.artistId, '<< artist login id')
+        // console.log(req.artistId, '<< artist login id')
         next ()
 
       } else {
         req.userId = dataUser.id
-        console.log(req.userId, '<< user login Id')
+        // console.log(req.userId, '<< user login Id')
         next ()
       }
     }

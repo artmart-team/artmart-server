@@ -256,10 +256,10 @@ class OrderController {
         res.status(200).json (dataObj)
       } else {
         // belom testing
-        // next ({name: 'Error not found'})
+        next ({name: 'Error not found'})
       }
     } catch (err) {
-      // next(err)
+      next(err)
     }
   }
 

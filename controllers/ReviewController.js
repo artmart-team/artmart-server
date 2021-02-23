@@ -86,7 +86,7 @@ class ReviewController {
       })
       res.status(201).json(data)
     } catch (err) {
-      // next(err) // comment aja
+      next(err) // comment aja
     }
   }
 

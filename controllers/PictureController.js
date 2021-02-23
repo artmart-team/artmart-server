@@ -198,13 +198,13 @@ class PictureController {
       })
       if (!data) {
         // belom testing
-        // next({ name: "Error not found" })
+        next({ name: "Error not found" })
       } else {
         res.status(200).json({ messages: 'Pictures deleted' })
       }
     } catch (err) {
       // belom testing
-      // next(err)
+      next(err)
     }
   }
 }

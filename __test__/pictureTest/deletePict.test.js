@@ -39,27 +39,28 @@ describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
     // error not login (belom dibuat)
 
 
+    // testing error
     // ======================== error internal server ==========================
-    it('should status 500, error internal server' ,function (done) {
-        //setup
-        const idPict = "sa"
+    // it('should status 500, error internal server' ,function (done) {
+    //     //setup
+    //     const idPict = "sa"
 
-        //excecute
-        request(app) 
-        .delete(`/artists/${artId}/pictures/${idPict}`)
-        .set('access_token', access_token )
-        .end((err, res) => {
-            if(err) done(err)
+    //     //excecute
+    //     request(app) 
+    //     .delete(`/artists/${artId}/pictures/${idPict}`)
+    //     .set('access_token', access_token )
+    //     .end((err, res) => {
+    //         if(err) done(err)
                     
-            //assert
-            expect(res.statusCode).toEqual(500)
-            expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect(typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
 
-            done()
-        })
-    })
+    //         done()
+    //     })
+    // })
 
 
     // ======================== successfull delete picture ==========================

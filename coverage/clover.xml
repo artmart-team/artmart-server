@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1614012363245" clover="3.2.0">
-  <project timestamp="1614012363245" name="All files">
-    <metrics statements="727" coveredstatements="700" conditionals="251" coveredconditionals="173" methods="91" coveredmethods="88" elements="1069" coveredelements="961" complexity="0" loc="727" ncloc="727" packages="7" files="35" classes="35"/>
+<coverage generated="1614042787164" clover="3.2.0">
+  <project timestamp="1614042787165" name="All files">
+    <metrics statements="731" coveredstatements="707" conditionals="251" coveredconditionals="173" methods="91" coveredmethods="89" elements="1073" coveredelements="969" complexity="0" loc="731" ncloc="731" packages="7" files="35" classes="35"/>
     <package name="artmart-server">
       <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="3" methods="0" coveredmethods="0"/>
       <file name="app.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\app.js">
@@ -37,7 +37,7 @@
       </file>
     </package>
     <package name="artmart-server.controllers">
-      <metrics statements="383" coveredstatements="359" conditionals="156" coveredconditionals="110" methods="51" coveredmethods="48"/>
+      <metrics statements="387" coveredstatements="366" conditionals="156" coveredconditionals="111" methods="51" coveredmethods="49"/>
       <file name="ArtistController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\ArtistController.js">
         <metrics statements="55" coveredstatements="54" conditionals="36" coveredconditionals="29" methods="4" coveredmethods="4"/>
         <line num="1" count="38" type="stmt"/>
@@ -166,7 +166,7 @@
         <line num="102" count="38" type="stmt"/>
       </file>
       <file name="OrderController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\OrderController.js">
-        <metrics statements="58" coveredstatements="49" conditionals="18" coveredconditionals="9" methods="9" coveredmethods="7"/>
+        <metrics statements="60" coveredstatements="56" conditionals="18" coveredconditionals="10" methods="9" coveredmethods="8"/>
         <line num="1" count="38" type="stmt"/>
         <line num="2" count="38" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -217,17 +217,19 @@
         <line num="232" count="1" type="stmt"/>
         <line num="233" count="1" type="stmt"/>
         <line num="235" count="0" type="stmt"/>
-        <line num="244" count="0" type="stmt"/>
-        <line num="245" count="0" type="stmt"/>
-        <line num="246" count="0" type="stmt"/>
-        <line num="252" count="0" type="stmt"/>
-        <line num="254" count="0" type="cond" truecount="0" falsecount="2"/>
-        <line num="255" count="0" type="stmt"/>
-        <line num="256" count="0" type="stmt"/>
+        <line num="244" count="1" type="stmt"/>
+        <line num="245" count="1" type="stmt"/>
+        <line num="246" count="1" type="stmt"/>
+        <line num="252" count="1" type="stmt"/>
+        <line num="254" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="255" count="1" type="stmt"/>
+        <line num="256" count="1" type="stmt"/>
+        <line num="259" count="0" type="stmt"/>
+        <line num="262" count="0" type="stmt"/>
         <line num="296" count="38" type="stmt"/>
       </file>
       <file name="PictureController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\PictureController.js">
-        <metrics statements="66" coveredstatements="61" conditionals="32" coveredconditionals="20" methods="9" coveredmethods="9"/>
+        <metrics statements="68" coveredstatements="61" conditionals="32" coveredconditionals="20" methods="9" coveredmethods="9"/>
         <line num="1" count="38" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
@@ -292,7 +294,9 @@
         <line num="193" count="1" type="stmt"/>
         <line num="194" count="1" type="stmt"/>
         <line num="199" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="201" count="0" type="stmt"/>
         <line num="203" count="1" type="stmt"/>
+        <line num="207" count="0" type="stmt"/>
         <line num="212" count="38" type="stmt"/>
       </file>
       <file name="RatingController.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\controllers\RatingController.js">
@@ -468,30 +472,30 @@
         <line num="7" count="38" type="cond" truecount="1" falsecount="1"/>
         <line num="10" count="24" type="stmt"/>
         <line num="11" count="24" type="stmt"/>
-        <line num="15" count="78" type="stmt"/>
-        <line num="16" count="62" type="stmt"/>
+        <line num="15" count="74" type="stmt"/>
+        <line num="16" count="58" type="stmt"/>
         <line num="19" count="38" type="stmt"/>
       </file>
     </package>
     <package name="artmart-server.middlewares">
-      <metrics statements="109" coveredstatements="107" conditionals="66" coveredconditionals="43" methods="13" coveredmethods="13"/>
+      <metrics statements="109" coveredstatements="107" conditionals="66" coveredconditionals="42" methods="13" coveredmethods="13"/>
       <file name="auth.js" path="C:\Users\Member\HACKTIV8\final-project\artmart-server\middlewares\auth.js">
-        <metrics statements="91" coveredstatements="89" conditionals="58" coveredconditionals="35" methods="11" coveredmethods="11"/>
+        <metrics statements="91" coveredstatements="89" conditionals="58" coveredconditionals="34" methods="11" coveredmethods="11"/>
         <line num="1" count="38" type="stmt"/>
         <line num="2" count="38" type="stmt"/>
-        <line num="5" count="78" type="stmt"/>
-        <line num="6" count="78" type="stmt"/>
-        <line num="8" count="62" type="stmt"/>
-        <line num="14" count="62" type="stmt"/>
-        <line num="20" count="62" type="cond" truecount="4" falsecount="0"/>
+        <line num="5" count="74" type="stmt"/>
+        <line num="6" count="74" type="stmt"/>
+        <line num="8" count="58" type="stmt"/>
+        <line num="14" count="58" type="stmt"/>
+        <line num="20" count="58" type="cond" truecount="4" falsecount="0"/>
         <line num="21" count="11" type="stmt"/>
-        <line num="23" count="51" type="cond" truecount="2" falsecount="0"/>
-        <line num="24" count="25" type="stmt"/>
-        <line num="25" count="25" type="stmt"/>
-        <line num="26" count="25" type="stmt"/>
-        <line num="29" count="26" type="stmt"/>
-        <line num="30" count="26" type="stmt"/>
-        <line num="31" count="26" type="stmt"/>
+        <line num="23" count="47" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="23" type="stmt"/>
+        <line num="25" count="23" type="stmt"/>
+        <line num="26" count="23" type="stmt"/>
+        <line num="29" count="24" type="stmt"/>
+        <line num="30" count="24" type="stmt"/>
+        <line num="31" count="24" type="stmt"/>
         <line num="35" count="16" type="stmt"/>
         <line num="40" count="1" type="stmt"/>
         <line num="41" count="1" type="stmt"/>
@@ -514,13 +518,13 @@
         <line num="100" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="103" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="104" count="1" type="stmt"/>
-        <line num="112" count="7" type="stmt"/>
-        <line num="113" count="7" type="stmt"/>
-        <line num="114" count="7" type="stmt"/>
+        <line num="112" count="4" type="stmt"/>
+        <line num="113" count="4" type="stmt"/>
+        <line num="114" count="4" type="stmt"/>
         <line num="119" count="4" type="cond" truecount="1" falsecount="1"/>
-        <line num="124" count="4" type="cond" truecount="2" falsecount="0"/>
-        <line num="127" count="3" type="cond" truecount="1" falsecount="1"/>
-        <line num="128" count="3" type="stmt"/>
+        <line num="124" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="127" count="4" type="cond" truecount="1" falsecount="1"/>
+        <line num="128" count="4" type="stmt"/>
         <line num="136" count="1" type="stmt"/>
         <line num="138" count="1" type="stmt"/>
         <line num="139" count="1" type="stmt"/>
@@ -529,9 +533,9 @@
         <line num="148" count="1" type="cond" truecount="1" falsecount="1"/>
         <line num="149" count="1" type="stmt"/>
         <line num="152" count="0" type="stmt"/>
-        <line num="157" count="5" type="stmt"/>
-        <line num="158" count="5" type="stmt"/>
-        <line num="159" count="5" type="stmt"/>
+        <line num="157" count="4" type="stmt"/>
+        <line num="158" count="4" type="stmt"/>
+        <line num="159" count="4" type="stmt"/>
         <line num="164" count="4" type="cond" truecount="2" falsecount="0"/>
         <line num="165" count="1" type="stmt"/>
         <line num="168" count="3" type="cond" truecount="1" falsecount="1"/>
