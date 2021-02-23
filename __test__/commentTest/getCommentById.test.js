@@ -4,7 +4,7 @@
 
 
 const request = require('supertest')
-// const { User, Artist } = require('../../models')
+const { User, Artist, Comment } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 
@@ -13,19 +13,55 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/comments/:commentId',function() {
-    let userId = 1
-    let commentId = 3
+    let artistId = null
+    let userId = null
+    let commentId = null
 
-    // beforeAll(done => {
-    //     User.findOne({where : {email : "user@mail.com"}})
-    //     .then(data => {
-    //         userId = data.id
-    //         done()
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //     })
-    // })
+    beforeAll(done => {
+        User.create({ 
+            username : "userCommentGetId",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "userCommentGetId@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
+
+            return Artist.create({
+                username : "artistCommentGetId",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "artistCommentGetId@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+            return Comment.create({
+                description: "testingGetCommentId",
+                UserId: userId,
+                ArtistId: artistId
+            })
+        })
+        .then(res => {
+            commentId = res.id
+            done()
+        })
+    })
+
+
+    afterAll(done => {
+        Comment.destroy({ where : { description : "testingGetCommentId"}})
+        .then(data => {
+            done()
+        })
+    })
 
     // ======================== successfull get comments ==========================
     it('should status 200, successfull get comments id' ,function (done) {

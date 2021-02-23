@@ -30,24 +30,42 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('PUT /artists/:artistId',function () {
-    let artistId =  3
+    let artistId = null
     let access_token = null
-    let tokens = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJiZXJoYXNpbGVkaXRBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAwMjU4Mn0.qwsFxww3aZx36t7NPsLzQhMCSsyt8uCELAM7EjFGFEs"
-
+    
     beforeAll(done => {
-        //dummy artist login
-        Artist.findOne({ where : { email : "testingeditartist@mail.com"}})
+        Artist.create({
+            username : "artistTestingPut",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "artistTestingPut@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
         .then(data => {
-            artistId = data.id
+            return Artist.findOne({ where : { username : "artistTestingPut"}})
+        })
+        .then(response => {
+            artistId = response.id
 
             let payload = {
-                id : data.id,
-                username : data.username,
-                profilePicture : data.profilePicture
+                id : response.id,
+                username : response.username,
+                profilePicture : response.profilePicture
             }
 
             access_token = generateToken(payload)
 
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Artist.destroy({ where : {username : "artistTestingPut"}})
+        .then(() => {
             done()
         })
     })
@@ -56,7 +74,12 @@ describe('PUT /artists/:artistId',function () {
     it('should status 200, successfull update artist' ,function (done) {
         //setup
         const body = {
-            username : 'berhasileditArtist',      
+            username : 'berhasileditArtist',
+            firstName : "yessss",
+            lastName : "berhasil",
+            email : "berhasiledit@mail.com",
+            profilePicture : "link2.google.com"
+
         }
     
         //excecute
@@ -245,17 +268,17 @@ describe('PUT /artists/:artistId',function () {
     
         //excecute
         request(app) 
-        .put(`/artists/${artistId}`)
-        .set('access_token', tokens)
+        .put(`/artists/2`)
+        .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(400)
+            expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('errors')
-            // expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

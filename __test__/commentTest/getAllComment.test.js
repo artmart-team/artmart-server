@@ -1,6 +1,8 @@
 // describe GET /artists/:artistId/comments   //comment artisnya
 // -- it success
 
+const { User, Comment, Artist } = require('../../models')
+
 const request = require('supertest')
 
 const app = require('../../app')  
@@ -10,7 +12,53 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId/comments',function() {
-    let artistId = 1
+    let artistId = null
+    let userId = null
+
+    beforeAll(done => {
+        User.create({ 
+            username : "userTestAddComment",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "userTestAddComment@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
+
+            return Artist.create({
+                username : "artistTestAddComment",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "artistTestAddComment@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+            return Comment.create({
+                description: "testingGetAllComment",
+                UserId: userId,
+                ArtistId: artistId
+            })
+        })
+        .then(res => {
+            done()
+        })
+    })
+
+
+    afterAll(done => {
+        Comment.destroy({ where : { description : "testingGetAllComment"}})
+        .then(data => {
+            done()
+        })
+    })
 
     // ======================== successfull get all comments ==========================
     it('should status 200, successfull get all comments' ,function (done) {
@@ -39,7 +87,7 @@ describe('GET /users/:userId/comments',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const idArtist = "sdadsadasd"
+        const idArtist = "sdad"
 
         //excecute
         request(app) 

@@ -14,24 +14,44 @@ const { generateToken } = require('../../helpers/jwt')
 // ==================================================================================
 
 describe('POST /artists/:artistId/orders', function() {
-    let userId = 1
+    let userId = null
     let access_token = null
-    // let artistId = 1
-    let artistAdd = 3
+    let artistId = null
 
     beforeAll(done => {
-        //dummy Artist login
-        User.findOne( { where : { id : 1}})
+        User.create({ 
+            username : "addOrderUser",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "addOrderUser@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
         .then(data => {
-            userId =  data.id
+            userId = data.id
 
             const payload = {
-                id : data.id,
-                username : data.username,
-                profilePicture : data.profilePicture
+                id : res.id,
+                username : res.username,
+                profilePicture : res.profilePicture
             }
 
             access_token = generateToken(payload)
+
+            return Artist.create({
+                username : "addOrderArtist",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "addOrderArtist@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
             done()
         })
     })
@@ -53,7 +73,7 @@ describe('POST /artists/:artistId/orders', function() {
     
         //excecute
         request(app) 
-        .post(`/users/${userId}/artists/${artistAdd}/orders`)
+        .post(`/users/${userId}/artists/${artistId}/orders`)
         .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
@@ -101,7 +121,7 @@ describe('POST /artists/:artistId/orders', function() {
     
         //excecute
         request(app) 
-        .post(`/users/${userId}/artists/${artistAdd}/orders`)
+        .post(`/users/${userId}/artists/${artistId}/orders`)
         .send(body)
         .end((err, res) => {
             if(err) done(err)

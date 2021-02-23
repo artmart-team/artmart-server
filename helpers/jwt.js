@@ -1,6 +1,6 @@
-if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
-  require('dotenv').config()
-}
+// if (process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'test') {
+//   require('dotenv').config()
+// }
 
 const jwt = require ('jsonwebtoken')
 

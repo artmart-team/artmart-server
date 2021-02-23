@@ -1,5 +1,5 @@
 const request = require ('supertest')
-// const { Category } = require('../../models')
+const { Category } = require('../../models')
 const app = require ('../../app')
 
 // DONE REVISION AFISTA 19-02-2021
@@ -10,6 +10,23 @@ const app = require ('../../app')
 // -- it success
 
 describe ('GET /categories', function () {
+
+  beforeAll(done => {
+    Category.create({
+        name: "Otherssssssss"
+    })
+    .then(() => {
+      done()
+    })
+  })
+
+  afterAll(done => {
+    Category.destroy({ where : {name : "Otherssssssss" }})
+    .then(() => {
+      done()
+    })
+  })
+
 
     it ('should send response with 200 status code', function (done) {
       request (app)

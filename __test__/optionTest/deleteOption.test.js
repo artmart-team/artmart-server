@@ -10,26 +10,49 @@ const { generateToken } = require('../../helpers/jwt')
 
 describe('DELETE /artist/:artistId/options/:optionId',function() {
     let artistId = null
-    let optionId = 2
     let access_token = null
-
+    let optionId = null
+  
     beforeAll(done => {
-        Artist.findOne({where : {email : "artist@mail.com"}})
+        Artist.create({ 
+            username : "artistDeleteOption",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "artistDeleteOption@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
         .then(data => {
             artistId = data.id
-
-            const decoded = {
+  
+            const payload = {
                 id : data.id,
                 username : data.username,
                 profilePicture : data.profilePicture
             }
-
-            access_token = generateToken(decoded)
-
+  
+            access_token = generateToken(payload)
+  
+            return Option.create({
+                title : "deleteOptionTesting",
+                extraPrice : 11000,
+                ArtistId : artistId
+            })
+        })
+        .then(res => {
+            optionId = res.id
             done()
         })
-        .catch(err => {
-            console.log(err)
+    })
+  
+    afterAll(done => {
+    
+        Artist.destroy({ where : { username : "artistDeleteOption"}})
+        .then(res => {
+            done()
         })
     })
 
@@ -37,7 +60,7 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
     // ======================== error options id not found ==========================
     it('should status 404, error options id not found' ,function (done) {
         //setup
-        const id = 9999999
+        const id = 9999
 
         //excecute
         request(app) 
@@ -81,7 +104,7 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const id = "sadasdasdas"
+        const id = "sada"
 
         //excecute
         request(app) 

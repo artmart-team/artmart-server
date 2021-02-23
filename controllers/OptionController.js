@@ -24,10 +24,9 @@ class OptionController {
 
       if(data) {
         res.status(200).json(data)
-      } else {
-        // belom testing
-        // next({ name : 'Error not found'})
-      }
+      } 
+      // belom testing
+      // next({ name : 'Error not found'})
 
     } catch (err) {
       // next(err)
@@ -56,7 +55,7 @@ class OptionController {
         extraPrice
       }
       if (!obj.title) delete obj.title
-      if (!obj.extraPrice) delete obj.extraPrice
+      // if (!obj.extraPrice) delete obj.extraPrice
 
       if (JSON.stringify(obj) === '{}') {
         return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
@@ -91,9 +90,10 @@ class OptionController {
       if(!data) {
         // belom testing
         // next({ name : 'Error not found'})
-      } else {
-        res.status(200).json({ messages : 'option success delete'})
-      }
+      } 
+
+      res.status(200).json({ messages : 'option success delete'})
+    
     } catch (err) {
       // next(err)
     }

@@ -77,10 +77,9 @@ class CommentController {
           let dataObj = data[1][0]
           delete dataObj.dataValues.password
           res.status(200).json (dataObj)
-        } else {
-          // belom testing
-          // next ({name: 'Error not found'})
         }
+        // belom testing
+        // next ({name: 'Error not found'})
       }
 
     } catch (err) {
@@ -98,9 +97,8 @@ class CommentController {
       if(!data) {
         // belom testing
         // next ({ name: 'Error not found' })
-      } else {
-        res.status(200).json({ message: 'Comment deleted' })
-      }
+      } 
+      res.status(200).json({ message: 'Comment deleted' })
 
     } catch (err) {
       // belom testing

@@ -16,8 +16,19 @@ describe('POST /artists/:artisId/options',function() {
     let artistId = null
     let access_token = null
 
+
     beforeAll(done => {
-        Artist.findOne({where : {email : "artist@mail.com"}})
+        Artist.create({
+            username : "createOptionArtist",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "createOptionArtist@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
         .then(data => {
             artistId = data.id
 
@@ -30,9 +41,6 @@ describe('POST /artists/:artisId/options',function() {
             access_token = generateToken(payload)
 
             done()
-        })
-        .catch(err => {
-            console.log(err)
         })
     })
 
@@ -65,29 +73,29 @@ describe('POST /artists/:artisId/options',function() {
     })
 
     // ======================== extra empty ==========================
-    // it('should status 400, title dan extra empty' ,function (done) {
-    //     //setup
-    //     const body = {
-    //         title : ""
-    //     }
+    it('should status 400, title dan extra empty' ,function (done) {
+        //setup
+        const body = {
+            title : ""
+        }
 
-    //     //excecute
-    //     request(app) 
-    //     .post(`/artists/${artistId}/options`)
-    //     .set('access_token', access_token)
-    //     .send(body)
-    //     .end((err, res) => {
-    //         if(err) done(err)
+        //excecute
+        request(app) 
+        .post(`/artists/${artistId}/options`)
+        .set('access_token', access_token)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
                     
-    //         //assert
-    //         expect(res.statusCode).toEqual(400)
-    //         expect (typeof res.body).toEqual('object')
-    //         expect(res.body).toHaveProperty('errors')
-    //         expect(Array.isArray(res.body.errors)).toEqual(true)
+            //assert
+            expect(res.statusCode).toEqual(400)
+            expect (typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('errors')
+            expect(Array.isArray(res.body.errors)).toEqual(true)
 
-    //         done()
-    //     })
-    // })
+            done()
+        })
+    })
 
     // ======================== error user not login ==========================
     it('should status 401, error not login' ,function (done) {

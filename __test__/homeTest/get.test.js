@@ -3,6 +3,7 @@ const app = require ('../../app')
 
 describe ('GET /', function () {
 
+    // berhasil 200 data
     it ('should response get', function (done) {
       request (app)
         .get ('/')

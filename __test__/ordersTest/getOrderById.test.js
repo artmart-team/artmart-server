@@ -14,28 +14,66 @@ const { generateToken } = require('../../helpers/jwt')
 
 describe('GET /artists/:artistsId/orders/:orderId', function() {
 
-  let artId = null
-  let orderId = 2
-  let access_token = null
+  let userId = null
+    let access_token = null
+    let artistId = null
+    let orderId = null
 
-  beforeAll(done => {
-    Artist.findOne({where : { email : 'artist@mail.com' }})
-    .then(data => {
-      artId = data.id
+    beforeAll(done => {
+        User.create({ 
+            username : "addReviewUserTesting",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "addReviewUserTesting@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
 
-      const payload = {
-        id : data.id,
-        username : data.username,
-        profilePicture : data.profilePicture
-      }
+            const payload = {
+                id : res.id,
+                username : res.username,
+                profilePicture : res.profilePicture
+            }
 
-      access_token = generateToken(payload)
-      done()
+            access_token = generateToken(payload)
+
+            return Artist.create({
+                username : "addReviewArtistTest",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "addReviewArtistTest@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+
+            return Order.create({
+                title : 'testing orders data',
+                description : 'testing',
+                deadline : new Date(),
+                price : 100000,
+                totalPrice : 120000,
+                accepted : false,
+                done : false,
+                paid : false,
+                imageURL : 'link.google.com',
+                ArtistId : artistId,
+                UserId : userId  
+            })
+        })
+        .then(res => {
+            orderId = res.id
+            done()
+        })
     })
-    .catch(err => {
-      console.log(err, "<< err beforeAll getOrferById.test.js")
-    })
-  })
+
 
   // success get order By id using artist id
   it('should status 200, successfull get all Image' ,function (done) {

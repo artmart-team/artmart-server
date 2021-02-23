@@ -21,57 +21,95 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',function() {
+    let userId = null
+    let access_token = null
+    let artistId = null
+    let orderId = null
 
-    let userId = 1
-    let artistId = 1
-    let orderId = 1
-    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDA0MjU3Mn0.WDW6CklcYnDeDjtD0J1mSQANepoolZ5gwwoaCvvLvP4"
+    beforeAll(done => {
+        User.create({ 
+            username : "addReviewUserTesting",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "addReviewUserTesting@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
 
-    // beforeAll(done => {
-    //     User.findOne({where : {id : 1}})
-    //     .then(data => {
-    //         userId = data.id
+            const payload = {
+                id : res.id,
+                username : res.username,
+                profilePicture : res.profilePicture
+            }
 
-    //         const payload = {
-    //             id : data.id,
-    //             username : data.username,
-    //             profilePicture : data.profilePicture
-    //         }
+            access_token = generateToken(payload)
 
-    //         access_token = generateToken(payload)
-    //         done()
-    //     })
-    // })
+            return Artist.create({
+                username : "addReviewArtistTest",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "addReviewArtistTest@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
+            })
+        })
+        .then(datas => {
+            artistId = datas.id
+
+            return Order.create({
+                title : 'testing orders data',
+                description : 'testing',
+                deadline : new Date(),
+                price : 100000,
+                totalPrice : 120000,
+                accepted : false,
+                done : false,
+                paid : false,
+                imageURL : 'link.google.com',
+                ArtistId : artistId,
+                UserId : userId  
+            })
+        })
+        .then(res => {
+            orderId = res.id
+            done()
+        })
+    })
 
 
     // testing gk berhasil
     // ======================== successfull Create reviews ==========================
-    // it('should status 201, successfull Create reviews' ,function (done) {
-    //     //setup
-    //     const body = {
-    //         title : "create new review",
-    //         description : "new review"
-    //     }
+    it('should status 201, successfull Create reviews' ,function (done) {
+        //setup
+        const body = {
+            title : "create new review",
+            description : "new review"
+        }
 
-    //     //excecute
-    //     request(app) 
-    //     .post(`/users/${userId}/artists/1/orders/2/reviews`)
-    //     .set('access_token', access_token)
-    //     .send(body)
-    //     .end((err, res) => {
-    //         if(err) done(err)
+        //excecute
+        request(app) 
+        .post(`/users/${userId}/artists/1/orders/2/reviews`)
+        .set('access_token', access_token)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
                     
-    //         //assert
-    //         expect(res.statusCode).toEqual(201)
-    //         expect (typeof res.body).toEqual('object')
-    //         expect(res.body).toHaveProperty('title')
-    //         expect(res.body).toHaveProperty('description')
-    //         expect(typeof res.body.title).toEqual('string')
-    //         expect(typeof res.body.description).toEqual('string')
+            //assert
+            expect(res.statusCode).toEqual(201)
+            expect (typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('title')
+            expect(res.body).toHaveProperty('description')
+            expect(typeof res.body.title).toEqual('string')
+            expect(typeof res.body.description).toEqual('string')
 
-    //         done()
-    //     })
-    // })
+            done()
+        })
+    })
 
 
     // ======================== successfull Create reviews ==========================

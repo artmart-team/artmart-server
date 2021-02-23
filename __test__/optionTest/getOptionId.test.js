@@ -5,12 +5,22 @@ const { generateToken } = require('../../helpers/jwt')
 
 
 describe ('GET /artists/:artistId/options/:optionId', function () {
-    let artistId = 1
-    let optionId = 3 
+    let artistId = null
+    let optionId = null
     let access_token = null
 
     beforeAll(done => {
-        Artist.findOne({ where : {email : "artist@mail.com"}})
+        Artist.create({ 
+            username : "getOptionIdArtist",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "getOptionIdArtist@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
         .then(data => {
             artistId = data.id
 
@@ -22,10 +32,15 @@ describe ('GET /artists/:artistId/options/:optionId', function () {
 
             access_token = generateToken(payload)
 
-            done()
+            return Option.create({
+                title : "create new option",
+                extraPrice : 10000,
+                ArtistId : artistId
+            })
         })
-        .catch(err => {
-            console.log(err)
+        .then(res => {
+            optionId = res.id
+            done()
         })
     })
 
@@ -50,7 +65,7 @@ describe ('GET /artists/:artistId/options/:optionId', function () {
 
     // error internal server
     // it ('should send response with 500 error internal server', function (done) {
-    //     let idOpt = "asdaasdas"
+    //     let idOpt = "asd"
 
 
     //     request (app)

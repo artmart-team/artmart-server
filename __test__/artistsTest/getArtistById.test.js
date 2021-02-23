@@ -23,13 +23,30 @@ describe('GET /artists/:artistId',function() {
     let artistId 
 
     beforeAll(done => {
-        Artist.findOne({ where: { email : "testingartist@mail.com"}})
+        Artist.create({
+            username : "artistTestingByIdSearch",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "artistTestingById@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
         .then(data => {
-            artistId = data.id
+            return Artist.findOne({ where : { username : "artistTestingByIdSearch"}})
+        })
+        .then(response => {
+            artistId = response.id
             done()
         })
-        .catch(err => {
-            console.log(err, "<< err beforeAll getArtistById.test.js")
+    })
+
+    afterAll(done => {
+        Artist.destroy({ where : { username : "artistTestingByIdSearch"}})
+        .then(data => {
+            done()
         })
     })
     
@@ -85,24 +102,24 @@ describe('GET /artists/:artistId',function() {
         })
     })
 
-        // ==========================  error internal server  ===============================
-        it('should status 500, error internal server' ,function (done) {
-            //setup
-            const id = "selat"
-        
-            //excecute
-            request(app) 
-            .get(`/artists/${id}`)
-            .end((err, res) => {
-                if(err) done(err)
-                        
-                //assert
-                expect(res.statusCode).toEqual(500)
-                expect(typeof res.body).toEqual('object')
-                expect(res.body).toHaveProperty('messages')
-                expect(typeof res.body.messages).toEqual('string')
+    // ==========================  error internal server  ===============================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+        const id = "selat"
     
-                done()
-            })
+        //excecute
+        request(app) 
+        .get(`/artists/${id}`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+
+            done()
         })
+    })
 })

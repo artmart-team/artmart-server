@@ -11,7 +11,7 @@
 
 const request = require('supertest')
 
-// const { User } = require('../../models')
+const { User } = require('../../models')
 
 const app = require ('../../app')  
 
@@ -21,11 +21,34 @@ const app = require ('../../app')
 
 describe('POST /users/login',function() {
 
+    beforeAll(done => {
+        User.create({ 
+            username : "userTestingLogin",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "userTestinlogin@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(response => {
+            done()
+        })
+    })
+
+    afterAll(done => {
+        User.destroy({ where : {
+            username: "userTestingLogin"
+        }})
+        .then(data => {
+            done()
+        })
+    })
+
     // ======================== successfull login with usernmae ==========================
     it('should status 200, successfull login with username' ,function (done) {
         //setup
         const body = {
-            username : 'testinguser',
+            username : 'userTestingLogin',
             password : '123456',         
         }
     
@@ -55,7 +78,7 @@ describe('POST /users/login',function() {
     it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
-            email : 'testinguser@mail.com',
+            email : 'userTestinlogin@mail.com',
             password : '123456',         
         }
     

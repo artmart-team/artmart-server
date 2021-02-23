@@ -56,7 +56,7 @@ class UserController {
           let checked = checkPassword (password, data.password)
           if (!checked) {
             //belom testing
-            next ({name: 'Invalid email / password'})
+            // next ({name: 'Invalid email / password'})
           } else {
             const payload = {
               id: data.id,

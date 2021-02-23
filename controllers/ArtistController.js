@@ -75,7 +75,7 @@ class ArtistController {
               })
             } else {
               //belom testing
-              // next ({name: 'Invalid email / password'})
+              next ({name: 'Invalid email / password'})
             }
           }
       }
@@ -106,7 +106,7 @@ class ArtistController {
               })
             } else {
               // belom testing
-              // next ({name: 'Invalid email / password'})
+              next ({name: 'Invalid email / password'})
             }
           }
         }
@@ -116,7 +116,7 @@ class ArtistController {
       }
     } catch (err) {
       // belom testing
-      // next (err)
+      next (err)
     }
   }
 

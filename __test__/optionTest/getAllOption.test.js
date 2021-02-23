@@ -2,46 +2,74 @@ const request = require ('supertest')
 const app = require ('../../app')
 
 const { generateToken } = require('../../helpers/jwt')
-const { Artist } = require('../../models')
+const { Artist, Option } = require('../../models')
 
 describe ('GET /artists/:artistId/options', function () {
-    let artistId = 1
-    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAwOTkxNn0.OQYv_a3QLoeiiQjT7R-jWLHNmH_9AXRfKsIkgcAlUWs"
+  let artistId = null
+  let access_token = null
 
-    // beforeAll(done => {
-    //   Artist.findOne({ where : {id : 1}})
-    //   .then(data => {
-    //     const payload = {
-    //       id : data.id,
-    //       username : data.username,
-    //       profilePicture : data.profilePicture
-    //     }
+  beforeAll(done => {
+      Artist.create({ 
+          username : "getAllOptionArtist",
+          firstName : "artist",
+          lastName : "idsearch",
+          email : "getAllOptionArtist@mail.com",
+          password : '123456',
+          profilePicture : "link.google.com",
+          completeDuration : 48,
+          bankAccount : 230230230,
+          defaultPrice : 100000
+      })
+      .then(data => {
+          artistId = data.id
 
-    //     access_token = generateToken(payload)
-    //   })
-    // })
+          const payload = {
+              id : data.id,
+              username : data.username,
+              profilePicture : data.profilePicture
+          }
 
+          access_token = generateToken(payload)
 
-    it ('should send response with 200 status code', function (done) {
-      request (app)
-        .get (`/artists/${artistId}/options`)
-        .set('access_token', access_token)
-        .end (function (err, res) {
-          if (err) done (err)
-
-          expect(res.statusCode).toEqual(200)
-          expect(Array.isArray (res.body)).toEqual(true)
-          res.body.forEach(opt => {
-            expect(opt).toHaveProperty('id')
-            expect(opt).toHaveProperty('title')
-            expect(opt).toHaveProperty('extraPrice')
-            expect (typeof opt.title).toEqual('string')
-            expect (typeof opt.extraPrice).toEqual('number')
+          return Option.create({
+              title : "option for get all",
+              extraPrice : 11000,
+              ArtistId : artistId
           })
-
+      })
+      .then(res => {
           done()
-        })
+      })
+  })
+
+  afterAll(done => {
+    Option.destroy({ where : { title : "option for get all"}})
+    .then(res => {
+      done()
     })
+  })
+
+
+  it ('should send response with 200 status code', function (done) {
+    request (app)
+      .get (`/artists/${artistId}/options`)
+      .set('access_token', access_token)
+      .end (function (err, res) {
+        if (err) done (err)
+
+        expect(res.statusCode).toEqual(200)
+        expect(Array.isArray (res.body)).toEqual(true)
+        res.body.forEach(opt => {
+          expect(opt).toHaveProperty('id')
+          expect(opt).toHaveProperty('title')
+          expect(opt).toHaveProperty('extraPrice')
+          expect (typeof opt.title).toEqual('string')
+          expect (typeof opt.extraPrice).toEqual('number')
+        })
+
+        done()
+      })
+  })
 
     // error internal server 500
     // it ('should response 500, error internal server', function (done) {

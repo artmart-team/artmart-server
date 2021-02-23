@@ -44,17 +44,21 @@ async function authorizeUserEdit (req, res, next) {
         id: targetId
       }
     })
-    if (!data) {
-      //belom testing
-      // return next({ name: 'Error not found' })
-    }
 
-    if (data.id !== req.userId) {
-      //belom testing
-      // res.status (401).json ({message: 'Unauthorized'})
-    } else if (data.id === req.userId) {
+    if(data.id == req.userId) {
       next()
     }
+
+    // if (!data) {
+    //belom testing
+    // return next({ name: 'Error not found' })
+    // }
+
+    // if (data.id !== req.userId) {
+    //belom testing
+    // res.status (401).json ({message: 'Unauthorized'})
+    // } 
+
   } catch (err) {
     // next (err)
   }
@@ -92,17 +96,21 @@ async function authorizeUserOrder (req, res, next) {
         id: targetId
       }
     })
-    if (!data) {
-      //belom testing
-      // return next({ name: 'Error not found' })
-    }
 
-    if (data.UserId !== req.userId) {
-      //belom testing
-      // res.status (401).json ({message: 'Unauthorized'})
-    } else if (data.UserId === req.userId) {
+    if(data.UserId === req.userId) {
       next()
     }
+
+    // if (!data) {
+    //belom testing
+    // return next({ name: 'Error not found' })
+    // }
+
+    // if (data.UserId !== req.userId) {
+    //belom testing
+    // res.status (401).json ({message: 'Unauthorized'})
+    // } 
+
   } catch (err) {
     // next (err)
   }
@@ -116,17 +124,21 @@ async function authorizeArtistOrder (req, res, next) {
         id: targetId
       }
     })
-    if (!data) {
-      //belom testing
-      // return next({ name: 'Error not found' })
-    }
 
-    if (data.ArtistId !== req.artistId) {
-      //belom testing
-      // res.status (401).json ({message: 'Unauthorized'})
-    } else if (data.ArtistId === req.artistId) {
+    if(data.ArtistId === req.artistId) {
       next()
     }
+
+    // if (!data) {
+    //belom testing
+    // return next({ name: 'Error not found' })
+    // }
+
+    // if (data.ArtistId !== req.artistId) {
+    //belom testing
+    // res.status (401).json ({message: 'Unauthorized'})
+    // }
+    
   } catch (err) {
     // next (err)
   }
@@ -142,12 +154,14 @@ async function authorizeUserPicture (req, res, next) {
       }
     })
 
-    if (data.UserId !== req.userId) {
-      //belom testing
-      // res.status (401).json ({message: 'Unauthorized'})
-    } else if (data.UserId === req.userId) {
+    if(data.UserId === req.userId) {
       next()
     }
+
+    // if (data.UserId !== req.userId) {
+    //belom testing
+    // res.status (401).json ({message: 'Unauthorized'})
+    // } 
   } catch (err) {
     // next (err)
   }
@@ -204,16 +218,21 @@ async function authorizeArtistOption (req, res, next) {
         id: targetId
       }
     })
+
+    if(data.ArtistId == req.artistId) {
+      next()
+    } 
+
     if (!data) {
       return next({ name: 'Error not found' })
     }
 
     if (data.ArtistId != req.artistId) {
-      //belom testing
-      // res.status (401).json ({message: 'Unauthorized'})
-    } else if (data.ArtistId == req.artistId) {
-      next()
+    
+    res.status (401).json ({message: 'Unauthorized'})
     }
+    
+    
   } catch (err) {
     next (err)
   }
@@ -228,12 +247,15 @@ async function authorizeUserRating (req, res, next) {
       }
     })
 
-    if (data.UserId !== req.userId) {
-      //belom testing
-      // res.status (401).json ({message: 'Unauthorized'})
-    } else if (data.UserId === req.userId) {
+    if(data.UserId === req.userId) {
       next()
     }
+
+    // if (data.UserId !== req.userId) {
+    //belom testing
+    // res.status (401).json ({message: 'Unauthorized'})
+    // }
+    
   } catch (err) {
     next (err)
   }
@@ -248,12 +270,15 @@ async function authorUserReview (req, res, next) {
       }
     })
 
-    if (data.UserId != req.userId) {
-      //belom testing
-      // res.status (401).json ({message: 'Unauthorized'})
-    } else if (data.UserId == req.userId) {
+    if(data.UserId == req.userId) {
       next()
     }
+
+    // if (data.UserId != req.userId) {
+    //belom testing
+    // res.status (401).json ({message: 'Unauthorized'})
+    // } 
+
   } catch (err) {
     next (err)
   }

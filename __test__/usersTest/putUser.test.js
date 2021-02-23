@@ -29,24 +29,39 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('PUT /users/:userId',function() {
-    let userId = 3
+    let userId = null
     let access_token = null
-    let tokenerror = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJiZXJoYXNpbGVkaXRVc2VyIiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTQwMDIzNzB9.ZmOnvDhDcfwiJJsi0I8KmdsXX8Pq9Du8I-Q_y9J9T8Y"
 
     beforeAll(done => {
-        //dummy user login
-        User.findOne( { where : { id : 3}})
-        .then(user => {
-            userId = user.id
+        User.create({
+            username : "artistTestingPut",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "artistTestingPut@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com"
+        })
+        .then(data => {
+            return User.findOne({ where : { username : "artistTestingPut"}})
+        })
+        .then(response => {
+            userId = response.id
 
-            const payload = {
-                id : user.id,
-                username : user.username,
-                profilePicture : user.profilePicture
+            let payload = {
+                id : response.id,
+                username : response.username,
+                profilePicture : response.profilePicture
             }
 
             access_token = generateToken(payload)
 
+            done()
+        })
+    })
+
+    afterAll(done => {
+        User.destroy({ where : {username : "artistTestingPut"}})
+        .then(() => {
             done()
         })
     })
@@ -55,7 +70,11 @@ describe('PUT /users/:userId',function() {
     it('should status 200, successfull update user' ,function (done) {
         //setup
         const body = {
-            username : 'editberhasilusername',      
+            username : 'editberhasilusername',
+            firstName : "yessss",
+            lastName : "berhasil",
+            email : "berhasiledit@mail.com",
+            profilePicture : "link2.google.com"      
         }
     
         //excecute
@@ -243,8 +262,8 @@ describe('PUT /users/:userId',function() {
     
         //excecute
         request(app) 
-        .put(`/users/${userId}`)
-        .set('access_token', tokenerror)
+        .put(`/users/2`)
+        .set('access_token', access_token)
         .send(body)
         .end((err, res) => {
             if(err) done(err)

@@ -53,7 +53,6 @@ describe('GET /users/:userId/orders', function () {
         expect(typeof res.body[0].title).toEqual('string')
         expect(typeof res.body[0].description).toEqual('string')
         expect(typeof res.body[0].refPictureId).toEqual('number')
-        expect(typeof res.body[0].deadline).toEqual('object')
         expect(typeof res.body[0].price).toEqual('number')
         expect(typeof res.body[0].totalPrice).toEqual('number')
         expect(typeof res.body[0].accepted).toEqual('boolean')

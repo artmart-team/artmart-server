@@ -9,42 +9,57 @@ const request = require('supertest')
 
 const { generateToken } = require('../../helpers/jwt')
 
-const { User } = require('../../models')
+const { User, Artist } = require('../../models')
 
 const app = require('../../app')  
 const { beforeAll } = require('@jest/globals')
+const ArtistController = require('../../controllers/ArtistController')
 
 // ===================================================================================
 // ==========================  POST /users/:userId/comments
 // ==================================================================================
-
-
-
-
-
 describe('POST /users/:userId/comments',function() {
 
-    let userId = 1
+    let userId = null
     let access_token = null
-    let artistId = 1
+    let artistId = null
 
     beforeAll(done => {
-        User.findOne({where : {id : 1}})
-            .then(data => {
-                userId = data.id
-    
-                const payload = {
-                    id : data.id,
-                    username : data.username,
-                    profilePicture : data.profilePicture
-                }
-                access_token = generateToken(payload)
-    
-                done()
+        User.create({ 
+            username : "userTestAddComment",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "userTestAddComment@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
+        .then(data => {
+            userId = data.id
+
+            const payload = {
+                id : res.id,
+                username : res.username,
+                profilePicture : res.profilePicture
+            }
+
+            access_token = generateToken(payload)
+
+            return Artist.create({
+                username : "artistTestAddComment",
+                firstName : "artist",
+                lastName : "idsearch",
+                email : "artistTestAddComment@mail.com",
+                password : '123456',
+                profilePicture : "link.google.com",
+                completeDuration : 48,
+                bankAccount : 230230230,
+                defaultPrice : 100000
             })
-            .catch(err => {
-                console.log(err)
-            })
+        })
+        .then(datas => {
+            artistId = datas.id
+            done()
+        })
     })
 
     // ======================== successfull Create Comment ==========================
@@ -122,28 +137,28 @@ describe('POST /users/:userId/comments',function() {
     })
 
 
-        // ======================== error internal server ==========================
-        // it('should status 500, error internal server' ,function (done) {
-        //     //setup
-        //     const data = {
-        //         ssssss : "sdsad"
-        //     }
-    
-        //     //excecute
-        //     request(app) 
-        //     .post(`/users/${userId}/artists/${artistId}/comments`)
-        //     .set('access_token', access_token)
-        //     .send(data)
-        //     .end((err, res) => {
-        //         if(err) done(err)
-                        
-        //         //assert
-        //         expect(res.statusCode).toEqual(500)
-        //         expect (typeof res.body).toEqual('object')
-        //         expect(res.body).toHaveProperty('messages')
-        //         expect(typeof res.body.messages).toEqual('string')
-    
-        //         done()
-        //     })
-        // })
+    // ======================== error internal server ==========================
+    // it('should status 500, error internal server' ,function (done) {
+    //     //setup
+    //     const data = {
+    //         ssssss : "sdsad"
+    //     }
+
+    //     //excecute
+    //     request(app) 
+    //     .post(`/users/${userId}/artists/${artistId}/comments`)
+    //     .set('access_token', access_token)
+    //     .send(data)
+    //     .end((err, res) => {
+    //         if(err) done(err)
+                    
+    //         //assert
+    //         expect(res.statusCode).toEqual(500)
+    //         expect (typeof res.body).toEqual('object')
+    //         expect(res.body).toHaveProperty('messages')
+    //         expect(typeof res.body.messages).toEqual('string')
+
+    //         done()
+    //     })
+    // })
 })

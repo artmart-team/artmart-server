@@ -1,5 +1,5 @@
 const request = require('supertest')
-const { Artist } = require('../../models')
+const { Artist, Option } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
@@ -11,25 +11,51 @@ const { generateToken } = require('../../helpers/jwt')
 describe('PUT /artists/:artistId/options/:optionId',function() {
     let artistId = null
     let access_token = null
-    let optionId = 1
-
+    let optionId = null
+  
     beforeAll(done => {
-        Artist.findOne({where : {email : "artist@mail.com"}})
+        Artist.create({ 
+            username : "getArtisteditOption",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "getArtisteditOption@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
         .then(data => {
             artistId = data.id
-
+  
             const payload = {
                 id : data.id,
                 username : data.username,
                 profilePicture : data.profilePicture
             }
-
+  
             access_token = generateToken(payload)
+  
+            return Option.create({
+                title : "editOptionTesting",
+                extraPrice : 11000,
+                ArtistId : artistId
+            })
+        })
+        .then(res => {
+            optionId = res.id
             done()
         })
-        .catch(err => {
-            console.log(err)
-        })
+    })
+  
+    afterAll(done => {
+      Option.destroy({ where : { title : "editOptionTesting"}})
+      .then(res => {
+          return Artist.destroy({ where : { username : "getArtisteditOption"}})
+      })
+      .then(res => {
+        done()
+      })
     })
 
     // ======================== successfull edit options ==========================

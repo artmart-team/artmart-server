@@ -23,13 +23,29 @@ describe('GET /users/:userId',function() {
     let userId 
 
     beforeAll(done => {
-        User.findOne({ where : {email : 'testinguser@mail.com'}})
+        User.create({ 
+            username : "userTestIdSearchData",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "userTestingById@mail.com",
+            password : '123456',
+            profilePicture : ""
+        })
         .then(data => {
-            userId = data.id
+            return User.findOne({ where : {username : 'userTestIdSearchData'}})
+        })
+        .then(response => {
+            userId = response.id
             done()
         })
-        .catch(err => {
-            console.log(err, "<< err beforeAll getUserById.test.js ")
+    })
+
+    afterAll(done => {
+        User.destroy({ where : {
+            username: "userTestIdSearchData"
+        }})
+        .then(data => {
+            done()
         })
     })
 

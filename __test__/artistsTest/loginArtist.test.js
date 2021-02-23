@@ -11,7 +11,7 @@
 
 const request = require('supertest')
 
-// const { Artist } = require('../../models')
+const { Artist } = require('../../models')
 
 const app = require ('../../app') 
 
@@ -20,12 +20,39 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /artists/login',function() {
+
+
+    beforeAll(done => {
+        Artist.create({ 
+            username : "artistLoginTesting",
+            firstName : "artist",
+            lastName : "idsearch",
+            email : "artistTestingLogin@mail.com",
+            password : '123456',
+            profilePicture : "link.google.com",
+            completeDuration : 48,
+            bankAccount : 230230230,
+            defaultPrice : 100000
+        })
+        .then(response => {
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Artist.destroy({ where : {
+            username: "artistLoginTesting"
+        }})
+        .then(data => {
+            done()
+        })
+    })
     
     // ======================== successfull login with usernmae ==========================
     it('should status 200, successfull login with username' ,function (done) {
         //setup
         const body = {
-            username : 'testingartist',
+            username : 'artistLoginTesting',
             password : '123456',         
         }
     
@@ -56,7 +83,7 @@ describe('POST /artists/login',function() {
     it('should status 200, successfull login with email' ,function (done) {
         //setup
         const body = {
-            email : 'testingartist@mail.com',
+            email : 'artistTestingLogin@mail.com',
             password : '123456',         
         }
     
@@ -190,7 +217,7 @@ describe('POST /artists/login',function() {
     // it('should status 500, error internal server' ,function (done) {
     //     //setup
     //     const body = {
-    //         sssssss : 'testinggggggg@mail.com'      
+    //         ssss : 'testinggggggg@mail.com'      
     //     }
     
     //     //excecute
