@@ -20,7 +20,7 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('GET /users/:userId',function() {
-    let userId 
+    let userId = null
 
     beforeAll(done => {
         User.create({ 
@@ -32,17 +32,15 @@ describe('GET /users/:userId',function() {
             profilePicture : ""
         })
         .then(data => {
-            return User.findOne({ where : {username : 'userTestIdSearchData'}})
-        })
-        .then(response => {
-            userId = response.id
+            userId = data.id
+
             done()
         })
     })
 
     afterAll(done => {
         User.destroy({ where : {
-            username: "userTestIdSearchData"
+            id : userId
         }})
         .then(data => {
             done()

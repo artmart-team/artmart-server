@@ -61,11 +61,21 @@ describe('DELETE /artists/:artistId/pictures/:pictureId',function() {
                 hidden : false,
                 CategoryId : catId,
                 ArtistId : artId,
-                UserId : ""
             })
         })
         .then(pict => {
             pictId = pict.id
+            done()
+        })
+    })
+
+
+    afterAll(done => {
+        Category.destroy({ where : { id : catId}})
+        .then(() => {
+            return Artist.destroy({ where : { id : artId}})
+        })
+        .then(() => {
             done()
         })
     })

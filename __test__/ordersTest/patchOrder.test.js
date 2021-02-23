@@ -8,7 +8,7 @@
 
 const request = require('supertest')
 
-const { Artist, Order } = require('../../models')
+const { Artist, Order, User } = require('../../models')
 
 const { beforeAll } = require("@jest/globals")
 
@@ -17,14 +17,6 @@ const { generateToken } = require('../../helpers/jwt')
 
 
 describe('PATCH /artists/:artistId/orders', function() {
-    let artistId = 1
-    let access_token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JBcnRpc3QiLCJwcm9maWxlUGljdHVyZSI6ImxpbmsuZ29vZ2xlLmNvbSIsImlhdCI6MTYxNDAxMjAyNn0.vQyZa-ldYGwO3blnq8KmSaGTe4GAr6duhOoX50hU95A"
-    let orderId = 3
-    let userId = 1
-    let idOrder = "zzz"
-    let userToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1c2VybmFtZVRlc3RpbmdGb3JVU2VyIiwicHJvZmlsZVBpY3R1cmUiOiJsaW5rLmdvb2dsZS5jb20iLCJpYXQiOjE2MTQwMTEyOTd9.kEprekXCVV9xX_kfPZ_6y7P9xPMC1gFrsum6hsy0nPw"
-
-
     let userId = null
     let accessUser = null
     let accessArtist = null

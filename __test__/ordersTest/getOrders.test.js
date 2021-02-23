@@ -4,7 +4,7 @@ const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
 
-const { User, Artist } = require('../../models')
+const { User, Artist, Order } = require('../../models')
 const { generateToken } = require('../../helpers/jwt')
 
 // describe /users/:userId/orders  (get orders by userId)
@@ -81,9 +81,15 @@ describe('GET /users/:userId/orders', function () {
   })
 
   afterAll(done => {
-    Order.destroy({ where : { title : "testingOrderGetAll" }})
-    .then(data => {
-      done()
+    Order.destroy({ where : { id : orderId }})
+    .then(() => {
+        return Artist.destroy({ where : {id : artistId}})
+    })
+    .then(() => {
+        return User.destroy({ where : { id: userId}})
+    })
+    .then(() => {
+        done()
     })
   })
 

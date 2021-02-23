@@ -60,7 +60,7 @@ describe('PUT /users/:userId',function() {
     })
 
     afterAll(done => {
-        User.destroy({ where : {username : "artistTestingPut"}})
+        User.destroy({ where : {id : userId}})
         .then(() => {
             done()
         })

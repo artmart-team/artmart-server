@@ -4,7 +4,7 @@ const { beforeAll } = require("@jest/globals")
 
 const { generateToken } = require('../../helpers/jwt')
 
-const { Artist } = require('../../models')
+const { Artist, Option } = require('../../models')
 
 const app = require('../../app')  
 
@@ -40,6 +40,16 @@ describe('POST /artists/:artisId/options',function() {
 
             access_token = generateToken(payload)
 
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Option.destroy({ where : {title : "create new option"}})
+        .then(() => {
+            return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(() => {
             done()
         })
     })

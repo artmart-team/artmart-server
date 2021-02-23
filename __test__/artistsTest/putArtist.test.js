@@ -13,8 +13,6 @@
 // -- it edit error email not email format
 // -- it edit password empty
 
-const axios = require('axios')
-
 const request = require('supertest')
 
 const { Artist } = require('../../models')
@@ -46,25 +44,21 @@ describe('PUT /artists/:artistId',function () {
             defaultPrice : 100000
         })
         .then(data => {
-            return Artist.findOne({ where : { username : "artistTestingPut"}})
-        })
-        .then(response => {
-            artistId = response.id
+            artistId = data.id
 
-            let payload = {
-                id : response.id,
-                username : response.username,
-                profilePicture : response.profilePicture
+            const payload = {
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)
-
             done()
         })
     })
 
     afterAll(done => {
-        Artist.destroy({ where : {username : "artistTestingPut"}})
+        Artist.destroy({ where : {id : artistId}})
         .then(() => {
             done()
         })
@@ -74,10 +68,10 @@ describe('PUT /artists/:artistId',function () {
     it('should status 200, successfull update artist' ,function (done) {
         //setup
         const body = {
-            username : 'berhasileditArtist',
+            username : 'dieditdongbiarok',
             firstName : "yessss",
             lastName : "berhasil",
-            email : "berhasiledit@mail.com",
+            email : "dieditdongbiarok@mail.com",
             profilePicture : "link2.google.com"
 
         }
@@ -230,6 +224,7 @@ describe('PUT /artists/:artistId',function () {
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('message')
             expect(typeof res.body.message).toEqual('string')
+            // expect(Array.isArray(res.body.errors)).toEqual(true)
 
             done()
         })
@@ -260,7 +255,7 @@ describe('PUT /artists/:artistId',function () {
     })
 
     // ==========================  username diisi kosong  ===============================
-    it('should status 400, error input username empty / null' ,function (done) {
+    it('should status 401, error input username empty / null' ,function (done) {
         //setup
         const body = {
             username : '',      
@@ -277,8 +272,8 @@ describe('PUT /artists/:artistId',function () {
             //assert
             expect(res.statusCode).toEqual(403)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('messages')
-            expect(typeof res.body.messages).toEqual('string')
+            expect(res.body).toHaveProperty('message')
+            expect(typeof res.body.message).toEqual('string')
 
             done()
         })

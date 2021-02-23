@@ -47,11 +47,12 @@ describe('PUT /artists/:artistId/options/:optionId',function() {
             done()
         })
     })
-  
+
+
     afterAll(done => {
-      Option.destroy({ where : { title : "editOptionTesting"}})
+      Option.destroy({ where : { id : optionId}})
       .then(res => {
-          return Artist.destroy({ where : { username : "getArtisteditOption"}})
+          return Artist.destroy({ where : { id : artistId}})
       })
       .then(res => {
         done()

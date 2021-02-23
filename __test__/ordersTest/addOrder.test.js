@@ -2,7 +2,7 @@
 
 const request = require('supertest')
 
-const { User } = require('../../models')
+const { User, Artist, Order } = require('../../models')
 
 const { beforeAll } = require("@jest/globals")
 
@@ -31,9 +31,9 @@ describe('POST /artists/:artistId/orders', function() {
             userId = data.id
 
             const payload = {
-                id : res.id,
-                username : res.username,
-                profilePicture : res.profilePicture
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)
@@ -56,6 +56,19 @@ describe('POST /artists/:artistId/orders', function() {
         })
     })
 
+    afterAll(done => {
+        Order.destroy( { where : { title : "testing orders data"}})
+        .then(() => {
+            return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(() => {
+            return User.destroy({ where : { id: userId}})
+        })
+        .then(() => {
+            done()
+        })
+    })
+ 
     // ======================== successfull add orders ==========================
     it('should status 201, successfull create orders' ,function (done) {
         //setup

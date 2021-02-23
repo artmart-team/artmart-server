@@ -43,7 +43,7 @@ class OptionController {
       })
       res.status(201).json(data)
     } catch (err) {
-      // next(err)
+      next(err)
     }
   }
 
@@ -89,13 +89,13 @@ class OptionController {
 
       if(!data) {
         // belom testing
-        // next({ name : 'Error not found'})
+        next({ name : 'Error not found'})
       } 
 
       res.status(200).json({ messages : 'option success delete'})
     
     } catch (err) {
-      // next(err)
+      next(err)
     }
   }
 }

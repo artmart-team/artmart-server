@@ -20,6 +20,7 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /users/login',function() {
+    let artId = null
 
     beforeAll(done => {
         User.create({ 
@@ -31,13 +32,14 @@ describe('POST /users/login',function() {
             profilePicture : ""
         })
         .then(response => {
+            artId = response.id
             done()
         })
     })
 
     afterAll(done => {
         User.destroy({ where : {
-            username: "userTestingLogin"
+            id: artId 
         }})
         .then(data => {
             done()

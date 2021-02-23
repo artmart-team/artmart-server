@@ -84,9 +84,15 @@ describe('GET /artists/:artistsId/orders/:orderId', function() {
   })
 
   afterAll(done => {
-    Order.destroy({ where : { title : "testingOrderByIdData" }})
-    .then(data => {
-      done()
+    Order.destroy({ where : { id : orderId }})
+    .then(() => {
+        return Artist.destroy({ where : {id : artistId}})
+    })
+    .then(() => {
+        return User.destroy({ where : { id: userId}})
+    })
+    .then(() => {
+        done()
     })
   })
 

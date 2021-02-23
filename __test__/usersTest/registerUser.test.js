@@ -15,7 +15,7 @@
 
 const request = require('supertest')
 
-// const { User } = require('../../models')
+const { User } = require('../../models')
 
 const app = require ('../../app')  
 
@@ -25,6 +25,13 @@ const app = require ('../../app')
 // ==================================================================================
 
 describe('POST /users/register',function() {
+
+    afterAll(done => {
+        User.destroy({ where : { username : "testUser"}})
+        .then(() => {
+            done()
+        })
+    })
 
     // ======================== successfull register ==========================
     it('should status 201, successfull created user' ,function (done) {

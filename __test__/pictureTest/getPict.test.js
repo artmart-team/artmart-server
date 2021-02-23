@@ -20,6 +20,7 @@ describe('GET /artists/:artistId/pictures',function() {
     let artId = null
     let userId = null
     let catId = null
+    let pictId = null
 
     beforeAll(done => {
         Artist.create({
@@ -62,10 +63,27 @@ describe('GET /artists/:artistId/pictures',function() {
                 hidden : false,
                 CategoryId : catId,
                 ArtistId : artId,
-                UserId : ""
+                UserId : userId
             })
         })
         .then(res => {
+            pictId = res.id
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Picture.destroy({ where : { id : pictId}})
+        .then(() => {
+            return Category.destroy({ where : { id : catId}})
+        })
+        .then(() => {
+            return Artist.destroy({ where : {id : artId}})
+        })
+        .then(() => {
+            return User.destroy({ where : {id : userId}})
+        })
+        .then(() => {
             done()
         })
     })

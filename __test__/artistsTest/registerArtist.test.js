@@ -18,6 +18,7 @@
 const request = require('supertest')
 
 const app = require('../../app')  
+const { Artist } = require('../../models')
 
 
 // ===================================================================================
@@ -25,6 +26,15 @@ const app = require('../../app')
 // ==================================================================================
 
 describe('POST /artists/register',function() {
+
+    afterAll(done => {
+        ArtistController.destroy({
+            where : { username : "testArtist"}
+        })
+        .then(() => {
+            done()
+        })
+    })
    
     // ======================== successfull register ==========================
     it('should status 201, successfull created user' ,function (done) {

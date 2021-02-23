@@ -44,6 +44,16 @@ describe ('GET /artists/:artistId/options/:optionId', function () {
         })
     })
 
+    afterAll(done => {
+        Option.destroy({ where : { id : optionId}})
+        .then(res => {
+          return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(() => {
+          done()
+        })
+      })
+
     // success
     it ('should send response with 200 status code', function (done) {
       request (app)

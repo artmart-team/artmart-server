@@ -7,6 +7,7 @@ const { Artist, Option } = require('../../models')
 describe ('GET /artists/:artistId/options', function () {
   let artistId = null
   let access_token = null
+  let optId = null
 
   beforeAll(done => {
       Artist.create({ 
@@ -38,13 +39,17 @@ describe ('GET /artists/:artistId/options', function () {
           })
       })
       .then(res => {
+        optId = res.id
           done()
       })
   })
 
   afterAll(done => {
-    Option.destroy({ where : { title : "option for get all"}})
+    Option.destroy({ where : { id : optId}})
     .then(res => {
+      return Artist.destroy({ where : {id : artistId}})
+    })
+    .then(() => {
       done()
     })
   })

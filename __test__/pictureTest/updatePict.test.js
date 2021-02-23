@@ -92,6 +92,22 @@ describe('PUT /artists/:artistId/pictures/:pictureId',function() {
         })
     })
 
+    afterAll(done => {
+        Picture.destroy({ where : { id : pictId}})
+        .then(() => {
+            return Category.destroy({ where : { id : catId}})
+        })
+        .then(() => {
+            return Artist.destroy({ where : {id : artId}})
+        })
+        .then(() => {
+            return User.destroy({ where : {id : userId}})
+        })
+        .then(() => {
+            done()
+        })
+    })
+
     // ======================== successfull update pictures ==========================
     it('should status 200, successfull get all pictures' ,function (done) {
         //setup

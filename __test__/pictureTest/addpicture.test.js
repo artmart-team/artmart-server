@@ -11,13 +11,13 @@
 
 const request = require('supertest')
 
-const { Artist, Category } = require('../../models')
+const { Artist, Category, Picture } = require('../../models')
 
 const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
-const { stack } = require('../../routes/catRouter')
+// const { stack } = require('../../routes/catRouter')
 
 // ===================================================================================
 // ==========================    POST /artists/:artistId/pictures
@@ -58,6 +58,19 @@ describe('POST /artists/:artistId/pictures', function() {
         })
         .then(data => {
             catId = data.id
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Picture.destroy({ where : { name : "asik nih"}})
+        .then(data => {
+            return Category.destroy({ where : {id : catId}})
+        })
+        .then(res =>{
+            return Artist.destroy({where : { id : artId}})
+        })
+        .then(() => {
             done()
         })
     })

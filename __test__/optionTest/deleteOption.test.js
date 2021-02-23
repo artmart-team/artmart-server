@@ -50,7 +50,7 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
   
     afterAll(done => {
     
-        Artist.destroy({ where : { username : "artistDeleteOption"}})
+        Artist.destroy({ where : { id : artistId}})
         .then(res => {
             done()
         })
@@ -70,7 +70,7 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(404)
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
