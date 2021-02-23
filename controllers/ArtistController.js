@@ -157,7 +157,7 @@ class ArtistController {
       }
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 }

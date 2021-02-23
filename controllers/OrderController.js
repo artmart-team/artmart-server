@@ -215,33 +215,85 @@ class OrderController {
 
   static async doneOrder (req, res, next) {
     try {
+
+      const checkDone = await Order.findOne({
+        where : {
+          id : +req.params.orderId
+        }
+      })
+      if(checkDone.done) {
+        return next({ name : "Order already done" })
+      }
+
+
       const obj = { done: true, imageURL: req.body.imageURL }
+
+      // belom testing
+      // let orderData = await Order.findOne({
+      //   where: {
+      //     id: +req.params.orderId
+      //   },
+      //   include: {
+      //     model: User,
+      //     attributes: [ 'id', 'username', 'profilePicture']
+      //   }
+      // })
+
+      // if (!orderData) {
+      //   return next({ name: 'Error not found'})
+      // }
+
+      let data = await Order.update (obj, {
+        where: {
+          id: +req.params.orderId
+        },
+        returning: true
+      })
+
       if (!obj.imageURL) {
         // belom testing
-        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Image URL required' }] })
+        // return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Image URL required' }] })
       } else {
-        const data = await Order.update (obj, {
-          where: {
-            id: +req.params.orderId
-          },
-          returning: true
-        })
+
         let isSuccess = data[0]
         
         if (isSuccess === 1) {
           let dataObj = data[1][0]
+
+          const objPicture = {
+            name: `Commission from ${orderData.User.username}`,
+            description: '',
+            price: +orderData.price,
+            link: orderData.imageURL,
+            hidden: false,
+            CategoryId: 1,
+            ArtistId: +orderData.ArtistId,
+            UserId: +orderData.UserId
+          }
+
+          // const dataPicture = await Picture.create(objPicture)
+
           res.status(200).json (dataObj)
         } else {
-          next ({name: 'Error not found'})
+          // next ({name: 'Error not found'})
         }    
       }
     } catch (err) {
-      // next (err)
+      next (err)
     }
   }
 
   static async paidOrder (req, res, next) {
     try {
+      const checkPaid = await Order.findOne({
+        where : {
+          id: +req.params.orderId
+        }
+      })
+      if(checkPaid.paid) {
+        return next({ name : 'Order already paid'})
+      }
+
       const obj = { paid: true }
       const data = await Order.update (obj, {
         where: {
@@ -256,10 +308,10 @@ class OrderController {
         res.status(200).json (dataObj)
       } else {
         // belom testing
-        next ({name: 'Error not found'})
+        // next ({name: 'Error not found'})
       }
     } catch (err) {
-      next(err)
+      // nsext(err)
     }
   }
 
@@ -273,7 +325,7 @@ class OrderController {
         }
       }
 
-      await axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', obj
+      axios.post('https://app.sandbox.midtrans.com/snap/v1/transactions', obj
       , {
         headers: {
           "Accept": "application/json",
@@ -282,7 +334,7 @@ class OrderController {
         }
       })
       .then(function (response) {
-        res.status(201).json(response.data)
+        // res.status(201).json(response.data)
       })
       .catch(function (error) {
         res.status(400).json(error)
@@ -290,7 +342,7 @@ class OrderController {
       })
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 }

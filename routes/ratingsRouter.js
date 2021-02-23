@@ -4,6 +4,8 @@ const { authenticate, authorizeUserRating } = require ('../middlewares/auth')
 
 router.get ('/artists/:artistId/ratings', RatingController.getAllByArtist)
 
+router.get ('/artists/:artistId/ratings/average', RatingController.getArtistAverage)
+
 router.get ('/users/:userId/ratings', RatingController.getAllByUser)
 
 router.get ('/users/:userId/ratings/:ratingId', RatingController.getRatingIdUser)

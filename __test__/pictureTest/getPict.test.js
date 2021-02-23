@@ -47,7 +47,7 @@ describe('GET /artists/:artistId/pictures',function() {
     // ======================== error internal server ==========================
     it('should status 500, error internal server' ,function (done) {
         //setup
-        const idArt = "asdadasd"
+        const idArt = "asd"
 
 
         //excecute

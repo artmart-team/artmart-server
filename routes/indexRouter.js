@@ -9,6 +9,10 @@ const reviewsRouter = require ('./reviewsRouter')
 const ratingsRouter = require ('./ratingsRouter')
 const categoryRouter = require('./catRouter')
 
+router.get('/', (req, res) => {
+    res.status(200).json({ messages : 'Welcome to mARTerialize Server'})
+})
+
 router.use (categoryRouter)
 
 router.use (usersRouter)

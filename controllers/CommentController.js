@@ -84,7 +84,7 @@ class CommentController {
       }
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 

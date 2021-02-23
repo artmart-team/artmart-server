@@ -65,6 +65,12 @@ module.exports = (sequelize, DataTypes) => {
           msg: 'ArtistId required'
         }
       },
+    },
+    ReviewId: {
+      type : DataTypes.INTEGER
+    },
+    RatingId: {
+      type : DataTypes.INTEGER
     }
   }, {
     sequelize,

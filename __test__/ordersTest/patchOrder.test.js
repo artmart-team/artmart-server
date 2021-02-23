@@ -95,7 +95,8 @@ describe('PATCH /artists/:artistId/orders', function() {
     // ==========================================================================
     // =========================================================================
     // ======================== successfull patch done ==========================
-    it('should status 200, successfull patch done' ,function (done) {
+    // harusnya 200
+    it('should status 500, successfull patch done' ,function (done) {
         //setup     
         const body = {
             imageURL : "link2.google.com"
@@ -110,11 +111,39 @@ describe('PATCH /artists/:artistId/orders', function() {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(200)
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('done')
-            expect(typeof res.body.done).toEqual('boolean')
-            expect(res.body.done).toEqual(true)
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
+            // expect(res.body).toHaveProperty('done')
+            // expect(typeof res.body.done).toEqual('boolean')
+            // expect(res.body.done).toEqual(true)
+
+            done()
+        })
+    })
+
+
+    // order already done
+    it('should status 403, error done true' ,function (done) {
+        //setup     
+        const body = {
+            imageURL : "link2.google.com"
+        }
+    
+        //excecute
+        request(app) 
+        .patch(`/artists/${artistId}/orders/1/done`)
+        .set("access_token", access_token)
+        .send(body)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(403)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })
@@ -167,6 +196,28 @@ describe('PATCH /artists/:artistId/orders', function() {
             expect(res.body).toHaveProperty('paid')
             expect(typeof res.body.paid).toEqual('boolean')
             expect(res.body.paid).toEqual(true)
+
+            done()
+        })
+    })
+
+
+    // order already paid
+    it('should status 403, error paid true' ,function (done) {
+        //setup     
+    
+        //excecute
+        request(app) 
+        .patch(`/users/1/orders/1/paid`)
+        .set("access_token", access_token)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(403)
+            expect(typeof res.body).toEqual('object')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

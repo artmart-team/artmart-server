@@ -47,7 +47,7 @@ describe('GET /users/:userId/ratings',function() {
     it('should status 500, error internal server' ,function (done) {
         //setup
 
-        let idUser = "adsadasdasd"
+        let idUser = "ad"
 
         //excecute
         request(app) 
@@ -95,11 +95,57 @@ describe('GET /users/:userId/ratings',function() {
     it('should status 500, error internal server' ,function (done) {
         //setup
 
-        let idArt = "adsadasdasd"
+        let idArt = "ad"
 
         //excecute
         request(app) 
         .get(`/artists/${idArt}/ratings`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(500)
+            expect (typeof res.body).toEqual('object')
+            expect (typeof res.body.messages).toEqual('string')
+
+            done()
+        })
+    })
+})
+
+
+describe('GET /artists/:artistId/ratings/average',function() {
+    let artistId = 1 
+
+    // ================ successfull average rating ===================
+    it('should status 200, success average ratings' ,function (done) {
+        //setup
+
+        //excecute
+        request(app) 
+        .get(`/artists/${artistId}/ratings/average`)
+        .end((err, res) => {
+            if(err) done(err)
+                    
+            //assert
+            expect(res.statusCode).toEqual(200)
+            expect(Array.isArray (res.body)).toEqual(false)
+            expect(res.body).toHaveProperty("ArtistId")
+            expect(res.body).toHaveProperty("averageRating")
+
+            done()
+        })
+    })
+
+    // ======================== error internal server ==========================
+    it('should status 500, error internal server' ,function (done) {
+        //setup
+
+        let idArt = "ad"
+
+        //excecute
+        request(app) 
+        .get(`/artists/${idArt}/ratings/average`)
         .end((err, res) => {
             if(err) done(err)
                     

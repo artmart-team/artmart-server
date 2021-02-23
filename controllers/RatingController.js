@@ -14,6 +14,26 @@ class RatingController {
     }
   }
 
+  static async getArtistAverage (req, res, next) {
+    try {
+      const data = await Rating.findAll({
+        where: {
+          ArtistId: +req.params.artistId
+        }
+      })
+      let total = null
+
+      data.forEach(rating => {
+        total += rating.score
+      })
+
+      let average = total / (data.length)
+      res.status(200).json({ ArtistId: +req.params.artistId, averageRating: average })
+    } catch (err) {
+      next(err)
+    }
+  }
+
   static async getRatingIdUser (req, res, next) {
     try {
       const data  = await Rating.findOne({ where : {
@@ -66,24 +86,41 @@ class RatingController {
 
   static async post (req, res, next) {
     try {
-      const obj = {
-        score: +req.body.score,
-        UserId: +req.params.userId,
-        ArtistId: +req.params.artistId
-      }
-      
-      const data = await Rating.create(obj)
-
-      const updateObj = {
-        RatingId: data.id
-      }
-
-      const updatedOrderData = await Order.update(updateObj, {
+      const findOrder = await Order.findOne({
         where: {
           id: +req.params.orderId
         }
       })
-      res.status(201).json(data)
+
+      if (!findOrder) {
+        // next({ name: 'Error not found' })
+      } else if (findOrder.RatingId) {
+          // next({ name: 'Already have rating' })
+      } else {
+        if (findOrder.UserId !== req.userId) {
+          // return res.status (401).json ({message: 'Unauthorized'})
+        }
+
+        const obj = {
+          score: +req.body.score,
+          UserId: +req.params.userId,
+          ArtistId: +req.params.artistId
+        }
+  
+        const data = await Rating.create(obj)
+  
+        const updateObj = {
+          RatingId: data.id
+        }
+  
+        const updatedOrderData = await Order.update(updateObj, {
+          where: {
+            id: +req.params.orderId
+          }
+        })
+        res.status(201).json(data)
+      }
+
     } catch (err) {
       // next(err)
     }
@@ -129,10 +166,6 @@ class RatingController {
           id: +req.params.ratingId
         }
       })
-      //belom testing
-      // if(!data) {
-      //   next({ name : 'Error not found'})
-      // }
 
       res.status(200).json({ messages: 'Rating deleted' })
     } catch (err) {

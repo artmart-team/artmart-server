@@ -65,28 +65,46 @@ class ReviewController {
 
   static async post (req, res, next) {
     try {
-      const { title, description } = req.body
-      const obj = {
-        title,
-        description,
-        UserId: +req.params.userId,
-        ArtistId: +req.params.artistId
-      }
-
-      const data = await Review.create(obj)
-
-      const updateObj = {
-        ReviewId: data.id
-      }
-
-      const updatedOrderData = await Order.update(updateObj, {
+      const findOrder = await Order.findOne({
         where: {
           id: +req.params.orderId
         }
       })
-      res.status(201).json(data)
+
+
+      if (findOrder.UserId !== req.userId) {
+        res.status (401).json ({message: 'Unauthorized'})
+      }
+
+      if (!findOrder) {
+        // next({ name: 'Error not found' })
+      } else if (findOrder.ReviewId) {
+          // next({ name: 'Already have review' })
+      } else {
+        const { title, description } = req.body
+        const obj = {
+          title,
+          description,
+          UserId: +req.params.userId,
+          ArtistId: +req.params.artistId
+        }
+  
+        const data = await Review.create(obj)
+  
+        const updateObj = {
+          ReviewId: data.id
+        }
+  
+        const updatedOrderData = await Order.update(updateObj, {
+          where: {
+            id: +req.params.orderId
+          }
+        })
+        res.status(200).json(data)
+      }
+
     } catch (err) {
-      next(err) // comment aja
+      next(err)
     }
   }
 
@@ -122,7 +140,7 @@ class ReviewController {
         // next ({name: 'Error not found'})
       }
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -133,10 +151,6 @@ class ReviewController {
           id: +req.params.reviewId
         }
       })
-      //belom testing
-      // if(!data) {
-      //   next({ name: 'Error not found' })
-      // }
 
       res.status(200).json({ messages: 'Review deleted' })
     } catch (err) {

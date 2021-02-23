@@ -1,4 +1,4 @@
-const { Picture, User, Artist } = require ('../models/index')
+const { Picture, User, Artist, Rating } = require ('../models/index')
 
 class PictureController {
   static async getAll (req, res, next) {
@@ -6,8 +6,52 @@ class PictureController {
       const data = await Picture.findAll({
         where: {
           hidden: false
+        },
+        include: {
+          model: Artist,
+          attributes: [ 'id', 'username', 'profilePicture']
         }
       })
+
+      const artistData = await Artist.findAll()
+      let dataRating = await Rating.findAll()
+
+      let artistsRating = {}
+
+      if (artistData.length > 0) {
+        artistData.forEach(e => {
+          if (!artistsRating[e.id]) {
+            artistsRating[e.id] = []
+          }
+
+          if (dataRating.length > 0) {
+            dataRating.forEach (rating => {
+              if (rating.ArtistId === e.id) {
+                return artistsRating[e.id].push(rating.score)
+              }
+            })
+          }
+        })
+      }
+
+      for (let key in artistsRating) {
+        let total = null
+        artistsRating[key].forEach(score => {
+          total += score
+        })
+        artistsRating[key] = total / (artistsRating[key].length)
+        if (isNaN(artistsRating[key])) artistsRating[key] = null
+      }
+
+      data.forEach(picture => {
+        for (let key in artistsRating) {
+          if (picture.ArtistId == key) {
+            picture.Artist.dataValues.averageRating = artistsRating[key]
+          }
+        }
+
+      })
+
       res.status(200).json(data)
     } catch (err) {
       // next(err)
@@ -39,7 +83,7 @@ class PictureController {
         },
         include: {
           model: User,
-          attributes: ['username', 'email', 'profilePicture']
+          attributes: ['id', 'username', 'profilePicture']
         }
       })
       res.status(200).json(data)
@@ -79,7 +123,7 @@ class PictureController {
         },
         include: {
           model: User,
-          attributes: ['username', 'email', 'profilePicture']
+          attributes: ['id', 'username', 'profilePicture']
         }
       })
 
@@ -150,11 +194,11 @@ class PictureController {
         let dataObj = data[1][0]
         res.status(200).json (dataObj)
       } else {
-        next ({name: 'Error not found'})
+        // next ({name: 'Error not found'})
       }
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -166,7 +210,7 @@ class PictureController {
       if (!obj.hidden) delete obj.hidden
 
       if (JSON.stringify(obj) === '{}') {
-        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
+        // return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
       }
 
       let data = await Picture.update (obj, {
@@ -181,11 +225,11 @@ class PictureController {
         let dataObj = data[1][0]
         res.status(200).json (dataObj)
       } else {
-        next ({name: 'Error not found'})
+        // next ({name: 'Error not found'})
       }
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 
@@ -197,14 +241,12 @@ class PictureController {
         }
       })
       if (!data) {
-        // belom testing
-        next({ name: "Error not found" })
+        // next({ name: "Error not found" })
       } else {
         res.status(200).json({ messages: 'Pictures deleted' })
       }
     } catch (err) {
-      // belom testing
-      next(err)
+      // next(err)
     }
   }
 }

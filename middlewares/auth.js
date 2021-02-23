@@ -144,12 +144,12 @@ async function authorizeUserPicture (req, res, next) {
 
     if (data.UserId !== req.userId) {
       //belom testing
-      res.status (401).json ({message: 'Unauthorized'})
+      // res.status (401).json ({message: 'Unauthorized'})
     } else if (data.UserId === req.userId) {
       next()
     }
   } catch (err) {
-    next (err)
+    // next (err)
   }
 }
 

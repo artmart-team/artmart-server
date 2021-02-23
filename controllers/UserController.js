@@ -56,7 +56,7 @@ class UserController {
           let checked = checkPassword (password, data.password)
           if (!checked) {
             //belom testing
-            // next ({name: 'Invalid email / password'})
+            next ({name: 'Invalid email / password'})
           } else {
             const payload = {
               id: data.id,
@@ -67,7 +67,6 @@ class UserController {
             res.status (200).json ({
               access_token, 
               id: data.id, 
-              role: data.role, 
               username:data.username, 
               profilePicture: data.profilePicture})
           }
