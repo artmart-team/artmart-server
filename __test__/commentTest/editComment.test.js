@@ -68,8 +68,14 @@ describe('PUT /users/:userId/comments/:commentId',function() {
 
 
     afterAll(done => {
-        Comment.destroy({ where : { description : "testingEditComment"}})
+        Comment.destroy({ where : { id : commentId}})
         .then(data => {
+            return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(dat => {
+            return User.destroy({ where : { id : userId}})
+        })
+        .then(datas => {
             done()
         })
     })

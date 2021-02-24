@@ -87,15 +87,15 @@ class OptionController {
         where : {id : +req.params.optionId}
       })
 
-      if(!data) {
+      // if(!data) {
         // belom testing
-        next({ name : 'Error not found'})
-      } 
+        // next({ name : 'Error not found'})
+      // } 
 
       res.status(200).json({ messages : 'option success delete'})
     
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 }

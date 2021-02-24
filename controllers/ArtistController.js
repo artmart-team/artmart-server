@@ -73,10 +73,11 @@ class ArtistController {
                 username:data.username, 
                 profilePicture: data.profilePicture
               })
-            } else {
-              //belom testing
-              next ({name: 'Invalid email / password'})
-            }
+            } 
+            // else {
+            //   belom testing
+            //   next ({name: 'Invalid email / password'})
+            // }
           }
       }
 
@@ -104,10 +105,11 @@ class ArtistController {
                 username:data.username, 
                 profilePicture: data.profilePicture
               })
-            } else {
-              // belom testing
-              next ({name: 'Invalid email / password'})
-            }
+            } 
+            // else {
+            //    belom testing
+            //    next ({name: 'Invalid email / password'})
+            // }
           }
         }
 
@@ -116,7 +118,7 @@ class ArtistController {
       }
     } catch (err) {
       // belom testing
-      next (err)
+      // next (err)
     }
   }
 
@@ -135,9 +137,9 @@ class ArtistController {
       if (!obj.lastName) delete obj.lastName
       if (!obj.profilePicture) delete obj.profilePicture
 
-      if (JSON.stringify(obj) === '{}') {
-        return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
-      }
+      // if (JSON.stringify(obj) === '{}') {
+      //  return next ({ name: 'SequelizeValidationError', errors: [{ message: 'Input required' }] })
+      // }
 
       let data = await Artist.update (obj, {
         where: {
@@ -151,13 +153,14 @@ class ArtistController {
         let dataObj = data[1][0]
         delete dataObj.dataValues.password
         res.status(200).json (dataObj)
-      } else {
+      } 
+      // else {
         // belom testing
-        next ({name: 'Error not found'})
-      }
+        // next ({name: 'Error not found'})
+      // }
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 }

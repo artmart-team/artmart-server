@@ -68,6 +68,16 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
         })
     })
 
+    afterAll(done => {
+        Artist.destroy({ where : {id : artistId}})
+        .then(data => {
+            return User.destroy({ where : { id : userId}})
+        })
+        .then(res => {
+            done()
+        })
+    })
+
     // ======================== error reviews id not found ==========================
     it('should status 500, error reviews id not found' ,function (done) {
         //setup
@@ -97,7 +107,7 @@ describe('DELETE /users/:userId/reviews/:reviewId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/reviews/${revDel}`)
+        .delete(`/users/${userId}/artists/${artistId}/reviews/${reviewId}`)
         .end((err, res) => {
             if(err) done(err)
                     

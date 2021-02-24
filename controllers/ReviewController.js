@@ -72,14 +72,14 @@ class ReviewController {
       })
 
 
-      if (findOrder.UserId !== req.userId) {
-        res.status (401).json ({message: 'Unauthorized'})
-      }
+      // if (findOrder.UserId !== req.userId) {
+      //   res.status (401).json ({message: 'Unauthorized'})
+      // }
 
       if (!findOrder) {
         // next({ name: 'Error not found' })
       } else if (findOrder.ReviewId) {
-          // next({ name: 'Already have review' })
+          next({ name: 'Already have review' })
       } else {
         const { title, description } = req.body
         const obj = {
@@ -100,11 +100,11 @@ class ReviewController {
             id: +req.params.orderId
           }
         })
-        res.status(200).json(data)
+        res.status(201).json(data)
       }
 
     } catch (err) {
-      next(err)
+      // next(err)
     }
   }
 

@@ -22,7 +22,8 @@ module.exports = {
     password,
     database,
     host,
-    dialect
+    dialect,
+    logging : false
   },
   "production": {
     use_env_variable: "DATABASE_URL"

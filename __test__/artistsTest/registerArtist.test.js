@@ -28,8 +28,8 @@ const { Artist } = require('../../models')
 describe('POST /artists/register',function() {
 
     afterAll(done => {
-        ArtistController.destroy({
-            where : { username : "testArtist"}
+        Artist.destroy({
+            where : { username : "testArtistRegister"}
         })
         .then(() => {
             done()
@@ -40,7 +40,7 @@ describe('POST /artists/register',function() {
     it('should status 201, successfull created user' ,function (done) {
         //setup
         const body = {
-            username : 'testArtist',
+            username : 'testArtistRegister',
             firstName : 'test',
             lastName : 'artist',
             email : 'testingforregisterartist@mail.com',

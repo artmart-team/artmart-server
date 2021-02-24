@@ -9,11 +9,11 @@ const request = require('supertest')
 
 const { generateToken } = require('../../helpers/jwt')
 
-const { User, Artist } = require('../../models')
+const { User, Artist, Comment } = require('../../models')
 
 const app = require('../../app')  
 const { beforeAll } = require('@jest/globals')
-const ArtistController = require('../../controllers/ArtistController')
+
 
 // ===================================================================================
 // ==========================  POST /users/:userId/comments
@@ -37,9 +37,9 @@ describe('POST /users/:userId/comments',function() {
             userId = data.id
 
             const payload = {
-                id : res.id,
-                username : res.username,
-                profilePicture : res.profilePicture
+                id : data.id,
+                username : data.username,
+                profilePicture : data.profilePicture
             }
 
             access_token = generateToken(payload)
@@ -58,6 +58,19 @@ describe('POST /users/:userId/comments',function() {
         })
         .then(datas => {
             artistId = datas.id
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Comment.destroy({ where : { description : "sepertinya keren nih"}})
+        .then(() => {
+            return Artist.destroy({ where : { id : artistId}})
+        })
+        .then(() => {
+            return User.destroy({ where : {id : userId}})
+        })
+        .then(() => {
             done()
         })
     })
@@ -137,6 +150,7 @@ describe('POST /users/:userId/comments',function() {
     })
 
 
+    // error response
     // ======================== error internal server ==========================
     // it('should status 500, error internal server' ,function (done) {
     //     //setup

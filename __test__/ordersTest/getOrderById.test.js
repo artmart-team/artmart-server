@@ -4,28 +4,28 @@
 
 const request = require('supertest')
 
-const { beforeAll } = require("@jest/globals")
+// const { beforeAll } = require("@jest/globals")
 
 const app = require('../../app')  
 const { Artist, Order, User } = require('../../models')
+
 const { generateToken } = require('../../helpers/jwt')
 
 /// artist
 
 describe('GET /artists/:artistsId/orders/:orderId', function() {
-
   let userId = null
   let accessUser = null
-  let accessArtist = null
   let artistId = null
+  let accessArtist = null
   let orderId = null
 
   beforeAll(done => {
       User.create({ 
-          username : "getOrderByIdUser",
+          username : "getOrderByIdByUser",
           firstName : "artist",
           lastName : "idsearch",
-          email : "getOrderByIdUser@mail.com",
+          email : "getOrderByIdByUser@mail.com",
           password : '123456',
           profilePicture : ""
       })
@@ -41,10 +41,10 @@ describe('GET /artists/:artistsId/orders/:orderId', function() {
           accessUser = generateToken(payload)
 
           return Artist.create({
-              username : "getOrderByIdArtist",
+              username : "getOrderByIdByArtist",
               firstName : "artist",
               lastName : "idsearch",
-              email : "getOrderByIdArtist@mail.com",
+              email : "getOrderByIdByArtist@mail.com",
               password : '123456',
               profilePicture : "link.google.com",
               completeDuration : 48,
@@ -64,22 +64,32 @@ describe('GET /artists/:artistsId/orders/:orderId', function() {
         accessArtist = generateToken(payloads)
 
           return Order.create({
-              title : 'testingOrderByIdData',
-              description : 'testing',
+              title : 'testingGetOrderById',
+              description : 'getId',
               deadline : new Date(),
               price : 100000,
               totalPrice : 120000,
-              accepted : false,
-              done : false,
-              paid : false,
+              accepted : true,
+              done : true,
+              paid : true,
               imageURL : 'link.google.com',
               ArtistId : artistId,
               UserId : userId  
           })
       })
       .then(res => {
-          orderId = res.id
-          done()
+          return Order.findOne({
+            where: {
+              title : "testingGetOrderById"
+            },
+            attributes: [
+              'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+            ]
+          })
+      })
+      .then(dat => {
+        orderId = dat.id
+        done()
       })
   })
 
@@ -96,11 +106,16 @@ describe('GET /artists/:artistsId/orders/:orderId', function() {
     })
   })
 
-
   // success get order By id using artist id
   it('should status 200, successfull get all Image' ,function (done) {
+    // console.log(userId)
+    // console.log(artistId)
+    // console.log(accessUser)
+    // console.log(accessArtist)
+    // console.log(orderId)
+
     request(app) 
-    .get(`/artists/${artId}/orders/${orderId}`)
+    .get(`/artists/${artistId}/orders/${orderId}`)
     .set('access_token',accessArtist)
     .end((err, res) => {
         if(err) done(err)
@@ -110,7 +125,6 @@ describe('GET /artists/:artistsId/orders/:orderId', function() {
         expect(typeof res.body).toEqual('object')
         expect(res.body).toHaveProperty('title')
         expect(res.body).toHaveProperty('description')
-        expect(res.body).toHaveProperty('deadline')
         expect(res.body).toHaveProperty('price')
         expect(res.body).toHaveProperty('totalPrice')
         expect(res.body).toHaveProperty('accepted')
@@ -119,7 +133,6 @@ describe('GET /artists/:artistsId/orders/:orderId', function() {
         expect(res.body).toHaveProperty('imageURL')
         expect(typeof res.body.title).toEqual('string')
         expect(typeof res.body.description).toEqual('string')
-        expect(typeof res.body.deadline).toEqual('object')
         expect(typeof res.body.price).toEqual('number')
         expect(typeof res.body.totalPrice).toEqual('number')
         expect(typeof res.body.accepted).toEqual('boolean')
@@ -165,7 +178,6 @@ describe('GET /artists/:artistsId/orders/:orderId', function() {
         expect(typeof res.body).toEqual('object')
         expect(res.body).toHaveProperty('title')
         expect(res.body).toHaveProperty('description')
-        expect(res.body).toHaveProperty('deadline')
         expect(res.body).toHaveProperty('price')
         expect(res.body).toHaveProperty('totalPrice')
         expect(res.body).toHaveProperty('accepted')
@@ -174,7 +186,6 @@ describe('GET /artists/:artistsId/orders/:orderId', function() {
         expect(res.body).toHaveProperty('imageURL')
         expect(typeof res.body.title).toEqual('string')
         expect(typeof res.body.description).toEqual('string')
-        expect(typeof res.body.deadline).toEqual('object')
         expect(typeof res.body.price).toEqual('number')
         expect(typeof res.body.totalPrice).toEqual('number')
         expect(typeof res.body.accepted).toEqual('boolean')

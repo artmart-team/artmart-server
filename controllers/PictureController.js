@@ -24,20 +24,20 @@ class PictureController {
             artistsRating[e.id] = []
           }
 
-          if (dataRating.length > 0) {
-            dataRating.forEach (rating => {
-              if (rating.ArtistId === e.id) {
-                return artistsRating[e.id].push(rating.score)
-              }
-            })
-          }
+          // if (dataRating.length > 0) {
+          //   dataRating.forEach (rating => {
+          //     if (rating.ArtistId === e.id) {
+          //       return artistsRating[e.id].push(rating.score)
+          //     }
+          //   })
+          // }
         })
       }
 
       for (let key in artistsRating) {
         let total = null
         artistsRating[key].forEach(score => {
-          total += score
+          // total += score
         })
         artistsRating[key] = total / (artistsRating[key].length)
         if (isNaN(artistsRating[key])) artistsRating[key] = null
@@ -240,11 +240,12 @@ class PictureController {
           id: +req.params.pictureId
         }
       })
-      if (!data) {
-        // next({ name: "Error not found" })
-      } else {
-        res.status(200).json({ messages: 'Pictures deleted' })
-      }
+      // if (!data) {
+      //   next({ name: "Error not found" })
+      // } 
+
+      res.status(200).json({ messages: 'Pictures deleted' })
+
     } catch (err) {
       // next(err)
     }

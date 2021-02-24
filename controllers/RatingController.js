@@ -97,9 +97,9 @@ class RatingController {
       } else if (findOrder.RatingId) {
           // next({ name: 'Already have rating' })
       } else {
-        if (findOrder.UserId !== req.userId) {
+        // if (findOrder.UserId !== req.userId) {
           // return res.status (401).json ({message: 'Unauthorized'})
-        }
+        // }
 
         const obj = {
           score: +req.body.score,

@@ -145,71 +145,71 @@ class OrderController {
 
   static async editOrder (req, res, next) {
     // try {
-      // const obj = {
-      //   title: req.body.title,
-      //   description: req.body.description
-      // }
+    //   const obj = {
+    //     title: req.body.title,
+    //     description: req.body.description
+    //   }
 
-      // const data = await Order.update (obj, {
-      //   where: {
-      //     id: +req.params.orderId
-      //   },
-      //   returning: true
-      // })
+    //   const data = await Order.update (obj, {
+    //     where: {
+    //       id: +req.params.orderId
+    //     },
+    //     returning: true
+    //   })
 
-      // let isSuccess = data[0]
+    //   let isSuccess = data[0]
       
-      // if (isSuccess === 1) {
-      //   let dataObj = data[1][0]
-      //   res.status(200).json (dataObj)
-      // } else {
-      //   next ({name: 'Error not found'})
-      // }
+    //   if (isSuccess === 1) {
+    //     let dataObj = data[1][0]
+    //     res.status(200).json (dataObj)
+    //   } else {
+    //     next ({name: 'Error not found'})
+    //   }
     // } catch (err) {
-      // next(err)
+    //   next(err)
     // }
   }
 
   static async acceptOrder (req, res, next) {
-    try {
-      const artistData = await Artist.findOne({
-        where: {
-          id: +req.artistId
-        }
-      })
-      const orderData = await Order.findOne({
-        where: {
-          id: +req.params.orderId
-        }
-      })
+    // try {
+    //   const artistData = await Artist.findOne({
+    //     where: {
+    //       id: +req.artistId
+    //     }
+    //   })
+    //   const orderData = await Order.findOne({
+    //     where: {
+    //       id: +req.params.orderId
+    //     }
+    //   })
 
-      if (orderData.deadline) {
-        // belom testing
-        // return next ({ name: 'Order already accepted' })
-      } else {
-          const deadline = new Date()
-          deadline.setHours(deadline.getHours() + artistData.completeDuration)
+    //   if (orderData.deadline) {
+    //     // belom testing
+    //     return next ({ name: 'Order already accepted' })
+    //   } else {
+    //       const deadline = new Date()
+    //       deadline.setHours(deadline.getHours() + artistData.completeDuration)
     
-          const obj = { accepted: true, deadline }
-          const data = await Order.update (obj, {
-            where: {
-              id: +req.params.orderId
-            },
-            returning: true
-          })
-          let isSuccess = data[0]
+    //       const obj = { accepted: true, deadline }
+    //       const data = await Order.update (obj, {
+    //         where: {
+    //           id: +req.params.orderId
+    //         },
+    //         returning: true
+    //       })
+    //       let isSuccess = data[0]
           
-          if (isSuccess === 1) {
-            let dataObj = data[1][0]
-            res.status(200).json (dataObj)
-          } else {
-            // next ({name: 'Error not found'})
-          }
-        }
+    //       if (isSuccess === 1) {
+    //         let dataObj = data[1][0]
+    //         res.status(200).json (dataObj)
+    //       } else {
+    //         next ({name: 'Error not found'})
+    //       }
+    //     }
 
-    } catch (err) {
-      // next(err)
-    }
+    // } catch (err) {
+    //   next(err)
+    // }
   }
 
 
@@ -229,15 +229,15 @@ class OrderController {
       const obj = { done: true, imageURL: req.body.imageURL }
 
       // belom testing
-      // let orderData = await Order.findOne({
-      //   where: {
-      //     id: +req.params.orderId
-      //   },
-      //   include: {
-      //     model: User,
-      //     attributes: [ 'id', 'username', 'profilePicture']
-      //   }
-      // })
+      let orderData = await Order.findOne({
+        where: {
+          id: +req.params.orderId
+        },
+        include: {
+          model: User,
+          attributes: [ 'id', 'username', 'profilePicture']
+        }
+      })
 
       // if (!orderData) {
       //   return next({ name: 'Error not found'})
@@ -271,12 +271,13 @@ class OrderController {
             UserId: +orderData.UserId
           }
 
-          // const dataPicture = await Picture.create(objPicture)
+          const dataPicture = await Picture.create(objPicture)
 
-          res.status(200).json (dataObj)
-        } else {
-          // next ({name: 'Error not found'})
-        }    
+          // res.status(200).json (dataObj)
+        } 
+        //else {
+        //   next ({name: 'Error not found'})
+        // }    
       }
     } catch (err) {
       next (err)
@@ -284,35 +285,35 @@ class OrderController {
   }
 
   static async paidOrder (req, res, next) {
-    try {
-      const checkPaid = await Order.findOne({
-        where : {
-          id: +req.params.orderId
-        }
-      })
-      if(checkPaid.paid) {
-        return next({ name : 'Order already paid'})
-      }
+    // try {
+  //     const checkPaid = await Order.findOne({
+  //       where : {
+  //         id: +req.params.orderId
+  //       }
+  //     })
+  //     if(checkPaid.paid) {
+  //       return next({ name : 'Order already paid'})
+  //     }
 
-      const obj = { paid: true }
-      const data = await Order.update (obj, {
-        where: {
-          id: +req.params.orderId
-        },
-        returning: true
-      })
-      let isSuccess = data[0]
+  //     const obj = { paid: true }
+  //     const data = await Order.update (obj, {
+  //       where: {
+  //         id: +req.params.orderId
+  //       },
+  //       returning: true
+  //     })
+  //     let isSuccess = data[0]
       
-      if (isSuccess === 1) {
-        let dataObj = data[1][0]
-        res.status(200).json (dataObj)
-      } else {
-        // belom testing
-        // next ({name: 'Error not found'})
-      }
-    } catch (err) {
-      // nsext(err)
-    }
+  //     if (isSuccess === 1) {
+  //       let dataObj = data[1][0]
+  //       res.status(200).json (dataObj)
+  //     } else {
+  //       // belom testing
+  //       next ({name: 'Error not found'})
+  //     }
+    // } catch (err) {
+  //     // nsext(err)
+    // }
   }
 
 

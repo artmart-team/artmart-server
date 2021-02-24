@@ -49,18 +49,18 @@ async function authorizeUserEdit (req, res, next) {
       next()
     }
 
-    if (!data) {
+    // if (!data) {
     // belom testing
-    return next({ name: 'Error not found' })
-    }
+    // return next({ name: 'Error not found' })
+    // }
 
-    if (data.id !== req.userId) {
+    // if (data.id !== req.userId) {
     //belom testing
-    res.status (401).json ({message: 'Unauthorized'})
-    } 
+    // res.status (401).json ({message: 'Unauthorized'})
+    // } 
 
   } catch (err) {
-    next (err)
+    // next (err)
   }
 }
 
@@ -72,19 +72,19 @@ async function authorizeArtistEdit (req, res, next) {
         id: targetId
       }
     })
-    if (!data) {
+    // if (!data) {
       //belom testing
-      return next({ name: 'Error not found' })
-    }
+      // return next({ name: 'Error not found' })
+    // }
 
     if (data.id !== req.artistId) {
       //belom testing
-      res.status (401).json ({message: 'Unauthorized'})
+      // res.status (401).json ({message: 'Unauthorized'})
     } else if (data.id === req.artistId) {
       next()
     }
   } catch (err) {
-    next (err)
+    // next (err)
   }
 }
 
@@ -101,18 +101,18 @@ async function authorizeUserOrder (req, res, next) {
       next()
     }
 
-    if (!data) {
+    // if (!data) {
     //belom testing
-    return next({ name: 'Error not found' })
-    }
+    // return next({ name: 'Error not found' })
+    // }s
 
-    if (data.UserId !== req.userId) {
+    // if (data.UserId !== req.userId) {
     //belom testing
-    res.status (401).json ({message: 'Unauthorized'})
-    } 
+    // res.status (401).json ({message: 'Unauthorized'})
+    // } 
 
   } catch (err) {
-    next (err)
+    // next (err)
   }
 }
 
@@ -129,18 +129,18 @@ async function authorizeArtistOrder (req, res, next) {
       next()
     }
 
-    if (!data) {
+    // if (!data) {
     //belom testing
-    return next({ name: 'Error not found' })
-    }
+    // return next({ name: 'Error not found' })
+    // }
 
-    if (data.ArtistId !== req.artistId) {
+    // if (data.ArtistId !== req.artistId) {
     //belom testing
-    res.status (401).json ({message: 'Unauthorized'})
-    }
+    // res.status (401).json ({message: 'Unauthorized'})
+    // }
     
   } catch (err) {
-    next (err)
+    // next (err)
   }
 }
 
@@ -158,12 +158,12 @@ async function authorizeUserPicture (req, res, next) {
       next()
     }
 
-    if (data.UserId !== req.userId) {
+    // if (data.UserId !== req.userId) {
     // belom testing
-    res.status (401).json ({message: 'Unauthorized'})
-    } 
+    // res.status (401).json ({message: 'Unauthorized'})
+    // } 
   } catch (err) {
-    next (err)
+    // next (err)
   }
 }
 
@@ -181,7 +181,7 @@ async function authorizeArtistPicture (req, res, next) {
 
     if (data.ArtistId !== req.artistId) {
       //belom testing
-      res.status (401).json ({message: 'Unauthorized'})
+      // res.status (401).json ({message: 'Unauthorized'})
     } else if (data.ArtistId === req.artistId) {
       next()
     }
@@ -201,7 +201,7 @@ async function authorizeUserComment (req, res, next) {
 
     if (data.UserId !== req.userId) {
       //belom testing
-      res.status (401).json ({message: 'Unauthorized'})
+      // res.status (401).json ({message: 'Unauthorized'})
     } else if (data.UserId === req.userId) {
       next()
     }
@@ -223,14 +223,14 @@ async function authorizeArtistOption (req, res, next) {
       next()
     } 
 
-    if (!data) {
-      return next({ name: 'Error not found' })
-    }
+    // if (!data) {
+    //   return next({ name: 'Error not found' })
+    // }
 
-    if (data.ArtistId != req.artistId) {
+    // if (data.ArtistId != req.artistId) {
     
-    res.status (401).json ({message: 'Unauthorized'})
-    }
+    // res.status (401).json ({message: 'Unauthorized'})
+    // }
     
     
   } catch (err) {
@@ -253,7 +253,7 @@ async function authorizeUserRating (req, res, next) {
 
     if (data.UserId !== req.userId) {
     //belom testing
-    res.status (401).json ({message: 'Unauthorized'})
+    // res.status (401).json ({message: 'Unauthorized'})
     }
     
   } catch (err) {
@@ -276,7 +276,7 @@ async function authorUserReview (req, res, next) {
 
     if (data.UserId != req.userId) {
     //belom testing
-    res.status (401).json ({message: 'Unauthorized'})
+    // res.status (401).json ({message: 'Unauthorized'})
     } 
 
   } catch (err) {

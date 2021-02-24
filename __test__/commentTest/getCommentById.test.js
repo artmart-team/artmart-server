@@ -57,8 +57,14 @@ describe('GET /users/:userId/comments/:commentId',function() {
 
 
     afterAll(done => {
-        Comment.destroy({ where : { description : "testingGetCommentId"}})
+        Comment.destroy({ where : { id : commentId}})
         .then(data => {
+            return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(dat => {
+            return User.destroy({ where : { id : userId}})
+        })
+        .then(datas => {
             done()
         })
     })
@@ -125,27 +131,11 @@ describe('GET /users/:userId/comments/:commentId',function() {
             done()
         })
     })
-})
-
 
 // ===================================================================================
-// ==========================  GET /users/:artistId/comments/:commentId
+// ==========================  GET /artists/:artistId/comments/:commentId
 // ==================================================================================
 
-describe('GET /artists/:artistId/comments/:commentId',function() {
-    let artistId = 1
-    let commentId = 3
-
-    // beforeAll(done => {
-    //     Artist.findOne({where : {email : "user@mail.com"}})
-    //     .then(data => {
-    //         artistId = data.id
-    //         done()
-    //     })
-    //     .catch(err => {
-    //         console.log(err)
-    //     })
-    // })
 
     // ======================== successfull get comments ==========================
     it('should status 200, successfull get comments id' ,function (done) {

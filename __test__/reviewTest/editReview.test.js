@@ -66,6 +66,19 @@ describe('PUT /users/:userId/artist/:artistId/reviews/:reviewId',function() {
         })
     })
 
+    afterAll(done => {
+        Review.destroy({ where : {id : reviewId}})
+        .then(dat => {
+            return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(data => {
+            return User.destroy({ where : { id : userId}})
+        })
+        .then(res => {
+            done()
+        })
+    })
+
     // ======================== successfull edit reviews ==========================
     it('should status 200, successfull edit reviews' ,function (done) {
         //setup

@@ -14,6 +14,7 @@ const app = require('../../app')
 describe('GET /users/:userId/comments',function() {
     let artistId = null
     let userId = null
+    let commentId = null
 
     beforeAll(done => {
         User.create({ 
@@ -48,14 +49,21 @@ describe('GET /users/:userId/comments',function() {
             })
         })
         .then(res => {
+            commentId = res.id
             done()
         })
     })
 
 
     afterAll(done => {
-        Comment.destroy({ where : { description : "testingGetAllComment"}})
+        Comment.destroy({ where : { id : commentId}})
         .then(data => {
+            return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(dat => {
+            return User.destroy({ where : { id : userId}})
+        })
+        .then(datas => {
             done()
         })
     })

@@ -12,9 +12,10 @@ const { beforeAll } = require("@jest/globals")
 
 const { generateToken } = require('../../helpers/jwt')
 
-const { User } = require('../../models')
+const { User, Artist, Rating, Order } = require('../../models')
 
 const app = require('../../app')  
+
 
 // ===================================================================================
 // ==========================  POST /users/:userId/artists/:artistId/orders:orderId/ratings
@@ -61,6 +62,9 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
         .then(datas => {
             artistId = datas.id
 
+            console.log(artistId)
+            console.log(userId)
+
             return Order.create({
                 title : 'testingAddRatingData',
                 description : 'testingAddRatingData',
@@ -76,7 +80,32 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/ratings',functio
             })
         })
         .then(res => {
-            orderId = res.id
+            return Order.findOne({
+                where: {
+                  title : "testingAddRatingData"
+                },
+                attributes: [
+                  'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+            ]})
+        })
+        .then(dat => {
+            orderId = dat.id
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Rating.destroy({ where : { score : 5 }})
+        .then(response => {
+            return Order.destroy({ where : { title : "testingAddRatingData" }})
+        })
+        .then(data => {
+            return Artist.destroy({ where : { id : artistId }})
+        })
+        .then(dat => {
+            return User.destroy({ where : {id : userId }})
+        })
+        .then(res => {
             done()
         })
     })

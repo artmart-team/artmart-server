@@ -75,8 +75,18 @@ describe('GET /users/:userId/orders', function () {
           })
       })
       .then(res => {
-          orderId = res.id
-          done()
+          return Order.findOne({
+            where: {
+              title : "testingOrderGetAll"
+            },
+            attributes: [
+              'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+            ]
+          })
+      })
+      .then(dat => {
+        orderId = dat.id
+        done()
       })
   })
 
@@ -92,7 +102,6 @@ describe('GET /users/:userId/orders', function () {
         done()
     })
   })
-
 
   // testing if success
   it ('should status 200, successfull get all orders by userId', function (done) {
@@ -118,7 +127,6 @@ describe('GET /users/:userId/orders', function () {
         expect(res.body[0]).toHaveProperty('ArtistId')
         expect(typeof res.body[0].title).toEqual('string')
         expect(typeof res.body[0].description).toEqual('string')
-        expect(typeof res.body[0].refPictureId).toEqual('number')
         expect(typeof res.body[0].price).toEqual('number')
         expect(typeof res.body[0].totalPrice).toEqual('number')
         expect(typeof res.body[0].accepted).toEqual('boolean')

@@ -6,6 +6,7 @@ const request = require('supertest')
 const { User, Rating, Artist } = require('../../models')
 const { beforeAll } = require("@jest/globals")
 const app = require('../../app')  
+const { generateToken } = require('../../helpers/jwt')
 
 // ===================================================================================
 // ==========================  GET /users/:userId/ratings/:ratingId
@@ -53,13 +54,26 @@ describe('GET /users/:userId/ratings/:ratingId',function() {
             artistId = datas.id
 
             return Rating.create({
-                score : 5,
+                score : 4,
                 ArtistId : artistId,
                 UserId : userId
             })
         })
         .then(res => {
             ratingId = res.id
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Rating.destroy({ where : { id : ratingId}})
+        .then(data => {
+            return Artist.destroy({ where : { id : artistId}})
+        })
+        .then(dat => {
+            return User.destroy({ where : {id : userId}})
+        })
+        .then(res => {
             done()
         })
     })

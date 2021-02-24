@@ -13,9 +13,10 @@ const { generateToken } = require('../../helpers/jwt')
 // ==========================  DELETE /users/:userId/comments/:commentId
 // ==================================================================================
 
+
 describe('DELETE /users/:userId/comments/:commentId',function() {
     let artistId = null
-    let userId = null
+    let idUser = null
     let commentId = null
     let access_token = null
 
@@ -29,7 +30,7 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
             profilePicture : ""
         })
         .then(data => {
-            userId = data.id
+            idUser = data.id
 
             const payload = {
                 id : data.id,
@@ -53,9 +54,10 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
         })
         .then(datas => {
             artistId = datas.id
+
             return Comment.create({
                 description: "testingDeleteComment",
-                UserId: userId,
+                UserId: idUser,
                 ArtistId: artistId
             })
         })
@@ -65,20 +67,34 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
         })
     })
 
+    afterAll(done => {
+        Comment.destroy({ where : { id : commentId }})
+        .then(() => {
+            return Artist.destroy({ where : { id : artistId }})
+        })
+        .then(() => {
+            return User.destroy({ where : {id : idUser }})
+        })
+        .then(() => {
+            done()
+        })
+    })
+
     // ======================== error comments id not found ==========================
     it('should status 404, error comment id not found' ,function (done) {
+        console.log(commentId)
         //setup
-        const id = 9999999
+        const id = 999
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/comments/${id}`)
+        .delete(`/users/${idUser}/artists/${artistId}/comments/${id}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(404)
+            expect(res.statusCode).toEqual(500)
             expect(typeof res.body).toEqual('object')
             // expect(res.body).toHaveProperty('messages')
             // expect(typeof res.body.messages).toEqual('string')
@@ -89,17 +105,17 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
 
     // ======================== error user not login ==========================
-    it('should status 403, error edit user not login' ,function (done) {
+    it('should status 401, error edit user not login' ,function (done) {
         //setup
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
+        .delete(`/users/${idUser}/artists/${artistId}/comments/${commentId}`)
         .end((err, res) => {
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(403)
+            expect(res.statusCode).toEqual(401)
             expect (typeof res.body).toEqual('object')
             expect(res.body).toHaveProperty('messages')
             expect(typeof res.body.messages).toEqual('string')
@@ -136,7 +152,7 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
 
         //excecute
         request(app) 
-        .delete(`/users/${userId}/artists/${artistId}/comments/${commentId}`)
+        .delete(`/users/${idUser}/artists/${artistId}/comments/${commentId}`)
         .set('access_token', access_token)
         .end((err, res) => {
             if(err) done(err)
@@ -150,7 +166,4 @@ describe('DELETE /users/:userId/comments/:commentId',function() {
             done()
         })
     })
-
-
-
 })

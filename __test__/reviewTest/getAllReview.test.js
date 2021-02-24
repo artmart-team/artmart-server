@@ -15,32 +15,25 @@ const app = require('../../app')
 describe('GET /users/:userId/reviews',function() {
     let userId = null
     let artistId = null
+    let reviewId = null
 
     beforeAll(done => {
         User.create({ 
-            username : "addReviewUserTesting",
-            firstName : "artist",
+            username : "getReviewAllByTest",
+            firstName : "users",
             lastName : "idsearch",
-            email : "addReviewUserTesting@mail.com",
+            email : "getReviewAllByTest@mail.com",
             password : '123456',
             profilePicture : ""
         })
         .then(data => {
             userId = data.id
 
-            // const payload = {
-            //     id : res.id,
-            //     username : res.username,
-            //     profilePicture : res.profilePicture
-            // }
-
-            // access_token = generateToken(payload)
-
             return Artist.create({
-                username : "addReviewArtistTest",
+                username : "getReviewAllByArtist",
                 firstName : "artist",
                 lastName : "idsearch",
-                email : "addReviewArtistTest@mail.com",
+                email : "getReviewAllByArtist@mail.com",
                 password : '123456',
                 profilePicture : "link.google.com",
                 completeDuration : 48,
@@ -52,11 +45,25 @@ describe('GET /users/:userId/reviews',function() {
             artistId = datas.id
 
             return Review.create({
-                title : "GetReviewAlldata",
-                description : "GetReviewAlldata",
+                title : "getReviewByALlTest",
+                description : "getReviewByALlTest",
                 UserId : userId,
                 ArtistId : artistId
             })
+        })
+        .then(res => {
+            reviewId = res.id
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Review.destroy({ where : {id : reviewId}})
+        .then(dat => {
+            return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(data => {
+            return User.destroy({ where : { id : userId}})
         })
         .then(res => {
             done()
@@ -108,10 +115,7 @@ describe('GET /users/:userId/reviews',function() {
             done()
         })
     })
-})
 
-describe('GET /users/:userId/reviews',function() {
-    let artistId = 1
 
     // ======================== successfull get all reviews ==========================
     it('should status 200, successfull get all reviews' ,function (done) {
@@ -158,4 +162,5 @@ describe('GET /users/:userId/reviews',function() {
         })
     })
 })
+
 

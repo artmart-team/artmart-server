@@ -68,6 +68,28 @@ describe('POST /artists/:artistId/orders', function() {
             done()
         })
     })
+
+    // beforeAll(done => {
+    //     User.findOne({ where : {username : "usernameTestingForUser"}})
+    //     .then(data => {
+    //         userId = data.id
+
+    //         let payload = {
+    //             id : data.id,
+    //             username : data.username,
+    //             profilePicture : data.profilePicture
+    //         }
+    //         access_token = generateToken(payload)
+    //         done()
+    //     })
+    // })
+
+    // afterAll(done => {
+    //     Order.dstroy({ where : { title : "testing orders data"}})
+    //     .then(() => {
+    //         done()
+    //     })
+    // })
  
     // ======================== successfull add orders ==========================
     it('should status 201, successfull create orders' ,function (done) {

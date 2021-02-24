@@ -62,11 +62,23 @@ describe('DELETE /users/:userId/artists/:artistId/ratings/:ratingId',function() 
             })
         })
         .then(res => {
-            scoreId = res.id
+            ratingId = res.id
             done()
         })
     })
 
+    afterAll(done => {
+        Rating.destroy({ where : { id : ratingId}})
+        .then(data => {
+            return Artist.destroy({ where : { id : artistId}})
+        })
+        .then(dat => {
+            return User.destroy({ where : {id : userId}})
+        })
+        .then(res => {
+            done()
+        })
+    })
 
     // ======================== error ratings id not found ==========================
     it('should status 404, error ratings id not found' ,function (done) {

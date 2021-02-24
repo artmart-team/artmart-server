@@ -7,7 +7,7 @@ const request = require('supertest')
 
 const { beforeAll } = require("@jest/globals")
 
-const { User } = require('../../models')
+const { User, Artist, Rating} = require('../../models')
 
 const app = require('../../app')  
 const { generateToken } = require('../../helpers/jwt')
@@ -70,6 +70,19 @@ describe('GET /users/:userId/ratings',function() {
         })
     })
 
+    afterAll(done => {
+        Rating.destroy({ where : { id : ratingId}})
+        .then(data => {
+            return Artist.destroy({ where : { id : artistId}})
+        })
+        .then(dat => {
+            return User.destroy({ where : {id : userId}})
+        })
+        .then(res => {
+            done()
+        })
+    })
+
     // ======================== successfull get all ratings ==========================
     it('should status 200, successfull get all ratings' ,function (done) {
         //setup
@@ -113,11 +126,7 @@ describe('GET /users/:userId/ratings',function() {
             done()
         })
     })
-})
 
-
-describe('GET /users/:userId/ratings',function() {
-    let artistId = 1 
 
     // ======================== successfull get all ratings ==========================
     it('should status 200, successfull get all ratings' ,function (done) {

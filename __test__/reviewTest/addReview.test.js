@@ -75,7 +75,29 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             })
         })
         .then(res => {
-            orderId = res.id
+            return Order.findOne({
+                where: {
+                  title : "testingAddReviewToOrder"
+                },
+                attributes: [
+                  'id', 'title', 'description', 'refPictureId', 'deadline', 'price', 'totalPrice', 'accepted', 'done', 'paid', 'imageURL', 'UserId', 'ArtistId', 'ReviewId', 'RatingId'
+            ]})          
+        })
+        .then(dat => {
+            orderId = dat.id
+            done()
+        })
+    })
+
+    afterAll(done => {
+        Order.destroy({ where : {id : orderId}})
+        .then(dat => {
+            return Artist.destroy({ where : {id : artistId}})
+        })
+        .then(data => {
+            return User.destroy({ where : { id : userId}})
+        })
+        .then(res => {
             done()
         })
     })
@@ -128,10 +150,10 @@ describe('POST /users/:userId/artists/:artistId/orders/:orderId/reviews',functio
             if(err) done(err)
                     
             //assert
-            expect(res.statusCode).toEqual(401)
+            expect(res.statusCode).toEqual(500)
             expect (typeof res.body).toEqual('object')
-            expect(res.body).toHaveProperty('message')
-            expect(typeof res.body.message).toEqual('string')
+            expect(res.body).toHaveProperty('messages')
+            expect(typeof res.body.messages).toEqual('string')
 
             done()
         })

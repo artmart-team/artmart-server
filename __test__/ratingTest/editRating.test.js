@@ -68,6 +68,20 @@ describe('PUT /users/:userId/ratings/:ratingId',function() {
         })
     })
 
+
+    afterAll(done => {
+        Rating.destroy({ where : { id : ratingId}})
+        .then(data => {
+            return Artist.destroy({ where : { id : artistId}})
+        })
+        .then(dat => {
+            return User.destroy({ where : {id : userId}})
+        })
+        .then(res => {
+            done()
+        })
+    })
+
     // ======================== successfull edit rating ==========================
     it('should status 200, successfull edit rating' ,function (done) {
         //setup
