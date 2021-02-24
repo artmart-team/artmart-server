@@ -300,12 +300,12 @@ class OrderController {
           let dataObj = data[1][0]
 
           const objPicture = {
-            name: `Commission from ${orderData.User.username}`,
+            name: `[C] - ${orderData.User.username}`,
             description: '',
             price: +orderData.price,
             link: req.body.imageURL,
             hidden: false,
-            CategoryId: 1,
+            CategoryId: +req.body.categoryId,
             ArtistId: +orderData.ArtistId,
             UserId: +orderData.UserId
           }
@@ -357,7 +357,7 @@ class OrderController {
     try {
       const obj = {
         transaction_details: {
-          order_id: 'TESTORDER' + Number(req.params.orderId),
+          order_id: 'TESTINGORDER' + Number(req.params.orderId),
           gross_amount: +req.body.gross_amount
         }
       }

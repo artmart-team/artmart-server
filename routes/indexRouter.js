@@ -8,6 +8,7 @@ const commentsRouter = require ('./commentsRouter')
 const reviewsRouter = require ('./reviewsRouter')
 const ratingsRouter = require ('./ratingsRouter')
 const categoryRouter = require('./catRouter')
+const chatRouter = require('./chatRouter')
 
 router.get('/', (req, res) => {
     res.status(200).json({ message : "get mARTerialize back end "})
@@ -34,6 +35,9 @@ router.use (commentsRouter)
 router.use (reviewsRouter)
 
 router.use (ratingsRouter)
+
+router.use (chatRouter)
+
 
 
 module.exports = router

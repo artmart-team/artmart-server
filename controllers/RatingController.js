@@ -1,4 +1,4 @@
-const { Rating, Order } = require ('../models/index')
+const { Rating, Order, Artist, User } = require ('../models/index')
 
 class RatingController {
   static async getAllByArtist (req, res, next) {
@@ -6,6 +6,10 @@ class RatingController {
       const data = await Rating.findAll({
         where: {
           ArtistId: +req.params.artistId
+        },
+        include: {
+          model: User,
+          attributes: ['id', 'username', 'profilePicture']
         }
       })
       res.status(200).json(data)
