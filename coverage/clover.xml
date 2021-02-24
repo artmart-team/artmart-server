@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1614140966383" clover="3.2.0">
-  <project timestamp="1614140966384" name="All files">
+<coverage generated="1614141131166" clover="3.2.0">
+  <project timestamp="1614141131167" name="All files">
     <metrics statements="726" coveredstatements="726" conditionals="232" coveredconditionals="165" methods="100" coveredmethods="95" elements="1058" coveredelements="986" complexity="0" loc="726" ncloc="726" packages="7" files="35" classes="35"/>
     <package name="artmart-server">
       <metrics statements="13" coveredstatements="13" conditionals="4" coveredconditionals="3" methods="0" coveredmethods="0"/>

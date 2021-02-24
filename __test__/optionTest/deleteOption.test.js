@@ -49,7 +49,6 @@ describe('DELETE /artist/:artistId/options/:optionId',function() {
     })
   
     afterAll(done => {
-    
         Artist.destroy({ where : { id : artistId}})
         .then(res => {
             done()
