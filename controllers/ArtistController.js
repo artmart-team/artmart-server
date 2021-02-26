@@ -61,8 +61,7 @@ class ArtistController {
             if(checked) {
               const payload = {
                 id : data.id,
-                username : data.username,
-                profilePicture : data.profilePicture
+                username : data.username
               }
 
               const access_token = generateToken(payload)
@@ -70,8 +69,7 @@ class ArtistController {
               res.status(200).json({
                 access_token, 
                 id: data.id, 
-                username:data.username, 
-                profilePicture: data.profilePicture
+                username:data.username
               })
             } else {
               next ({name: 'Invalid email / password'})
@@ -91,8 +89,7 @@ class ArtistController {
             if(checked) {
               const payload = {
                 id : data.id,
-                username : data.username,
-                profilePicture : data.profilePicture
+                username : data.username
               }
 
               const access_token = generateToken(payload)
@@ -100,8 +97,7 @@ class ArtistController {
               res.status(200).json({
                 access_token, 
                 id: data.id, 
-                username:data.username, 
-                profilePicture: data.profilePicture
+                username:data.username
               })
             } else {
               next ({name: 'Invalid email / password'})

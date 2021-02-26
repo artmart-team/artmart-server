@@ -12,13 +12,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING(500) 
+        type: Sequelize.STRING(700) 
       },
       price: {
         type: Sequelize.DOUBLE
       },
       link: {
-        type: Sequelize.STRING(500) 
+        type: Sequelize.STRING(700) 
       },
       hidden: {
         type: Sequelize.BOOLEAN

@@ -41,6 +41,11 @@ module.exports = {
         name: "Realism",
         createdAt: new Date(),
         updatedAt: new Date()
+      },
+      {
+        name: "Ukiyo-e",
+        createdAt: new Date(),
+        updatedAt: new Date()
       }
     ]
 
