@@ -16,6 +16,9 @@ module.exports = (sequelize, DataTypes) => {
       User.belongsToMany(models.Artist, {
         through: models.Order
       })
+      User.belongsToMany(models.Artist, {
+        through: models.Chat
+      })
       User.belongsToMany(models.Review, {
         through: models.Order
       })

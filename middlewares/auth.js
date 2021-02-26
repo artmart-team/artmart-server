@@ -1,5 +1,5 @@
 const { checkToken } = require ('../helpers/jwt')
-const { User, Artist, Order, Picture, Comment, Option, Rating, Review } = require ('../models/index')
+const { User, Artist, Order, Picture, Comment, Option, Rating, Review, Chat } = require ('../models/index')
 
 async function authenticate (req, res, next) {
   try {
@@ -18,6 +18,7 @@ async function authenticate (req, res, next) {
     })
 
     if ( !dataUser && !dataArtist) {
+      console.log(dataUser, dataArtist, 'datadata')
       res.status (403).json ({message: 'Please login first'})
     } else {
       if (!dataUser) {
@@ -253,6 +254,8 @@ async function authorizeUserReview (req, res, next) {
     next (err)
   }
 }
+
+
 
 module.exports = {
   authenticate,

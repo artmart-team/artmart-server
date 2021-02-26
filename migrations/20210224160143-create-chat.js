@@ -1,36 +1,18 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Pictures', {
+    await queryInterface.createTable('Chats', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      messages: {
         type: Sequelize.STRING
       },
-      description: {
-        type: Sequelize.STRING(700) 
-      },
-      price: {
-        type: Sequelize.DOUBLE
-      },
-      link: {
-        type: Sequelize.STRING(700) 
-      },
-      hidden: {
-        type: Sequelize.BOOLEAN
-      },
-      CategoryId: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {tableName: 'Categories'},
-          key: "id"
-        },
-        onUpdate: 'cascade',
-        onDelete: 'cascade'
+      from: {
+        type: Sequelize.STRING
       },
       ArtistId: {
         type: Sequelize.INTEGER,
@@ -61,6 +43,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Pictures');
+    await queryInterface.dropTable('Chats');
   }
 };

@@ -20,7 +20,7 @@
     "UserId": null
   },
   {
-    "name": "Daliism",
+    "name": "Dadaism",
     "description": "Veniam non minim in ad ullamco excepteur nostrud ad eiusmod duis. Duis in ipsum eiusmod cillum dolor eu qui aliqua. Ut excepteur veniam velit pariatur esse do veniam eiusmod ea do anim et laboris. Pariatur commodo duis aliqua amet dolor nulla aliqua ea. Ut magna minim exercitation in pariatur laborum.",
     "price": 175000000,
     "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fsalvator1.jpg?alt=media&token=8b304430-403b-446a-9063-6b2a9fd75c42",
@@ -37,6 +37,16 @@
     "hidden": false,
     "CategoryId": 6,
     "ArtistId": 3,
+    "UserId": null
+  },
+  {
+    "name": "Armory OC",
+    "description": "Voluptate id qui magna do occaecat veniam. Elit anim commodo deserunt nostrud labore. Excepteur occaecat non est officia enim pariatur consequat irure ullamco magna esse elit. Duis esse duis commodo irure et ipsum do sint anim enim. Ullamco cupidatat exercitation consectetur dolor labore ullamco sunt ex Lorem cillum officia enim eu amet. Est exercitation adipisicing minim in excepteur veniam labore minim cillum ea voluptate do. Deserunt aliqua adipisicing sit sit minim amet. https://www.pixiv.net/en/users/28172249 (Nvl)",
+    "price": 125000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fpetrik%20(2).png?alt=media&token=5b0d8aba-998d-468a-9008-cc6fedd515c5",
+    "hidden": false,
+    "CategoryId": 3,
+    "ArtistId": 7,
     "UserId": null
   },
   {
@@ -57,6 +67,16 @@
     "hidden": false,
     "CategoryId": 3,
     "ArtistId": 4,
+    "UserId": null
+  },
+  {
+    "name": "OC Drawing",
+    "description": "Dolor enim commodo ex id voluptate ad ipsum excepteur commodo duis duis elit. Pariatur anim minim exercitation id magna eu. Laborum nostrud mollit aliquip dolore incididunt in. In quis aute aliqua voluptate id cillum in veniam. https://www.pixiv.net/en/users/28172249 (Nvl)",
+    "price": 125000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fpetrik%20(1).png?alt=media&token=c5054bf5-8e3a-43f2-bd14-6f23f9ead152",
+    "hidden": false,
+    "CategoryId": 3,
+    "ArtistId": 7,
     "UserId": null
   },
   {
@@ -90,6 +110,16 @@
     "UserId": null
   },
   {
+    "name": "Kujoismo",
+    "description": "Dolor enim commodo ex id voluptate ad ipsum excepteur commodo duis duis elit. Pariatur anim minim exercitation id magna eu. Laborum nostrud mollit aliquip dolore incididunt in. In quis aute aliqua voluptate id cillum in veniam. https://www.pixiv.net/en/users/13953187 (an_kujo.)",
+    "price": 250000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fankujo1.png?alt=media&token=215174e4-59e6-406e-b00c-d16d62a17a7a",
+    "hidden": false,
+    "CategoryId": 3,
+    "ArtistId": 8,
+    "UserId": null
+  },
+  {
     "name": "Simple Deep Minimalist",
     "description": "Sit ad in excepteur in eu incididunt pariatur laborum. Eu officia amet mollit sunt id consequat. Anim anim incididunt dolor proident eu id labore ea aliqua labore minim pariatur nulla velit. Enim id nostrud anim quis pariatur officia proident excepteur exercitation sunt culpa ut ad. Deserunt nulla proident consectetur sit dolor cillum dolor ullamco sint nostrud tempor sint est elit. Ad occaecat fugiat duis eiusmod elit laboris culpa est nostrud. https://pixiv.me/stmzu (Satomiz.)",
     "price": 260000,
@@ -97,6 +127,26 @@
     "hidden": false,
     "CategoryId": 5,
     "ArtistId": 6,
+    "UserId": null
+  },
+  {
+    "name": "The Great Wave off Kanagawa",
+    "description": "Ad ullamco culpa proident do id officia ea non. Enim mollit deserunt quis esse. In officia amet exercitation ad anim eu nulla exercitation nostrud dolore eu excepteur. Occaecat adipisicing duis exercitation nisi minim sunt nostrud reprehenderit ut amet nisi. Exercitation adipisicing sit qui aliqua et reprehenderit nulla irure nostrud enim consectetur dolore velit est.",
+    "price": 260000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fhokusai%20(2).jpg?alt=media&token=28d02b22-5dd6-4b6b-8dd0-bf1c9c8a1774",
+    "hidden": false,
+    "CategoryId": 7,
+    "ArtistId": 9,
+    "UserId": null
+  },
+  {
+    "name": "Johannes's Special",
+    "description": "Cupidatat irure qui commodo enim exercitation reprehenderit anim mollit aliqua eiusmod adipisicing dolore esse. Laborum velit ad sint velit nostrud do ea tempor labore est et consequat anim non. Fugiat Lorem reprehenderit tempor ea adipisicing culpa eiusmod voluptate veniam tempor anim.",
+    "price": 260000,
+    "link": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fjohanes2.jpg?alt=media&token=e3fff727-3fa6-4813-b1c8-eb8aefa35f2b",
+    "hidden": false,
+    "CategoryId": 6,
+    "ArtistId": 10,
     "UserId": null
   }
 ]

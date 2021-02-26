@@ -1,6 +1,12 @@
 const { Order, User, Artist, Picture } = require('../models/index')
 const axios = require('axios')
 
+function addDays(date, days) {
+  var result = new Date(date);
+  result.setDate(result.getDate() + days);
+  return result;
+}
+
 class OrderController {
   static async getAllByUser (req, res, next) {
     try {
@@ -230,9 +236,9 @@ class OrderController {
       if (orderData.deadline) {
         return next ({ name: 'Order already accepted' })
       } else {
-          const deadline = new Date()
-          deadline.setHours(deadline.getHours() + artistData.completeDuration)
-    
+          let deadline = addDays(new Date, artistData.completeDuration)
+          console.log(artistData.completeDuration, 'completeDuration -------------')
+          console.log(deadline, 'deadline -------------')
           const obj = { accepted: true, deadline }
           const data = await Order.update (obj, {
             where: {
@@ -300,12 +306,12 @@ class OrderController {
           let dataObj = data[1][0]
 
           const objPicture = {
-            name: `Commission from ${orderData.User.username}`,
+            name: `[C] - ${orderData.User.username}`,
             description: '',
             price: +orderData.price,
             link: req.body.imageURL,
             hidden: false,
-            CategoryId: 1,
+            CategoryId: +req.body.categoryId,
             ArtistId: +orderData.ArtistId,
             UserId: +orderData.UserId
           }
@@ -355,9 +361,11 @@ class OrderController {
 
   static async respondPayment (req, res, next) {
     try {
+      let date = new Date()
+      let time = date.getTime()
       const obj = {
         transaction_details: {
-          order_id: 'TESTORDER' + Number(req.params.orderId),
+          order_id: 'mART__terialize' + Number(req.params.orderId) + time,
           gross_amount: +req.body.gross_amount
         }
       }

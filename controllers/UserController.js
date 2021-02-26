@@ -59,16 +59,15 @@ class UserController {
           } else {
             const payload = {
               id: data.id,
-              username: data.username,
-              profilePicture: data.profilePicture
+              username: data.username
             }
             const access_token = generateToken (payload)
             res.status (200).json ({
               access_token, 
               id: data.id, 
               role: data.role, 
-              username:data.username, 
-              profilePicture: data.profilePicture})
+              username:data.username
+            })
           }
         }
       } else {
@@ -86,15 +85,14 @@ class UserController {
           } else {
             const payload = {
               id: data.id,
-              username: data.username,
-              profilePicture: data.profilePicture
+              username: data.username  
             }
             const access_token = generateToken (payload)
             res.status (200).json ({
               access_token, 
               id: data.id,  
-              username:data.username, 
-              profilePicture: data.profilePicture})
+              username:data.username
+              })
           }
         }
       }

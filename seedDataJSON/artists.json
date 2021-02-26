@@ -64,5 +64,49 @@
     "completeDuration": 3,
     "bankAccount": 123459876,
     "defaultPrice": 250000
+  },
+  {
+    "username": "Nvl",
+    "firstName": "Nvl",
+    "lastName": "Nvl",
+    "email": "nvl@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fpetrik%20dp.png?alt=media&token=f6e95d6e-fdd5-4162-be41-f48d396f0b43",
+    "completeDuration": 7,
+    "bankAccount": 123459876,
+    "defaultPrice": 150000
+  },
+  {
+    "username": "an.kujo",
+    "firstName": "An",
+    "lastName": "Kujo",
+    "email": "an.kujo@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fankujo.jpg?alt=media&token=059a64c7-4ce5-482d-a9d7-bef1257c65bc",
+    "completeDuration": 8,
+    "bankAccount": 123459876,
+    "defaultPrice": 250000
+  },
+  {
+    "username": "hokusaisensei",
+    "firstName": "Hokusai",
+    "lastName": "Sensei",
+    "email": "hokusai.sensei@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fhokusai.jpg?alt=media&token=2c03c0d7-b165-4cd1-a98b-a8b8bb550ced",
+    "completeDuration": 27,
+    "bankAccount": 123459876,
+    "defaultPrice": 17000000
+  },
+  {
+    "username": "JohannesVermeer",
+    "firstName": "Johannes",
+    "lastName": "Vermeer",
+    "email": "johannesvermer@mail.com",
+    "password": "123456",
+    "profilePicture": "https://firebasestorage.googleapis.com/v0/b/marterialize.appspot.com/o/artistPicSeed%2Fjohanes1.jpg?alt=media&token=62d76d76-6291-4e3e-84c4-b62957438448",
+    "completeDuration": 37,
+    "bankAccount": 123459876,
+    "defaultPrice": 25000000
   }
 ]
